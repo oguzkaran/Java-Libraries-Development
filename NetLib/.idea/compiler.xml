@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="com-karandev-util-net" />
+        <module name="com-karandev-net" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -16,6 +17,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="NetLib" options="-parameters" />
+      <module name="com-karandev-net" options="-parameters" />
       <module name="com-karandev-util-net" options="-parameters" />
       <module name="org-csystem-util-net" options="-parameters" />
     </option>

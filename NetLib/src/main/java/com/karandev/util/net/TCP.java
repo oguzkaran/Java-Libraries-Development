@@ -1,12 +1,7 @@
-/*----------------------------------------------------------------------
-	FILE        : TCP.java
-	AUTHOR      : JavaApp2-Jan-2024 Group
-	LAST UPDATE : 6th May 2024
-
-	Immutable TCP class for TCP socket operations
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
+/**
+ * @Author JavaApp2-Jan-2024 Group
+ * Immutable TCP class for TCP socket operations
+ * Copyleft (c) 1993 by C and System Programmers Association (CSD) All Rights Free
 -----------------------------------------------------------------------*/
 package com.karandev.util.net;
 
@@ -15,6 +10,7 @@ import com.karandev.util.net.exception.NetworkException;
 import java.io.File;
 import java.net.Socket;
 import java.nio.charset.Charset;
+
 
 public class TCP {
     private final Socket m_socket;
