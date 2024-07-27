@@ -8,7 +8,7 @@
 	Copyleft (c) 1993 by C and System Programmers Association (CSD)
 	All Rights Free
 -----------------------------------------------------------------------*/
-package com.karandev.util.data.repository;
+package org.csystem.util.data.repository;
 
 import java.util.Optional;
 

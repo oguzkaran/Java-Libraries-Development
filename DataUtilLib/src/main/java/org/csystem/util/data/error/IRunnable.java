@@ -8,7 +8,7 @@
 	Copyleft (c) 1993 by C and System Programmers Association (CSD)
 	All Rights Free
 -----------------------------------------------------------------------*/
-package com.karandev.util.data.error;
+package org.csystem.util.data.error;
 
 @FunctionalInterface
 public interface IRunnable {

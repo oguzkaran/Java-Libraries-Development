@@ -9,10 +9,10 @@
 	Copyleft (c) 1993 by C and System Programmers Association (CSD)
 	All Rights Free
 -----------------------------------------------------------------------*/
-package com.karandev.util.data.error;
+package org.csystem.util.data.error;
 
-import com.karandev.util.data.repository.exception.RepositoryException;
-import com.karandev.util.data.service.exception.DataServiceException;
+import org.csystem.util.data.repository.exception.RepositoryException;
+import org.csystem.util.data.service.exception.DataServiceException;
 
 import java.util.function.Consumer;
 

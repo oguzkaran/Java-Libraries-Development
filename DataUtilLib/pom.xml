@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.karandev</groupId>
-	<artifactId>com-karandev-util-data</artifactId>
+	<groupId>org.csystem</groupId>
+	<artifactId>org-csystem-util-data</artifactId>
 	<version>1.0.0</version>
-	<name>com-karandev-util-data</name>
+	<name>org-csystem-util-data</name>
 
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
