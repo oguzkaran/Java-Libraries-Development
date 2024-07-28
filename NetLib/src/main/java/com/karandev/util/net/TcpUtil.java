@@ -280,7 +280,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a byte value from a {@code socket}.
+	 * Receives a byte value from the {@code socket}.
 	 * @param socket the Socket to receive byte value from
 	 * @return the received byte value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -303,7 +303,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a short value from a {@code socket}.
+	 * Receives a short value from the {@code socket}.
 	 * @param socket the Socket to receive short value from
 	 * @return the received short value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -326,7 +326,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives an int value from a {@code socket}.
+	 * Receives an int value from the {@code socket}.
 	 * @param socket the Socket to receive int value from
 	 * @return the received int value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -349,7 +349,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a long value from a {@code socket}.
+	 * Receives a long value from the {@code socket}.
 	 * @param socket the Socket to receive long value from
 	 * @return the received long value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -372,7 +372,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a float value from a {@code socket}.
+	 * Receives a float value from the {@code socket}.
 	 * @param socket the Socket to receive float value from
 	 * @return the received float value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -395,7 +395,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a double value from a {@code socket}.
+	 * Receives a double value from the {@code socket}.
 	 * @param socket the Socket to receive double value from
 	 * @return the received double value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -418,7 +418,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a char value from a {@code socket}.
+	 * Receives a char value from the {@code socket}.
 	 * @param socket the Socket to receive char value from
 	 * @return the received char value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -441,7 +441,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a string from a {@code socket} using the default charset UTF-8.
+	 * Receives a string from the {@code socket} using the default charset UTF-8.
 	 * @param socket the Socket to receive string from
 	 * @return the received string
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -452,7 +452,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a string value from a {@code socket} using the specified {@code charset}.
+	 * Receives a string value from the {@code socket} using the specified {@code charset}.
 	 * @param socket the Socket to receive string from
 	 * @param charset the charset of the text
 	 * @return the received string
@@ -476,7 +476,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a string value having {@code length} number of characters from a {@code socket} using
+	 * Receives a string value having {@code length} number of characters from the {@code socket} using
 	 * the default charset UTF-8.
 	 * @param socket the Socket to receive string from
 	 * @param length length the number of bytes to read
@@ -489,7 +489,7 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a string value having {@code length} number of characters from a {@code socket} using
+	 * Receives a string value having {@code length} number of characters from the {@code socket} using
 	 * the specified {@code charset}.
 	 * @param socket the Socket to receive string from
 	 * @param length the number of the bytes to be read
@@ -548,7 +548,7 @@ public final class TcpUtil {
 
 	/**
 	 * Receives text data until the last line feed character from the {@code socket}, using the default charset (UTF-8)
-	 * and the specified {@code blocksize}.
+	 * and the specified {@code blockSize}.
 	 * <p>This method will work properly if the sender closes the socket after the send process.</p>
 	 * @param socket the Socket to receive text from
 	 * @param blockSize block size of the internal buffer. If zero no data is read
@@ -564,7 +564,7 @@ public final class TcpUtil {
 
 	/**
 	 * Receives text data until the last line feed character from the {@code socket}, using the specified {@code charset}
-	 * and {@code blocksize}.
+	 * and {@code blockSize}.
 	 * <p>This method will work properly if sender close socket after the send process.</p>
 	 * @param socket a valid and open socket
 	 * @param charset the charset of the text
@@ -604,9 +604,11 @@ public final class TcpUtil {
 	}
 
 	/**
-	 *
+	 * Receives text using the default block size {@link TcpUtil#DEFAULT_LINE_BLOCK_SIZE} and the
+	 * default charset UTF-8, then splits the text around matching line break.
 	 * @param socket the Socket to receive an array of texts from
 	 * @return all received lines from the socket as a string array
+	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
 	public static String [] receiveLines(Socket socket)
 	{
@@ -614,10 +616,12 @@ public final class TcpUtil {
 	}
 
 	/**
-	 *
+	 * Receives text using the default block size {@link TcpUtil#DEFAULT_LINE_BLOCK_SIZE} and
+	 * specified {@code charset}, then splits the text around matching line break.
 	 * @param socket the Socket to receive an array of texts from
 	 * @param charset the charset of the text
 	 * @return all received lines from the socket as a string array
+	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
 	public static String [] receiveLines(Socket socket, Charset charset)
 	{
@@ -625,10 +629,12 @@ public final class TcpUtil {
 	}
 
 	/**
-	 *
+	 * Receives text from the {@code socket} using the specified {@code blockSize},
+	 * then splits the text around matching line break.
 	 * @param socket the Socket to receive an array of texts from
 	 * @param blockSize block size of the internal buffer. If zero no data is read
 	 * @return all received lines from the socket as a string array
+	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
 	public static String [] receiveLines(Socket socket, int blockSize)
 	{
@@ -636,8 +642,9 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * This method reads a String and split the lines
-	 * This method will work properly if sender close socket after the send process
+	 * Receives a string split by end of line character
+	 * This method reads a String and split the lines, using the specified {@code charset} and {@code blockSize}.
+	 * <p>This method will work properly if sender close socket after the send process</p>
 	 * @param socket a valid and open socket
 	 * @param charset the charset of the text
 	 * @param blockSize block size of the internal buffer
@@ -832,9 +839,11 @@ public final class TcpUtil {
 	}
 
 	/**
-	 *
+	 * Consecutively sends specified {@code string} and string's length via specified
+	 * {@code socket}.
 	 * @param socket the Socket to send a string to
 	 * @param str the string to send
+	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
 	public static void sendStringViaLength(Socket socket, String str)
 	{
@@ -842,7 +851,8 @@ public final class TcpUtil {
 	}
 
 	/**
-	 *
+	 * Consecutively sends specified {@code str} and string's length via specified
+	 * {@code socket} and {@code charset}.
 	 * @param socket the Socket to send a string to
 	 * @param str the string to send
 	 * @param charset the charset of the text
@@ -898,9 +908,11 @@ public final class TcpUtil {
 	}
 
 	/**
-	 *
+	 * Takes a text {@code str}, terminates it by line break and sends it to {@code socket},
+	 * using the default charset UTF-8.
 	 * @param socket the Socket to send a text to
 	 * @param str the text to send
+	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
 	public static void sendLine(Socket socket, String str)
 	{
@@ -908,7 +920,8 @@ public final class TcpUtil {
 	}
 
 	/**
-	 *
+	 * Takes a text {@code str}, terminates it by line break and sends it to {@code socket},
+	 * using the specified {@code charset}.
 	 * @param socket the Socket to send a text to
 	 * @param str the text to send
 	 * @param charset the charset of the text
@@ -928,10 +941,11 @@ public final class TcpUtil {
 	}
 
 	/**
-	 *
+	 * Sends a {@code file} to the specified {@code socket} using the specified {@code blockSize}.
 	 * @param socket the Socket to send a File to
 	 * @param file the file to send
 	 * @param blockSize block size of the internal buffer
+	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
 	public static void sendFile(Socket socket, File file, int blockSize)
 	{
@@ -939,7 +953,8 @@ public final class TcpUtil {
 	}
 
 	/**
-	 *
+	 * Creates a fileInputStream using the specified {@code path} and the {@code blockSize},
+	 * then sends to specified {@code socket}.
 	 * @param socket the Socket to send a File to
 	 * @param path the path to the file to send
 	 * @param blockSize block size of the internal buffer
