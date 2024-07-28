@@ -1,13 +1,3 @@
-/*----------------------------------------------------------------------
-	FILE        : TcpUtil.java
-	AUTHOR      : Oğuz Karan
-	LAST UPDATE : 28th July 2024
-
-	Utility class for TCP socket operations
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
------------------------------------------------------------------------*/
 package com.karandev.util.net;
 
 import com.karandev.util.net.exception.NetworkException;
@@ -19,6 +9,13 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
+/**
+ * Utility class for TCP socket operations such as sending and receiving primitive type values, text and files.
+ * <p>Copyleft (c) 1993 by C and System Programmers Association (CSD) All Rights Free</p>
+ *
+ * @author JavaApp2-Jan-2024 Group
+ * @version 1.0.0
+ */
 public final class TcpUtil {
 	private static final int DEFAULT_LINE_BLOCK_SIZE = 2048;
 
