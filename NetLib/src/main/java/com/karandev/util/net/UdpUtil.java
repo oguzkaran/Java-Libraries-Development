@@ -16,24 +16,32 @@ import java.net.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Utility class with usage of datagram packets and datagram sockets for UDP operations,
+ * including sending and receiving primitive type values and texts.
+ * <p>Copyleft (c) 1993 by C and System Programmers Association (CSD) All Rights Free</p>
+ *
+ * @author JavaApp2-Jan-2024 Group
+ * @version 1.0.0
+ */
+
 public final class UdpUtil {
     /**
-     *
-     * @param data
-     * @param host
-     * @param port
-     * @return
-     * @throws UnknownHostException
+     * Creates a new datagram packet for sending data that has bounden with specific ip address and port number.
+     * @param data the byte array which will be transferred in a single fetch
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @return a new DataGramPacket Object for sending data over the datagram socket
+     * @throws UnknownHostException if the destination ip address is invalid
      */
     private static DatagramPacket createDatagramPacket(byte [] data, String host, int port) throws UnknownHostException
     {
         return new DatagramPacket(data, 0, data.length, InetAddress.getByName(host), port);
     }
-
     /**
-     *
-     * @param length
-     * @return
+     * Creates a new datagram packet for receiving data from bounden specific datagram socket.
+     * @param length the size of the received data in a single fetch
+     * @return a new DataGramPacket Object for receive data over the datagram socket
      */
     private static DatagramPacket createDatagramPacket(int length)
     {
@@ -45,10 +53,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param val
+     * Sends single byte value via a new datagram socket to the specified ip address and port
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the byte value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendByte(String host, int port, byte val)
     {
@@ -61,11 +70,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param val
+     * Sends single byte value via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the byte value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendByte(DatagramSocket datagramSocket, String host, int port, byte val)
     {
@@ -80,10 +90,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param val
+     * Sends single short value via a new datagram socket to the specified ip address and port
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the short value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendShort(String host, int port, short val)
     {
@@ -96,11 +107,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param val
+     * Sends single short value via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the short value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendShort(DatagramSocket datagramSocket, String host, int port, short val)
     {
@@ -115,10 +127,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param val
+     * Sends single int value via a new datagram socket to the specified ip address and port
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the int value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendInt(String host, int port, int val)
     {
@@ -131,11 +144,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param val
+     * Sends single int value via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the int value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendInt(DatagramSocket datagramSocket, String host, int port, int val)
     {
@@ -150,10 +164,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param val
+     * Sends single long value via a new datagram socket to the specified ip address and port
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the long value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendLong(String host, int port, long val)
     {
@@ -166,11 +181,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param val
+     * Sends single long value via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the long value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendLong(DatagramSocket datagramSocket, String host, int port, long val)
     {
@@ -185,10 +201,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param val
+     * Sends single float value via a new datagram socket to the specified ip address and port
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the float value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendFloat(String host, int port, float val)
     {
@@ -201,11 +218,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param val
+     * Sends single float value via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the float value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendFloat(DatagramSocket datagramSocket, String host, int port, float val)
     {
@@ -220,10 +238,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param val
+     * Sends single double value via a new datagram socket to the specified ip address and port
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the double value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendDouble(String host, int port, double val)
     {
@@ -236,11 +255,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param val
+     * Sends single double value via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the double value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendDouble(DatagramSocket datagramSocket, String host, int port, double val)
     {
@@ -255,10 +275,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param ch
+     * Sends single char value via a new datagram socket to the specified ip address and port
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param ch the char value which will sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendChar(String host, int port, char ch)
     {
@@ -271,11 +292,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param ch
+     * Sends single char value via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param ch the char value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendChar(DatagramSocket datagramSocket, String host, int port, char ch)
     {
@@ -290,10 +312,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param val
+     * Sends single boolean value via a new datagram socket to the specified ip address and port
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the boolean value which will sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendBoolean(String host, int port, boolean val)
     {
@@ -306,11 +329,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param val
+     * Sends single boolean value via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param val the boolean value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendBoolean(DatagramSocket datagramSocket, String host, int port, boolean val)
     {
@@ -325,10 +349,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param str
+     * Sends single String value in Charset UTF-8 via a new datagram socket to the specified ip address and port
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param str the String value which will sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendString(String host, int port, String str)
     {
@@ -336,11 +361,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param str
+     * Sends single String value in Charset UTF-8 via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param str the String value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendString(DatagramSocket datagramSocket, String host, int port, String str)
     {
@@ -348,11 +374,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param host
-     * @param port
-     * @param str
-     * @param charset
+     * Sends single String value in given charset via a new datagram socket to the specified ip address and port
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param str the String value which will sent
+     * @param charset the specified charset of the {@code str}
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendString(String host, int port, String str, Charset charset)
     {
@@ -365,12 +392,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param str
-     * @param charset
+     * Sends single String value in Charset UTF-8 via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param str the String value which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static void sendString(DatagramSocket datagramSocket, String host, int port, String str, Charset charset)
     {
@@ -385,11 +412,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param host
-     * @param port
-     * @param ints
+     * Sends multiple int values via given {@code datagramSocket} to the specified ip address and port
+     * @param datagramSocket the socket which will be used for transfer data
+     * @param host the ip address of the transfer destination
+     * @param port the port number of transfer destination
+     * @param ints the int values which will be sent
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     ////////////////////
     public static void sendIntArray(DatagramSocket datagramSocket, String host, int port, int...ints)
@@ -404,9 +432,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @return
+     * Receives a single byte value from the given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @return the received byte value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static byte receiveByte(DatagramSocket datagramSocket)
     {
@@ -429,9 +458,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @return
+     * Receives a single byte value from a new datagramSocket which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @return the received byte value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static byte receiveByte(int port)
     {
@@ -447,9 +477,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @return
+     * Receives a single short value from the given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @return the received byte value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static short receiveShort(DatagramSocket datagramSocket)
     {
@@ -472,9 +503,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @return
+     * Receives a single short value from a new datagramSocket which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @return the received short value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static short receiveShort(int port)
     {
@@ -490,9 +522,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @return
+     * Receives a single int value from the given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @return the received int value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static int receiveInt(DatagramSocket datagramSocket)
     {
@@ -515,9 +548,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @return
+     * Receives a single int value from a new datagramSocket which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @return the received int value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static int receiveInt(int port)
     {
@@ -533,9 +567,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @return
+     * Receives a single float value from the given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @return the received float value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static float receiveFloat(DatagramSocket datagramSocket)
     {
@@ -558,9 +593,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @return
+     * Receives a single float value from a new datagramSocket which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @return the received float value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static float receiveFloat(int port)
     {
@@ -576,9 +612,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @return
+     * Receives a single double value from the given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @return the received double value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static double receiveDouble(DatagramSocket datagramSocket)
     {
@@ -601,9 +638,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @return
+     * Receives a single double value from a new datagramSocket which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @return the received double value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static double receiveDouble(int port)
     {
@@ -619,9 +657,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @return
+     * Receives a single char value from the given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @return the received char value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static char receiveChar(DatagramSocket datagramSocket)
     {
@@ -644,9 +683,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @return
+     * Receives a single char value from a new datagramSocket which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @return the received char value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static char receiveChar(int port)
     {
@@ -662,9 +702,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @return
+     * Receives a single boolean value from the given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @return the received boolean value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static boolean receiveBoolean(DatagramSocket datagramSocket)
     {
@@ -687,9 +728,10 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @return
+     * Receives a single boolean value from a new datagramSocket which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @return the received boolean value
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static boolean receiveBoolean(int port)
     {
@@ -705,10 +747,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param maxLength
-     * @return
+     * Receives a String object in Charset UTF-8 from the given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @param maxLength the max size of data which will be received in a datagram packet on a single fetch
+     * @return the received String object
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static String receiveString(DatagramSocket datagramSocket, int maxLength)
     {
@@ -716,10 +759,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @param maxLength
-     * @return
+     * Receives a String object in Charset UTF-8 from a new datagramSocket which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @param maxLength the max size of data which will be received in a datagram packet on a single fetch
+     * @return the received String object
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static String receiveString(int port, int maxLength)
     {
@@ -727,11 +771,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param maxLength
-     * @param charset
-     * @return
+     * Receives a String object in given {@code charset} from the given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @param maxLength the max size of data which will be received in a datagram packet on a single fetch
+     * @param charset the specified charset of the String value to be received
+     * @return the received String object
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static String receiveString(DatagramSocket datagramSocket, int maxLength, Charset charset)
     {
@@ -749,11 +794,13 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @param maxLength
-     * @param charset
-     * @return
+     * Receives a String object in given {@code charset} from a new datagramSocket
+     * which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @param maxLength the max size of data which will be received in a datagram packet on a single fetch
+     * @param charset the specified charset of the String value to be received
+     * @return the received String object
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static String receiveString(int port, int maxLength, Charset charset)
     {
@@ -771,10 +818,11 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param maxLength
-     * @return
+     * Receives a DatagramPacket object in Charset UTF-8 from given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @param maxLength the max size of data which will be received in a datagram packet on a single fetch
+     * @return the received DatagramPacket object
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static DatagramPacket receiveDatagramPacket(DatagramSocket datagramSocket, int maxLength)
     {
@@ -782,10 +830,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @param maxLength
-     * @return
+     * Receives a DatagramPacket object in Charset UTF-8 from a new datagramSocket
+     * which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @param maxLength the max size of data which will be received in a datagram packet on a single fetch
+     * @return the received DatagramPacket object
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static DatagramPacket receiveDatagramPacket(int port, int maxLength)
     {
@@ -793,11 +843,12 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param datagramSocket
-     * @param maxLength
-     * @param charset
-     * @return
+     * Receives a DatagramPacket object in given {@code charset} from the given {@code datagramSocket}
+     * @param datagramSocket the socket which will be used for receive data
+     * @param maxLength the max size of data which will be received in a datagram packet on a single fetch
+     * @param charset the specified charset of the DatagramPacket object to be received
+     * @return the received DatagramPacket object
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static DatagramPacket receiveDatagramPacket(DatagramSocket datagramSocket, int maxLength, Charset charset)
     {
@@ -814,11 +865,13 @@ public final class UdpUtil {
     }
 
     /**
-     *
-     * @param port
-     * @param maxLength
-     * @param charset
-     * @return
+     * Receives a DatagramPacket object in given {@code charset} from a new datagramSocket
+     * which is bounden to given {@code port}
+     * @param port the port number of the connection
+     * @param maxLength the max size of data which will be received in a datagram packet on a single fetch
+     * @param charset the specified charset of the DatagramPacket object to be received
+     * @return the received DatagramPacket object
+     * @throws NetworkException if any problem occurs while sending through the socket
      */
     public static DatagramPacket receiveDatagramPacket(int port, int maxLength, Charset charset)
     {

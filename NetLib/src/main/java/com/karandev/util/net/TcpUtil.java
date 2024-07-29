@@ -96,7 +96,8 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Sending data to a given {@code dos} from the {@code data} byte array. Default length to be sent
+	 * Sending data to a given {@code dos} from the {@code data} byte array.
+	 * The Default length to be sent
 	 * is determined by the length of the provided byte array.
 	 * @param dos the DataOutputStream to write to
 	 * @param data the byte array used for writing to the DataOutputStream
@@ -118,8 +119,8 @@ public final class TcpUtil {
 	 * @param backlog requested maximum length of the queue of incoming connections
 	 * @param minPort minimum value for the port number
 	 * @param maxPort maximum value for the port number
-	 * @return an Optional SocketServer with given backlog value, or empty optional if all the ports are busy and can
-	 * not be assigned
+	 * @return an Optional SocketServer with given backlog value,
+	 * or empty optional if all the ports are busy and cannot be assigned
 	 * @throws IllegalArgumentException if the provided port numbers are outside the valid range
 	 */
 	public static Optional<ServerSocket> getFirstAvailableSocket(int backlog, int minPort, int maxPort)
@@ -142,7 +143,7 @@ public final class TcpUtil {
 	 * range. Other-wise returns an empty Optional.
 	 * @param minPort minimum value for the port number
 	 * @param maxPort maximum value for the port number
-	 * @return an Optional SocketServer, or empty optional if all the ports are busy and can not be assigned
+	 * @return an Optional SocketServer, or empty optional if all the ports are busy and cannot be assigned
 	 * @throws IllegalArgumentException if the provided port numbers are outside the valid range
 	 */
 	public static Optional<ServerSocket> getFirstAvailablePort(int minPort, int maxPort)
@@ -165,7 +166,7 @@ public final class TcpUtil {
 	 * Other-wise returns an empty Optional.
 	 * @param backlog requested maximum length of the queue of incoming connections
 	 * @param ports vararg parameter for the available ports to be connected
-	 * @return an Optional SocketServer, or empty optional if all the {@code ports} are busy and can not be assigned
+	 * @return an Optional SocketServer, or empty optional if all the {@code ports} are busy and cannot be assigned
 	 * @throws IllegalArgumentException if the provided port numbers are outside the valid range
 	 */
 	public static Optional<ServerSocket> getFirstAvailableSocket(int backlog, int...ports)
@@ -186,7 +187,7 @@ public final class TcpUtil {
 	 * Returns an Optional SocketServer with the first available port number in the given vararg parameter {@code ports}.
 	 * Other-wise returns an empty Optional.
 	 * @param ports vararg parameter for the available ports to be connected
-	 * @return an Optional SocketServer, or empty optional if all the ports are busy and can not be assigned
+	 * @return an Optional SocketServer, or empty optional if all the ports are busy and cannot be assigned
 	 * @throws IllegalArgumentException if the provided port numbers are outside the valid range
 	 */
 	public static Optional<ServerSocket> getFirstAvailableSocket(int...ports)
@@ -212,7 +213,7 @@ public final class TcpUtil {
 	 * @param length the number of the bytes to be read
 	 * @return the number of bytes read, or -1 if the end of the stream is reached before any data is read,
 	 * or 0 when no bytes are read
-	 * @throws NetworkException if ay problem occurs while receiving from the socket
+	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
 	public static int receive(Socket socket, byte [] data, int offset, int length)
 	{
@@ -225,13 +226,14 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives data from the {@code socket} and stores it in the specified byte array {@code data}. Default length of reading
+	 * Receives data from the {@code socket} and stores it in the specified byte array {@code data}.
+	 * The Default length of reading
 	 * is determined by the length of the provided byte array.
 	 * @param socket the socket to receive data from
 	 * @param data the byte array to store the read data from the socket
 	 * @return the number of bytes read, or -1 if the end of the stream is reached before any data is read,
 	 * or 0 when no bytes are read
-	 * @throws NetworkException if ay problem occurs while receiving from the socket
+	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
 	public static int receive(Socket socket, byte [] data)
 	{
@@ -552,7 +554,7 @@ public final class TcpUtil {
 	 * and the specified {@code blockSize}.
 	 * <p>This method will work properly if the sender closes the socket after the send process.</p>
 	 * @param socket the socket to receive text from
-	 * @param blockSize block size of the internal buffer. If zero no data is read
+	 * @param blockSize block size of the internal buffer. If zero, no data is read
 	 * @return the received line
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 * @throws NullPointerException if socket is null or charset is null
@@ -569,7 +571,7 @@ public final class TcpUtil {
 	 * <p>This method will work properly if sender close socket after the send process.</p>
 	 * @param socket a valid and open socket
 	 * @param charset the charset of the text
-	 * @param blockSize block size of the internal buffer. If zero no data is read
+	 * @param blockSize block size of the internal buffer. If zero, no data is read
 	 * @return the received line
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 * @throws NullPointerException if socket is null or charset is null
@@ -633,7 +635,7 @@ public final class TcpUtil {
 	 * Receives text from the {@code socket}, using the specified {@code blockSize},
 	 * then splits the text around matching line break.
 	 * @param socket the socket to receive an array of texts from
-	 * @param blockSize block size of the internal buffer. If zero no data is read
+	 * @param blockSize block size of the internal buffer. If zero, no data is read
 	 * @return all received lines from the socket as a string array
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
