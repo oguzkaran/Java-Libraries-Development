@@ -1,13 +1,3 @@
-/*----------------------------------------------------------------------
-	FILE        : TCPClient.java
-	AUTHOR      : JavaApp2-Jan-2024 Group
-	LAST UPDATE : 6th May 2024
-
-	Immutable TCP class for TCP socket operations
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
------------------------------------------------------------------------*/
 package com.karandev.util.net;
 
 import com.karandev.util.net.exception.NetworkException;
@@ -18,6 +8,13 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.Charset;
+
+/**
+ * Immutable TCP class for TCP socket operations
+ * <p>Copyleft (c) 1993 by C and System Programmers Association (CSD) All Rights Free</p>
+ *
+ * @author JavaApp2-Jan-2024 Group
+*/
 
 public class TCPClient implements Closeable {
     private final Socket m_socket;
