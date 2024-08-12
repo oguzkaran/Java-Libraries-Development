@@ -1,9 +1,9 @@
 /*----------------------------------------------------------------------
-FILE        : IActionCallback.java
+FILE        : ISupplierCallback.java
 AUTHOR      : Oğuz Karan
 LAST UPDATE : 30.09.2020
 
-IActionCallback functional interface
+ISupplierCallback<T> functional interface
 
 Copyleft (c) 1993 by C and System Programmers Association (CSD)
 All Rights Free
@@ -11,6 +11,6 @@ All Rights Free
 package org.csystem.util.exception;
 
 @FunctionalInterface
-public interface IActionCallback {
-    void run() throws Exception;
+public interface ISupplier<R> {
+    R get() throws Exception;
 }
