@@ -12,7 +12,6 @@ import java.util.concurrent.Executors;
 public class TcpUtilSendReceiveStringTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
-    private static final int SOCKET_TIMEOUT = 1000;
     private static final String SEND_TEXT = "Deniz Karan";
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;

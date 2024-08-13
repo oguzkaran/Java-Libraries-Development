@@ -2,7 +2,6 @@ package com.karandev.util.net;
 
 import org.junit.jupiter.api.*;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,11 +9,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpUtilSendReceiveLineTest {
+public class TcpUtilSendReceiveIntTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
     private static final int SOCKET_TIMEOUT = 1000;
-    private static final String SEND_TEXT = "Deniz Karan";
+    private static final int SEND_INT = 12;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -24,11 +23,11 @@ public class TcpUtilSendReceiveLineTest {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
             clientSocket.setSoTimeout(SOCKET_TIMEOUT);
-            var text = TcpUtil.receiveLine(clientSocket);
+            var receivedInt = TcpUtil.receiveInt(clientSocket);
 
-            Assertions.assertEquals(SEND_TEXT, text.strip());
+            Assertions.assertEquals(SEND_INT, receivedInt);
         }
-        catch (IOException ex) {
+        catch (Throwable ex) {
             ex.printStackTrace();
         }
     }
@@ -41,9 +40,11 @@ public class TcpUtilSendReceiveLineTest {
     }
 
     @Test
-    public void test() throws IOException, InterruptedException
+    public void test() throws IOException
     {
-        TcpUtil.sendLine(new Socket(HOST, PORT), SEND_TEXT);
+        try (var socket = new Socket(HOST, PORT)) {
+            TcpUtil.sendInt(socket, SEND_INT);
+        }
     }
 
     @AfterEach

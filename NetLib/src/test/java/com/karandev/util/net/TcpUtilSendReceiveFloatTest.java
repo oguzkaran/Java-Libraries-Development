@@ -9,11 +9,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpUtilReceiveLinesTest {
+public class TcpUtilSendReceiveFloatTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
     private static final int SOCKET_TIMEOUT = 1000;
-    private static final String SEND_TEXT = "Deniz Karan";
+    private static final float SEND_FLOAT = 23.4f;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -23,11 +23,9 @@ public class TcpUtilReceiveLinesTest {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
             clientSocket.setSoTimeout(SOCKET_TIMEOUT);
-            var lines = TcpUtil.receiveLines(clientSocket);
+            var receivedFloat = TcpUtil.receiveFloat(clientSocket);
 
-            Assertions.assertEquals(SEND_TEXT, lines[0]);
-            Assertions.assertEquals(SEND_TEXT.toUpperCase(), lines[1]);
-            Assertions.assertEquals(SEND_TEXT, lines[2]);
+            Assertions.assertEquals(SEND_FLOAT, receivedFloat);
         }
         catch (Throwable ex) {
             ex.printStackTrace();
@@ -45,9 +43,7 @@ public class TcpUtilReceiveLinesTest {
     public void test() throws IOException
     {
         try (var socket = new Socket(HOST, PORT)) {
-            TcpUtil.sendLine(socket, SEND_TEXT);
-            TcpUtil.sendLine(socket, SEND_TEXT.toUpperCase());
-            TcpUtil.sendLine(socket, SEND_TEXT);
+            TcpUtil.sendFloat(socket, SEND_FLOAT);
         }
     }
 
