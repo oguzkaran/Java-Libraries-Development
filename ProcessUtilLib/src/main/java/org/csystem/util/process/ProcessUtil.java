@@ -79,10 +79,10 @@ public final class ProcessUtil {
 
     /**
      *
-     * @param builderAction
-     * @param exitAction
-     * @param exceptionAction
-     * @param commands
+     * @param builderAction Customization action of the process before the start
+     * @param exitAction An action for process exiting in the allowed timeout
+     * @param exceptionAction An action after the exception occurrence in startProcess
+     * @param commands A String array containing the program and its arguments
      */
 
     public static void startProcess(Consumer<ProcessBuilder> builderAction,
@@ -107,12 +107,12 @@ public final class ProcessUtil {
 
     /**
      *
-     * @param timeout
-     * @param timeUnit
-     * @param builderAction
-     * @param exitAction
-     * @param exceptionAction
-     * @param commands
+     * @param timeout Maximum wait timeout value
+     * @param timeUnit Unit of timeout
+     * @param builderAction Customization action of the process before the start
+     * @param exitAction An action for process exiting in the allowed timeout
+     * @param exceptionAction An action after the exception occurrence in startProcess
+     * @param commands A String array containing the program and its arguments
      */
     public static void startProcess(long timeout, TimeUnit timeUnit,
                                     Consumer<ProcessBuilder> builderAction,
@@ -136,14 +136,14 @@ public final class ProcessUtil {
 
     /**
      *
-     * @param timeout
-     * @param timeUnit
-     * @param builderAction
-     * @param exitAction
-     * @param elapsedBeforeExitAction
-     * @param interruptAction
-     * @param exceptionAction
-     * @param commands
+     * @param timeout Maximum wait timeout value
+     * @param timeUnit Unit of timeout
+     * @param builderAction Customization action of the process before the start
+     * @param exitAction An action for process exiting in the allowed timeout
+     * @param elapsedBeforeExitAction An action after elapsed process due to timeout
+     * @param interruptAction An action that the interrupt status of the parent process set while waiting for the child process
+     * @param exceptionAction An action after the exception occurrence in startProcess.
+     * @param commands a string array containing the program and its arguments
      */
     public static void startProcessAsync(long timeout, TimeUnit timeUnit,
                                          Consumer<ProcessBuilder> builderAction,

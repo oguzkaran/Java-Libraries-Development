@@ -22,30 +22,22 @@ class StartProcessTimeoutTest {
         );
     }
 
-//    @Test
-//    void testStartProcessElapsed() {
-//        ProcessUtil.startProcess(
-//                1, NANOSECONDS,
-//                processBuilder -> {},
-//                process -> {
-//                  assertNotEquals(0, process.exitValue());
-//                },
-//                ex -> fail(),
-//                "java", "-version"
-//        );
-//    }
-
-//    @Test
-//    void testStartProcessExitWithNonZeroCode()
-//    {
-//        ProcessUtil.startProcess(
-//                1000, MILLISECONDS,
-//                processBuilder -> {},
-//                process -> assertNotEquals(0, process.exitValue()),
-//                ex -> fail(),
-//                "java", "-version"
-//        );
-//    }
+    @Test
+    void testStartProcessExitWithNonZeroCode() {
+        ProcessUtil.startProcess(
+                1, NANOSECONDS,
+                processBuilder -> {},
+                process -> {
+                    try {
+                        assertFalse(process.waitFor(1, NANOSECONDS));
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
+                ex -> fail(),
+                "java", "-version"
+        );
+    }
 
     @Test
     void testStartProcessTimeoutInterrupt()
