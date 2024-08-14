@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------
 	FILE        : CollectionUtil.java
 	AUTHOR      : Oğuz Karan
-	LAST UPDATE : 07.02.2022
+	LAST UPDATE : 14.08.2024
 
 	Utility class for collections
 
@@ -13,6 +13,7 @@ package org.csystem.util.collection;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -45,6 +46,16 @@ public final class CollectionUtil {
     public static <T, R> Iterable<R> toIterable(Iterable<T> iterable, Function<? super T, R> func, boolean parallel)
     {
         return toList(iterable, func, parallel);
+    }
+
+    public static <T> void forEach(Iterable<T> iterable, Consumer<? super T> consumer)
+    {
+        forEach(iterable, consumer, false);
+    }
+
+    public static <T> void forEach(Iterable<T> iterable, Consumer<? super T> consumer, boolean parallel)
+    {
+        StreamSupport.stream(iterable.spliterator(), parallel).forEach(consumer);
     }
     //...
 }
