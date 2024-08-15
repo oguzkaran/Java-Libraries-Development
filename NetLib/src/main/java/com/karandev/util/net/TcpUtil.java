@@ -130,7 +130,6 @@ public final class TcpUtil {
 		for (int port = minPort; port <= maxPort; ++port)
 			try {
 				result = Optional.of(new ServerSocket(port, backlog));
-				break;
 			}
 			catch (IOException ignore) {
 			}
@@ -147,14 +146,13 @@ public final class TcpUtil {
 	 * @return an Optional SocketServer, or empty optional if all the ports are busy and cannot be assigned
 	 * @throws IllegalArgumentException if the provided port numbers are outside the valid range
 	 */
-	public static Optional<ServerSocket> getFirstAvailableSocket(int minPort, int maxPort)
+	public static Optional<ServerSocket> getFirstAvailablePort(int minPort, int maxPort)
 	{
 		Optional<ServerSocket> result = Optional.empty();
 
 		for (int port = minPort; port <= maxPort; ++port)
 			try {
 				result = Optional.of(new ServerSocket(port));
-				break;
 			}
 			catch (IOException ignore) {
 			}
@@ -178,7 +176,6 @@ public final class TcpUtil {
 		for (var port : ports)
 			try {
 				result = Optional.of(new ServerSocket(port, backlog));
-				break;
 			}
 			catch (IOException ignore) {
 			}
@@ -200,7 +197,6 @@ public final class TcpUtil {
 		for (var port : ports)
 			try {
 				result = Optional.of(new ServerSocket(port));
-				break;
 			}
 			catch (IOException ignore) {
 			}
