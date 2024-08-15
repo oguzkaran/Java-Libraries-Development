@@ -44,6 +44,8 @@ public class TcpGetSocketTest {
             var tcp = new TCP(socket);
 
             Assertions.assertNotNull(tcp.getSocket());
+            Assertions.assertEquals(HOST, tcp.getSocket().getInetAddress().getHostName());
+            Assertions.assertEquals(PORT, tcp.getSocket().getPort());
         }
     }
 

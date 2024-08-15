@@ -28,6 +28,8 @@ public class TcpAndTcpClientSendReceiveFloatTest {
             var val = tcp.receiveFloat();
 
             Assertions.assertEquals(SEND_FLOAT, val);
+
+            tcp.sendFloat(SEND_FLOAT);
         }
         catch (IOException ex) {
             ex.printStackTrace();
@@ -46,6 +48,8 @@ public class TcpAndTcpClientSendReceiveFloatTest {
     {
         try (var tcpClient = new TCPClient(HOST, PORT)) {
             tcpClient.sendFloat(SEND_FLOAT);
+
+            Assertions.assertEquals(SEND_FLOAT, tcpClient.receiveFloat());
         }
     }
 
