@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.net.ServerSocket;
 import java.util.stream.IntStream;
 
 @Disabled("Run the debug test")
@@ -26,7 +24,7 @@ public class TcpUtilGetFirstAvailableSocketTest {
     }
 
     @Test
-    public void givenPortNumber_whenPortIsUsed_thenReturnEmptyOptional() throws IOException
+    public void givenPortNumber_whenPortIsUsed_thenReturnEmptyOptional()
     {
         var serverSocketOpt = TcpUtil.getFirstAvailableSocket(1, 1024, 65535);
         int port;
