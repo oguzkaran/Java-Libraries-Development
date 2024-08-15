@@ -1,4 +1,4 @@
-package com.karandev.util.net.tcpUtil;
+package com.karandev.util.net.tcp.util;
 
 import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.Assertions;
@@ -11,11 +11,6 @@ import java.util.stream.IntStream;
 
 @Disabled("Run the debug test")
 public class TcpUtilGetFirstAvailableSocketTest {
-    private void presentCallback(ServerSocket serverSocket)
-    {
-        Assertions.fail();
-    }
-
     @Test
     public void givenPortNumberRange_whenAvailable_thenPortAssigned()
     {
@@ -33,13 +28,16 @@ public class TcpUtilGetFirstAvailableSocketTest {
     @Test
     public void givenPortNumber_whenPortIsUsed_thenReturnEmptyOptional() throws IOException
     {
-        int[] port = {6666};
+        var serverSocketOpt = TcpUtil.getFirstAvailableSocket(1, 1024, 65535);
+        int port;
 
-        try (var busySocket = new ServerSocket(6666)) {
-            busySocket.setSoTimeout(5000);
+        if (serverSocketOpt.isPresent()) {
+            port = serverSocketOpt.get().getLocalPort();
+            int[] ports = {port};
 
-            var serverSocketOpt = TcpUtil.getFirstAvailableSocket(1, port);
-            serverSocketOpt.ifPresent(this::presentCallback);
+            Assertions.assertTrue(TcpUtil.getFirstAvailableSocket(1, ports).isEmpty());
         }
+        else
+            Assertions.fail("No available ports");
     }
 }

@@ -1,4 +1,4 @@
-package com.karandev.util.net.tcpUtil;
+package com.karandev.util.net.tcp.util;
 
 import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.*;
@@ -10,11 +10,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpUtilSendReceiveDoubleTest {
+public class TcpUtilSendReceiveLineTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
     private static final int SOCKET_TIMEOUT = 1000;
-    private static final double SEND_DOUBLE = 34.5;
+    private static final String SEND_TEXT = "Deniz Karan";
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -24,11 +24,11 @@ public class TcpUtilSendReceiveDoubleTest {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
             clientSocket.setSoTimeout(SOCKET_TIMEOUT);
-            var receivedDouble = TcpUtil.receiveDouble(clientSocket);
+            var text = TcpUtil.receiveLine(clientSocket);
 
-            Assertions.assertEquals(SEND_DOUBLE, receivedDouble);
+            Assertions.assertEquals(SEND_TEXT, text.strip());
         }
-        catch (Throwable ex) {
+        catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -41,11 +41,9 @@ public class TcpUtilSendReceiveDoubleTest {
     }
 
     @Test
-    public void test() throws IOException
+    public void test() throws IOException, InterruptedException
     {
-        try (var socket = new Socket(HOST, PORT)) {
-            TcpUtil.sendDouble(socket, SEND_DOUBLE);
-        }
+        TcpUtil.sendLine(new Socket(HOST, PORT), SEND_TEXT);
     }
 
     @AfterEach

@@ -1,18 +1,19 @@
-package com.karandev.util.net.tcpUtil;
+package com.karandev.util.net.tcp.client;
 
-import com.karandev.util.net.TcpUtil;
+import com.karandev.util.net.TCP;
+import com.karandev.util.net.TCPClient;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpUtilSendReceiveStringTest {
+public class TcpAndTcpClientSendReceiveLineTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
+    private static final int SOCKET_TIMEOUT = 1000;
     private static final String SEND_TEXT = "Deniz Karan";
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
@@ -22,15 +23,13 @@ public class TcpUtilSendReceiveStringTest {
         try {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
-            var text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
-            Assertions.assertEquals(SEND_TEXT, text);
+            clientSocket.setSoTimeout(SOCKET_TIMEOUT);
+            var tcp = new TCP(clientSocket);
+            var text = tcp.receiveLine();
 
-            text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
-            Assertions.assertEquals(SEND_TEXT.toUpperCase(), text);
-            text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
-            Assertions.assertEquals(SEND_TEXT, text);
+            Assertions.assertEquals(SEND_TEXT, text.strip());
         }
-        catch (Throwable ex) {
+        catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -45,10 +44,8 @@ public class TcpUtilSendReceiveStringTest {
     @Test
     public void test() throws IOException
     {
-        try (var socket = new Socket(HOST, PORT)) {
-            TcpUtil.sendString(socket, SEND_TEXT);
-            TcpUtil.sendString(socket, SEND_TEXT.toUpperCase());
-            TcpUtil.sendString(socket, SEND_TEXT);
+        try (var tcpClient = new TCPClient(HOST, PORT)) {
+            tcpClient.sendLine(SEND_TEXT);
         }
     }
 

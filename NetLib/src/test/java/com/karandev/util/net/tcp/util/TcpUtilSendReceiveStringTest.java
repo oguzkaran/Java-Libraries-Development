@@ -1,4 +1,4 @@
-package com.karandev.util.net.tcpUtil;
+package com.karandev.util.net.tcp.util;
 
 import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.*;
@@ -10,11 +10,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpUtilSendReceiveByteTest {
+public class TcpUtilSendReceiveStringTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
-    private static final int SOCKET_TIMEOUT = 1000;
-    private static final byte SEND_BYTE = 23;
+    private static final String SEND_TEXT = "Deniz Karan";
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -23,10 +22,13 @@ public class TcpUtilSendReceiveByteTest {
         try {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
-            clientSocket.setSoTimeout(SOCKET_TIMEOUT);
-            var receivedByte = TcpUtil.receiveByte(clientSocket);
+            var text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
+            Assertions.assertEquals(SEND_TEXT, text);
 
-            Assertions.assertEquals(SEND_BYTE, receivedByte);
+            text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
+            Assertions.assertEquals(SEND_TEXT.toUpperCase(), text);
+            text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
+            Assertions.assertEquals(SEND_TEXT, text);
         }
         catch (Throwable ex) {
             ex.printStackTrace();
@@ -44,7 +46,9 @@ public class TcpUtilSendReceiveByteTest {
     public void test() throws IOException
     {
         try (var socket = new Socket(HOST, PORT)) {
-            TcpUtil.sendByte(socket, SEND_BYTE);
+            TcpUtil.sendString(socket, SEND_TEXT);
+            TcpUtil.sendString(socket, SEND_TEXT.toUpperCase());
+            TcpUtil.sendString(socket, SEND_TEXT);
         }
     }
 

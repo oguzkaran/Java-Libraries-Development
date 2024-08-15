@@ -1,4 +1,4 @@
-package com.karandev.util.net.tcpUtil;
+package com.karandev.util.net.tcp.util;
 
 import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.*;
@@ -10,10 +10,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpUtilSendReceiveStringViaLengthTest {
+public class TcpUtilSendReceiveCharTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
-    private static final String SEND_TEXT = "Deniz Karan";
+    private static final int SOCKET_TIMEOUT = 1000;
+    private static final char SEND_CHAR = 'b';
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -22,12 +23,10 @@ public class TcpUtilSendReceiveStringViaLengthTest {
         try {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
-            var text = TcpUtil.receiveStringViaLength(clientSocket);
+            clientSocket.setSoTimeout(SOCKET_TIMEOUT);
+            var receivedChar = TcpUtil.receiveChar(clientSocket);
 
-            Assertions.assertEquals(SEND_TEXT, text);
-
-            text = TcpUtil.receiveStringViaLength(clientSocket);
-            Assertions.assertEquals(SEND_TEXT.toUpperCase(), text);
+            Assertions.assertEquals(SEND_CHAR, receivedChar);
         }
         catch (Throwable ex) {
             ex.printStackTrace();
@@ -45,8 +44,7 @@ public class TcpUtilSendReceiveStringViaLengthTest {
     public void test() throws IOException
     {
         try (var socket = new Socket(HOST, PORT)) {
-            TcpUtil.sendStringViaLength(socket, SEND_TEXT);
-            TcpUtil.sendStringViaLength(socket, SEND_TEXT.toUpperCase());
+            TcpUtil.sendChar(socket, SEND_CHAR);
         }
     }
 
