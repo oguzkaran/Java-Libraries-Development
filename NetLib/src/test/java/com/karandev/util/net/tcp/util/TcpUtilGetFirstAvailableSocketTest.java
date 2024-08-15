@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-@Disabled("Run the debug test")
+@Disabled
 public class TcpUtilGetFirstAvailableSocketTest {
     @Test
     public void givenPortNumberRange_whenAvailable_thenPortAssigned()
