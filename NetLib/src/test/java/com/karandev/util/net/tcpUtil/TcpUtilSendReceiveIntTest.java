@@ -1,5 +1,6 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcpUtil;
 
+import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -9,22 +10,25 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpGetSocketTest {
+public class TcpUtilSendReceiveIntTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
-    private ExecutorService m_threadPool;
+    private static final int SOCKET_TIMEOUT = 1000;
+    private static final int SEND_INT = 12;
     private ServerSocket m_serverSocket;
+    private ExecutorService m_threadPool;
 
     private void serverCallback()
     {
         try {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
-            var tcp = new TCP(clientSocket);
+            clientSocket.setSoTimeout(SOCKET_TIMEOUT);
+            var receivedInt = TcpUtil.receiveInt(clientSocket);
 
-            System.out.println(tcp.getSocket().toString());
+            Assertions.assertEquals(SEND_INT, receivedInt);
         }
-        catch (IOException ex) {
+        catch (Throwable ex) {
             ex.printStackTrace();
         }
     }
@@ -37,12 +41,10 @@ public class TcpGetSocketTest {
     }
 
     @Test
-    public void getSocketTest() throws IOException
+    public void test() throws IOException
     {
         try (var socket = new Socket(HOST, PORT)) {
-            var tcp = new TCP(socket);
-
-            Assertions.assertNotNull(tcp.getSocket());
+            TcpUtil.sendInt(socket, SEND_INT);
         }
     }
 

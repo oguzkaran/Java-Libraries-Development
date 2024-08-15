@@ -1,5 +1,6 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcp;
 
+import com.karandev.util.net.TCP;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -9,11 +10,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpUtilSendReceiveLinesTest {
+public class TcpSendReceiveLongTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
     private static final int SOCKET_TIMEOUT = 1000;
-    private static final String SEND_TEXT = "Deniz Karan";
+    private static final long SEND_LONG = 1_000_000_000L;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -23,13 +24,13 @@ public class TcpUtilSendReceiveLinesTest {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
             clientSocket.setSoTimeout(SOCKET_TIMEOUT);
-            var lines = TcpUtil.receiveLines(clientSocket);
+            var tcp = new TCP(clientSocket);
 
-            Assertions.assertEquals(SEND_TEXT, lines[0]);
-            Assertions.assertEquals(SEND_TEXT.toUpperCase(), lines[1]);
-            Assertions.assertEquals(SEND_TEXT, lines[2]);
+            var val = tcp.receiveLong();
+
+            Assertions.assertEquals(SEND_LONG, val);
         }
-        catch (Throwable ex) {
+        catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -45,9 +46,9 @@ public class TcpUtilSendReceiveLinesTest {
     public void test() throws IOException
     {
         try (var socket = new Socket(HOST, PORT)) {
-            TcpUtil.sendLine(socket, SEND_TEXT);
-            TcpUtil.sendLine(socket, SEND_TEXT.toUpperCase());
-            TcpUtil.sendLine(socket, SEND_TEXT);
+            var tcp = new TCP(socket);
+
+            tcp.sendLong(SEND_LONG);
         }
     }
 

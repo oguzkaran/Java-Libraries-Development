@@ -1,5 +1,6 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcpUtil;
 
+import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ import java.net.ServerSocket;
 import java.util.stream.IntStream;
 
 @Disabled("Run the debug test")
-public class TcpUtilFirstAvailableSocketTest {
+public class TcpUtilGetFirstAvailableSocketTest {
     private void presentCallback(ServerSocket serverSocket)
     {
         Assertions.fail();

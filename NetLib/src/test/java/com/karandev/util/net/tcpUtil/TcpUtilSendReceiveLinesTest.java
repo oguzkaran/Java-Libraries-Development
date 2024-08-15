@@ -1,5 +1,6 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcpUtil;
 
+import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -9,11 +10,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpUtilSendReceiveFloatTest {
+public class TcpUtilSendReceiveLinesTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
     private static final int SOCKET_TIMEOUT = 1000;
-    private static final float SEND_FLOAT = 23.4f;
+    private static final String SEND_TEXT = "Deniz Karan";
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -23,9 +24,11 @@ public class TcpUtilSendReceiveFloatTest {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
             clientSocket.setSoTimeout(SOCKET_TIMEOUT);
-            var receivedFloat = TcpUtil.receiveFloat(clientSocket);
+            var lines = TcpUtil.receiveLines(clientSocket);
 
-            Assertions.assertEquals(SEND_FLOAT, receivedFloat);
+            Assertions.assertEquals(SEND_TEXT, lines[0]);
+            Assertions.assertEquals(SEND_TEXT.toUpperCase(), lines[1]);
+            Assertions.assertEquals(SEND_TEXT, lines[2]);
         }
         catch (Throwable ex) {
             ex.printStackTrace();
@@ -43,7 +46,9 @@ public class TcpUtilSendReceiveFloatTest {
     public void test() throws IOException
     {
         try (var socket = new Socket(HOST, PORT)) {
-            TcpUtil.sendFloat(socket, SEND_FLOAT);
+            TcpUtil.sendLine(socket, SEND_TEXT);
+            TcpUtil.sendLine(socket, SEND_TEXT.toUpperCase());
+            TcpUtil.sendLine(socket, SEND_TEXT);
         }
     }
 

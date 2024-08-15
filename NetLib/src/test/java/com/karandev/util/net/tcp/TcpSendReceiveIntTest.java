@@ -1,5 +1,6 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcp;
 
+import com.karandev.util.net.TCP;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -9,10 +10,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpUtilSendReceiveStringTest {
+public class TcpSendReceiveIntTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
-    private static final String SEND_TEXT = "Deniz Karan";
+    private static final int SOCKET_TIMEOUT = 1000;
+    private static final int SEND_INT = 34;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -21,15 +23,14 @@ public class TcpUtilSendReceiveStringTest {
         try {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
-            var text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
-            Assertions.assertEquals(SEND_TEXT, text);
+            clientSocket.setSoTimeout(SOCKET_TIMEOUT);
+            var tcp = new TCP(clientSocket);
 
-            text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
-            Assertions.assertEquals(SEND_TEXT.toUpperCase(), text);
-            text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
-            Assertions.assertEquals(SEND_TEXT, text);
+            var val = tcp.receiveInt();
+
+            Assertions.assertEquals(SEND_INT, val);
         }
-        catch (Throwable ex) {
+        catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -45,9 +46,9 @@ public class TcpUtilSendReceiveStringTest {
     public void test() throws IOException
     {
         try (var socket = new Socket(HOST, PORT)) {
-            TcpUtil.sendString(socket, SEND_TEXT);
-            TcpUtil.sendString(socket, SEND_TEXT.toUpperCase());
-            TcpUtil.sendString(socket, SEND_TEXT);
+            var tcp = new TCP(socket);
+
+            tcp.sendInt(SEND_INT);
         }
     }
 

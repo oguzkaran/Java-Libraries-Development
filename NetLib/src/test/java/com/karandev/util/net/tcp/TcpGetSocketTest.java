@@ -1,31 +1,29 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcp;
 
+import com.karandev.util.net.TCP;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpAndTcpClientSendReceiveLineTest {
+public class TcpGetSocketTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
-    private static final int SOCKET_TIMEOUT = 1000;
-    private static final String SEND_TEXT = "Deniz Karan";
-    private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
+    private ServerSocket m_serverSocket;
 
     private void serverCallback()
     {
         try {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
-            clientSocket.setSoTimeout(SOCKET_TIMEOUT);
             var tcp = new TCP(clientSocket);
-            var text = tcp.receiveLine();
 
-            Assertions.assertEquals(SEND_TEXT, text.strip());
+            System.out.println(tcp.getSocket().toString());
         }
         catch (IOException ex) {
             ex.printStackTrace();
@@ -40,10 +38,12 @@ public class TcpAndTcpClientSendReceiveLineTest {
     }
 
     @Test
-    public void test() throws IOException
+    public void getSocketTest() throws IOException
     {
-        try (var tcpClient = new TCPClient(HOST, PORT)) {
-            tcpClient.sendLine(SEND_TEXT);
+        try (var socket = new Socket(HOST, PORT)) {
+            var tcp = new TCP(socket);
+
+            Assertions.assertNotNull(tcp.getSocket());
         }
     }
 

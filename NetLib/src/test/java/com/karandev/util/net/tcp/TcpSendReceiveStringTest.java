@@ -1,5 +1,6 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcp;
 
+import com.karandev.util.net.TCP;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -9,11 +10,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpUtilSendReceiveShortTest {
+public class TcpSendReceiveStringTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
-    private static final int SOCKET_TIMEOUT = 1000;
-    private static final short SEND_SHORT = 56;
+    private static final String SEND_TEXT = "Oguz Karan";
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -22,10 +22,11 @@ public class TcpUtilSendReceiveShortTest {
         try {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
-            clientSocket.setSoTimeout(SOCKET_TIMEOUT);
-            var receivedShort = TcpUtil.receiveShort(clientSocket);
+            var tcp = new TCP(clientSocket);
 
-            Assertions.assertEquals(SEND_SHORT, receivedShort);
+            var text = tcp.receiveString(SEND_TEXT.length());
+
+            Assertions.assertEquals(SEND_TEXT, text);
         }
         catch (Throwable ex) {
             ex.printStackTrace();
@@ -43,7 +44,9 @@ public class TcpUtilSendReceiveShortTest {
     public void test() throws IOException
     {
         try (var socket = new Socket(HOST, PORT)) {
-            TcpUtil.sendShort(socket, SEND_SHORT);
+            var tcp = new TCP(socket);
+
+            tcp.sendString(SEND_TEXT);
         }
     }
 

@@ -1,5 +1,6 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcpUtil;
 
+import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -9,10 +10,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpSendReceiveStringViaLengthTest {
+public class TcpUtilSendReceiveStringTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
-    private static final String SEND_TEXT = "Oguz Karan";
+    private static final String SEND_TEXT = "Deniz Karan";
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -21,10 +22,12 @@ public class TcpSendReceiveStringViaLengthTest {
         try {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
-            var tcp = new TCP(clientSocket);
+            var text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
+            Assertions.assertEquals(SEND_TEXT, text);
 
-            var text = tcp.receiveStringViaLength();
-
+            text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
+            Assertions.assertEquals(SEND_TEXT.toUpperCase(), text);
+            text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
             Assertions.assertEquals(SEND_TEXT, text);
         }
         catch (Throwable ex) {
@@ -43,9 +46,9 @@ public class TcpSendReceiveStringViaLengthTest {
     public void test() throws IOException
     {
         try (var socket = new Socket(HOST, PORT)) {
-            var tcp = new TCP(socket);
-
-            tcp.sendStringViaLength(SEND_TEXT);
+            TcpUtil.sendString(socket, SEND_TEXT);
+            TcpUtil.sendString(socket, SEND_TEXT.toUpperCase());
+            TcpUtil.sendString(socket, SEND_TEXT);
         }
     }
 

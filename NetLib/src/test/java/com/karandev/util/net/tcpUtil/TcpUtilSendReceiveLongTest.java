@@ -1,5 +1,6 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcpUtil;
 
+import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -9,11 +10,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpSendReceiveLongTest {
+public class TcpUtilSendReceiveLongTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
     private static final int SOCKET_TIMEOUT = 1000;
-    private static final long SEND_LONG = 1_000_000_000L;
+    private static final long SEND_LONG = 34L;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -23,13 +24,11 @@ public class TcpSendReceiveLongTest {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
             clientSocket.setSoTimeout(SOCKET_TIMEOUT);
-            var tcp = new TCP(clientSocket);
+            var receivedLong = TcpUtil.receiveLong(clientSocket);
 
-            var val = tcp.receiveLong();
-
-            Assertions.assertEquals(SEND_LONG, val);
+            Assertions.assertEquals(SEND_LONG, receivedLong);
         }
-        catch (IOException ex) {
+        catch (Throwable ex) {
             ex.printStackTrace();
         }
     }
@@ -45,9 +44,7 @@ public class TcpSendReceiveLongTest {
     public void test() throws IOException
     {
         try (var socket = new Socket(HOST, PORT)) {
-            var tcp = new TCP(socket);
-
-            tcp.sendLong(SEND_LONG);
+            TcpUtil.sendLong(socket, SEND_LONG);
         }
     }
 

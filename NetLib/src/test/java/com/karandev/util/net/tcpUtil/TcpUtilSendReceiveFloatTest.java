@@ -1,8 +1,8 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcpUtil;
 
+import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,12 +10,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Disabled("Run the debug test")
-public class TcpSendReceiveFileTest {
+public class TcpUtilSendReceiveFloatTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
     private static final int SOCKET_TIMEOUT = 1000;
-    private static final File SEND_FILE = new File("./sent.txt");
-    private static final File RECEIVE_FILE = new File("./received.txt");
+    private static final float SEND_FLOAT = 23.4f;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -25,13 +24,11 @@ public class TcpSendReceiveFileTest {
             m_serverSocket = new ServerSocket(PORT);
             var clientSocket = m_serverSocket.accept();
             clientSocket.setSoTimeout(SOCKET_TIMEOUT);
-            var tcp = new TCP(clientSocket);
+            var receivedFloat = TcpUtil.receiveFloat(clientSocket);
 
-            tcp.receiveFile(RECEIVE_FILE);
-
-            Assertions.assertTrue(RECEIVE_FILE.isFile());
+            Assertions.assertEquals(SEND_FLOAT, receivedFloat);
         }
-        catch (IOException ex) {
+        catch (Throwable ex) {
             ex.printStackTrace();
         }
     }
@@ -44,14 +41,10 @@ public class TcpSendReceiveFileTest {
     }
 
     @Test
-    public void test() throws IOException, InterruptedException
+    public void test() throws IOException
     {
-        SEND_FILE.createNewFile();
-
         try (var socket = new Socket(HOST, PORT)) {
-            var tcp = new TCP(socket);
-
-            tcp.sendFile(SEND_FILE, 2048);
+            TcpUtil.sendFloat(socket, SEND_FLOAT);
         }
     }
 
@@ -60,8 +53,5 @@ public class TcpSendReceiveFileTest {
     {
         m_serverSocket.close();
         m_threadPool.shutdown();
-
-        SEND_FILE.deleteOnExit();
-        RECEIVE_FILE.deleteOnExit();
     }
 }
