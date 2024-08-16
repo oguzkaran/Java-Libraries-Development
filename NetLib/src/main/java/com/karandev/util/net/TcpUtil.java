@@ -20,8 +20,10 @@ public final class TcpUtil {
 	private static final int DEFAULT_LINE_BLOCK_SIZE = 2048;
 
 	/**
-	 * Receives data from a given {@code dis} and stores it in the given {@code data}. {@code offset} parameter can be used
-	 * for offsetting the start index of the byte array.
+	 * <p>Receives a specified number of bytes from the input stream and stores them into the given byte array.</p>
+	 * <p>This method is called by {@link #receive(Socket,byte[],int,int) receive(Socket,byte[],int,int)} and
+	 * {@link #receive(Socket, byte[]) receive(Socket,byte[])} for handling byte-by-byte transfer from a socket.</p>
+	 * <p>It is possible to handle data transfer when incoming bytes are not available in a single read operation.</p>
 	 * @param dis the DataInputStream to read from
 	 * @param data the byte array to store the read data from the DataInputStream
 	 * @param offset the starting index offset of the byte array
@@ -32,26 +34,28 @@ public final class TcpUtil {
 	 */
 	private static int receive(DataInputStream dis, byte [] data, int offset, int length) throws IOException
 	{
-	    int result;
-	    int left = length, index = offset;
+		int result;
+		int left = length, index = offset;
 
-	    while (left > 0) {
-	        if ((result = dis.read(data, index, left)) == -1)
-	            return -1;
-	        
-	        if (result == 0)
-	            break;
-	        
-	        index += result;
-	        left -= result;
-	    }
+		while (left > 0) {
+			if ((result = dis.read(data, index, left)) == -1)
+				return -1;
 
-	    return index;
+			if (result == 0)
+				break;
+
+			index += result;
+			left -= result;
+		}
+
+		return index;
 	}
 
 	/**
-	 * Receives data from a given {@code dis} and stores it in the {@code data}. Default read length
-	 * is determined by the length of the provided byte array.
+	 * <p>Receives a specified number of bytes from the input stream and stores them into the given byte array.</p>
+	 * <p>This method is called by {@link #receive(Socket, byte[], int, int) receive(Socket,byte[],int,int)} and
+	 * {@link #receive(Socket, byte[]) receive(Socket,byte[])} for handling data transfer from a socket.</p> <p>It uses
+	 * a fixed offset value of 0 and receives up to the length of byte array.</p>
 	 * @param dis the DataInputStream to read from
 	 * @param data the byte array to store the read data from the DataInputStream
 	 * @return the number of bytes read, or -1 if the end of the stream is reached before any data is read, or
@@ -60,12 +64,16 @@ public final class TcpUtil {
 	 */
 	private static int receive(DataInputStream dis, byte [] data) throws IOException
 	{
-	    return receive(dis, data, 0, data.length);
+		return receive(dis, data, 0, data.length);
 	}
 
 	/**
-	 * Sending data to a given {@code dos} from the {@code data} byte array. {@code offset} parameter can be used
-	 * for offsetting the start index of the byte array to be sent.
+	 * <p>Sends specified {@code data} to an output stream {@code dos}</p>
+	 * <p>This method first determines initial stages of transmission by instantiating with given {@code offset} and {@code length}.
+	 * Upon entering the loop a complete transmission attempt is made, followed by a flush. After the flush, size of successfully
+	 * written data is measured via subtracting the initial written byte count from current written byte count. Based on number of
+	 * successful writes, total bytes written, the number of bytes remaining and current offset is updated and method goes on
+	 * looping until there are no more bytes remaining.</p>
 	 * @param dos the DataOutputStream to write to
 	 * @param data the byte array used for writing to the DataOutputStream
 	 * @param offset the starting index offset of the byte array
@@ -74,18 +82,18 @@ public final class TcpUtil {
 	 * @throws IOException if an I/O error occurs while writing from the output stream
 	 */
 	private static int send(DataOutputStream dos, byte [] data, int offset, int length) throws IOException
-	{						
+	{
 		int curOffset = offset;
 		int left = length;
 		int total = 0;
 		int written;
 		int initWritten = dos.size();
-		
+
 		while (total < length) {
 			dos.write(data, curOffset, left);
 			dos.flush();
 			written = dos.size() - initWritten;
-			total += written;			
+			total += written;
 			left -= written;
 			curOffset += written;
 		}
@@ -96,9 +104,9 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Sending data to a given {@code dos} from the {@code data} byte array.
-	 * The Default length to be sent
-	 * is determined by the length of the provided byte array.
+	 * <p>Sends specified {@code data} to an output stream {@code dos}</p>
+	 * <p>This method works the same way as {@link #send(DataOutputStream, byte[], int, int)}, but instead
+	 * uses fixed starting offset of 0 and length parameter as big as {@code data}</p>
 	 * @param dos the DataOutputStream to write to
 	 * @param data the byte array used for writing to the DataOutputStream
 	 * @return the total number of bytes written to the DataOutputStream
@@ -106,16 +114,16 @@ public final class TcpUtil {
 	 */
 	private static int send(DataOutputStream dos, byte [] data) throws IOException
 	{
-	    return send(dos, data, 0, data.length);
+		return send(dos, data, 0, data.length);
 	}
 
 	private TcpUtil() {}
 
 	/**
-	 * Returns an Optional SocketServer with the first available port number in the given
+	 * <p>Returns an Optional SocketServer with the first available port number in the given
 	 * {@code minPort}, {@code maxPort} (inclusive)
 	 * range, having the specified {@code backlog} value for maximum number of pending connections on the socket.
-	 * Other-wise returns an empty Optional.
+	 * Other-wise returns an empty Optional.</p>
 	 * @param backlog requested maximum length of the queue of incoming connections
 	 * @param minPort minimum value for the port number
 	 * @param maxPort maximum value for the port number
@@ -138,9 +146,9 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Returns an Optional SocketServer with the first available port number in the given
+	 * <p>Returns an Optional SocketServer with the first available port number in the given
 	 * {@code minPort}, {@code maxPort} (inclusive)
-	 * range. Other-wise returns an empty Optional.
+	 * range. Other-wise returns an empty Optional.</p>
 	 * @param minPort minimum value for the port number
 	 * @param maxPort maximum value for the port number
 	 * @return an Optional SocketServer, or empty optional if all the ports are busy and cannot be assigned
@@ -161,9 +169,9 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Returns an Optional SocketServer with the first available port number in the given vararg parameter {@code ports},
+	 * <p>Returns an Optional SocketServer with the first available port number in the given vararg parameter {@code ports},
 	 * and sets the maximum number of pending connections on the socket using the {@code backlog}.
-	 * Other-wise returns an empty Optional.
+	 * Other-wise returns an empty Optional.</p>
 	 * @param backlog requested maximum length of the queue of incoming connections
 	 * @param ports vararg parameter for the available ports to be connected
 	 * @return an Optional SocketServer, or empty optional if all the {@code ports} are busy and cannot be assigned
@@ -184,8 +192,8 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Returns an Optional SocketServer with the first available port number in the given vararg parameter {@code ports}.
-	 * Other-wise returns an empty Optional.
+	 * <p>Returns an Optional SocketServer with the first available port number in the given vararg parameter {@code ports}.
+	 * Other-wise returns an empty Optional.</p>
 	 * @param ports vararg parameter for the available ports to be connected
 	 * @return an Optional SocketServer, or empty optional if all the ports are busy and cannot be assigned
 	 * @throws IllegalArgumentException if the provided port numbers are outside the valid range
@@ -205,8 +213,9 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives data from the {@code socket} and stores it in the specified byte array {@code data}, starting from
-	 * index number {@code offset} with the given {@code length}.
+	 * <p>Receives specified number of bytes from a socket and stores them into the specified byte array.</p>
+	 * <p>This method wraps {@link #receive(DataInputStream, byte[], int, int)} for handling byte-by-byte transfer and
+	 * is called by receiveXXX methods for retrieving data of different primitive types.</p>
 	 * @param socket the socket to receive data from
 	 * @param data the byte array to store the read data from the socket
 	 * @param offset the starting index offset of the byte array
@@ -226,9 +235,10 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives data from the {@code socket} and stores it in the specified byte array {@code data}.
-	 * The Default length of reading
-	 * is determined by the length of the provided byte array.
+	 * <p>Receives data from a socket and stores them into the specified byte array.</p>
+	 * <p>Number of bytes to read is as long as the incoming data and starting offset is 0</p>
+	 * <p>This method wraps {@link #receive(DataInputStream, byte[], int, int)} for handling byte-by-byte transfer and
+	 * is called by receiveXXX methods for retrieving data of different primitive types.</p>
 	 * @param socket the socket to receive data from
 	 * @param data the byte array to store the read data from the socket
 	 * @return the number of bytes read, or -1 if the end of the stream is reached before any data is read,
@@ -246,8 +256,9 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Sends data over the {@code socket} from the specified byte array {@code data}, starting from
-	 * index number {@code offset} with the given {@code length}.
+	 * <p>Sends specified number of bytes over a socket.</p>
+	 * <p>This method wraps {@link #send(DataOutputStream, byte[], int, int)} for handling byte-by-byte transfer and
+	 * is called by sendXXX methods for sending data of different primitive types.</p>
 	 * @param socket the socket to send data to
 	 * @param data the byte array used for sending the data through the socket
 	 * @param offset the starting index offset of the byte array to be sent
@@ -266,7 +277,10 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Sends data over the {@code socket} from the specified byte array {@code data}.
+	 * <p>Sends specified {@code data} over a socket.</p>
+	 * <p>Number of bytes to read is as long as the incoming data and starting offset is 0.</p>
+	 * <p>This method wraps {@link #send(DataOutputStream, byte[], int, int)} for handling byte-by-byte transfer and
+	 * is called by sendXXX methods for sending data of different primitive types.</p>
 	 * @param socket the socket to send data to
 	 * @param data the byte array used for sending the data through the socket
 	 * @return the total number of bytes sent through the socket
@@ -283,8 +297,10 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a byte value from the {@code socket}.
-	 * @param socket the socket to receive byte value from
+	 * <p>Receives a single byte from the {@code socket}</p>
+	 * <p>This method allocates a buffer for a byte and calls {@link #receive(Socket, byte[])}.</p>
+	 * <p>Received byte is returned.</p>
+	 * @param socket any valid and open socket
 	 * @return the received byte value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -306,8 +322,11 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a short value from the {@code socket}.
-	 * @param socket the socket to receive short value from
+	 * <p>Receives a short value from the {@code socket}</p>
+	 * This method allocates a buffer for 2 bytes and calls {@link #receive(Socket, byte[])}.
+	 * Byte array filled by incoming data is converted to short by {@link BitConverter#toShort(byte[])}
+	 * and returned.
+	 * @param socket any valid and open socket
 	 * @return the received short value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -329,8 +348,11 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives an int value from the {@code socket}.
-	 * @param socket the socket to receive int value from
+	 * <p>Receives an integer value from the {@code socket}</p>
+	 * This method allocates a buffer for 4 bytes and calls {@link #receive(Socket, byte[])}.
+	 * Byte array filled by incoming data is converted to Int by {@link BitConverter#toInt(byte[])}
+	 * and returned.
+	 * @param socket any valid and open socket
 	 * @return the received int value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -351,9 +373,11 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Receives a long value from the {@code socket}.
-	 * @param socket the socket to receive long value from
+	/**<p>Receives an integer value from the {@code socket}</p>
+	 * This method allocates a buffer for 8 bytes and calls {@link #receive(Socket, byte[])}.
+	 * Byte array filled by incoming data is converted to long by {@link BitConverter#toLong(byte[])}
+	 * and returned.
+	 * @param socket any valid and open socket
 	 * @return the received long value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -374,9 +398,11 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Receives a float value from the {@code socket}.
-	 * @param socket the socket to receive float value from
+	/**<p>Receives a float value from the {@code socket}</p>
+	 * This method allocates a buffer for 4 bytes and calls {@link #receive(Socket, byte[])}.
+	 * Byte array filled by incoming data is converted to float by {@link BitConverter#toFloat(byte[])}
+	 * and returned.
+	 * @param socket any valid and open socket
 	 * @return the received float value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -397,9 +423,11 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Receives a double value from the {@code socket}.
-	 * @param socket the socket to receive double value from
+	/**<p>Receives a double value from the {@code socket}</p>
+	 * This method allocates a buffer for 8 bytes and calls {@link #receive(Socket, byte[])}.
+	 * Byte array filled by incoming data is converted to double by {@link BitConverter#toDouble(byte[])}
+	 * and returned.
+	 * @param socket any valid and open socket
 	 * @return the received double value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -420,9 +448,11 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Receives a char value from the {@code socket}.
-	 * @param socket the socket to receive char value from
+	/**<p>Receives a char value from the {@code socket}</p>
+	 * This method allocates a buffer for 2 bytes and calls {@link #receive(Socket, byte[])}.
+	 * Byte array filled by incoming data is converted to char by {@link BitConverter#toChar(byte[])}
+	 * and returned.
+	 * @param socket any valid and open socket
 	 * @return the received char value
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -444,8 +474,9 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a string from the {@code socket}, using the default charset UTF-8.
-	 * @param socket the socket to receive string from
+	 * <p>Consecutively receives a string's length and the string itself from the {@code socket}, using the default charset UTF-8.</p>
+	 * <p>This method works the same way as {@link #receiveStringViaLength(Socket, Charset)}, other than using default charset (UTF-8) </p>
+	 * @param socket any valid and open socket
 	 * @return the received string
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -455,8 +486,11 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a string from the {@code socket}, using the specified {@code charset}.
-	 * @param socket the socket to receive string from
+	 * <p>Consecutively receives a string's length and the string itself from the {@code socket}, using the specified {@code charset}.</p>
+	 * <p>This method is to be used with {@link #sendStringViaLength(Socket, String, Charset) sendStringViaLength} and expects to receive length of the
+	 * incoming string before successfully decoding it. Length information is received via {@link #receiveInt(Socket) receiveInt}
+	 * and byte array is allocated accordingly.</p>
+	 * @param socket any valid and open socket
 	 * @param charset the charset of the text
 	 * @return the received string
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -481,7 +515,7 @@ public final class TcpUtil {
 	/**
 	 * Receives a string having {@code length} number of characters from the {@code socket}, using
 	 * the default charset UTF-8.
-	 * @param socket the socket to receive string from
+	 * @param socket any valid and open socket
 	 * @param length length the number of bytes to read
 	 * @return the received string
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -494,7 +528,7 @@ public final class TcpUtil {
 	/**
 	 * Receives a string having {@code length} number of characters from the {@code socket}, using
 	 * the specified {@code charset}.
-	 * @param socket the socket to receive string from
+	 * @param socket any valid and open socket
 	 * @param length the number of the bytes to be read
 	 * @param charset the charset of the text
 	 * @return the received string
@@ -522,7 +556,7 @@ public final class TcpUtil {
 	 * Receives text data until the last line feed character from the {@code socket}, using the default charset (UTF-8)
 	 * and the default block size {@link TcpUtil#DEFAULT_LINE_BLOCK_SIZE}.
 	 * <p>This method will work properly if the sender closes the socket after the send process.</p>
-	 * @param socket the socket to receive text from
+	 * @param socket any valid and open socket
 	 * @return the received line
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 * @throws NullPointerException if socket is null or charset is null
@@ -537,7 +571,7 @@ public final class TcpUtil {
 	 * Receives text data until the last line feed character from the {@code socket}, using the specified {@code charset}
 	 * and the default block size {@link TcpUtil#DEFAULT_LINE_BLOCK_SIZE}.
 	 * <p>This method will work properly if the sender closes the socket after the send process.</p>
-	 * @param socket the socket to receive text from
+	 * @param socket any valid and open socket
 	 * @param charset the charset of the text
 	 * @return the received line
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -553,7 +587,7 @@ public final class TcpUtil {
 	 * Receives text data until the last line feed character from the {@code socket}, using the default charset (UTF-8)
 	 * and the specified {@code blockSize}.
 	 * <p>This method will work properly if the sender closes the socket after the send process.</p>
-	 * @param socket the socket to receive text from
+	 * @param socket any valid and open socket
 	 * @param blockSize block size of the internal buffer. If zero, no data is read
 	 * @return the received line
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -569,7 +603,7 @@ public final class TcpUtil {
 	 * Receives text data until the last line feed character from the {@code socket}, using the specified {@code charset}
 	 * and {@code blockSize}.
 	 * <p>This method will work properly if sender close socket after the send process.</p>
-	 * @param socket a valid and open socket
+	 * @param socket any valid and open socket
 	 * @param charset the charset of the text
 	 * @param blockSize block size of the internal buffer. If zero, no data is read
 	 * @return the received line
@@ -609,7 +643,7 @@ public final class TcpUtil {
 	/**
 	 * Receives text using the default block size {@link TcpUtil#DEFAULT_LINE_BLOCK_SIZE} and the
 	 * default charset UTF-8, then splits the text around matching line break.
-	 * @param socket the socket to receive an array of texts from
+	 * @param socket any valid and open socket
 	 * @return all received lines from the socket as a string array
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -621,7 +655,7 @@ public final class TcpUtil {
 	/**
 	 * Receives text using the default block size {@link TcpUtil#DEFAULT_LINE_BLOCK_SIZE} and
 	 * specified {@code charset}, then splits the text around matching line break.
-	 * @param socket the socket to receive an array of texts from
+	 * @param socket any valid and open socket
 	 * @param charset the charset of the text
 	 * @return all received lines from the socket as a string array
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -634,7 +668,7 @@ public final class TcpUtil {
 	/**
 	 * Receives text from the {@code socket}, using the specified {@code blockSize},
 	 * then splits the text around matching line break.
-	 * @param socket the socket to receive an array of texts from
+	 * @param socket any valid and open socket
 	 * @param blockSize block size of the internal buffer. If zero, no data is read
 	 * @return all received lines from the socket as a string array
 	 * @throws NetworkException if any problem occurs while receiving from the socket
@@ -648,7 +682,7 @@ public final class TcpUtil {
 	 * Reads a string and splits the text around matching line break,
 	 * using the specified {@code charset} and {@code blockSize}.
 	 * <p>This method will work properly if sender close socket after the send process</p>
-	 * @param socket a valid and open socket
+	 * @param socket any valid and open socket
 	 * @param charset the charset of the text
 	 * @param blockSize block size of the internal buffer
 	 * @return all received lines from the socket
@@ -670,8 +704,10 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a file from the {@code socket} and write it to {@code file}.
-	 * @param socket the socket to receive a file from
+	 * <p>Receives a file from the socket and writes it to the path contained in {@code file} object</p>
+	 * <p>This method functions the same way as {@link #receiveFile(Socket, String)})}, other than
+	 * having path argument as {@link File}, instead of {@link String}.</p>
+	 * @param socket any valid and open socket
 	 * @param file the file that will be used for saving the received file
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -681,8 +717,12 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Receives a file from the {@code socket} and writes it to {@code file}.
-	 * @param socket the socket to receive a file from
+	 * <p>Receives a file from the {@code socket} and writes it to specified {@code path}.</p>
+	 * <p>This method instantiates a {@code fos} with specified {@code path}, allocates a buffer area
+	 * of file size via calling {@link #receiveInt(Socket)}, then loops until no file chunks remain.
+	 * Finally the resulting file data is written via calling {@link FileOutputStream}'s write method
+	 * with the resulting byte array and with a starting offset of 0.</p>
+	 * @param socket any valid and open socket
 	 * @param path the saving path for the received file
 	 * @throws NetworkException if any problem occurs while receiving from the socket
 	 */
@@ -711,9 +751,10 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Sends a byte value to the {@code socket}.
-	 * @param socket the socket to send a byte value to
+	/**<p>Sends a single byte value to the {@code socket}</p>
+	 * <p>This method allocates a new byte buffer via {@link BitConverter#getBytes(byte)} and calls {@link #send(Socket, byte[])}
+	 * with the return value. </p>
+	 * @param socket any valid and open socket
 	 * @param val the byte value to send
 	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
@@ -727,9 +768,10 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Sends a short value to the {@code socket}.
-	 * @param socket the socket to send a short value to
+	/**<p>Sends a single byte value to the {@code socket}</p>
+	 * <p>This method allocates a new byte buffer via {@link BitConverter#getBytes(short)} and calls {@link #send(Socket, byte[])}
+	 * with the return value. </p>
+	 * @param socket any valid and open socket
 	 * @param val the short value to send
 	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
@@ -746,9 +788,10 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Sends an int value to the {@code socket}.
-	 * @param socket the socket to send an int value to
+	/**<p>Sends an integer value to the {@code socket}</p>
+	 * <p>This method allocates a new byte buffer via {@link BitConverter#getBytes(int)} and then calls {@link #send(Socket, byte[])}
+	 * with the return value. </p>
+	 * @param socket any valid and open socket
 	 * @param val the int value to send
 	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
@@ -765,9 +808,10 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Sends a long value to the {@code socket}.
-	 * @param socket the socket to send a long value to
+	/**<p>Sends a long value to the {@code socket}</p>
+	 * <p>This method allocates a new byte buffer via {@link BitConverter#getBytes(long)} and then calls {@link #send(Socket, byte[])}
+	 * with the return value. </p>
+	 * @param socket any valid and open socket
 	 * @param val the long value to send
 	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
@@ -784,9 +828,10 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Sends a float value to the {@code socket}.
-	 * @param socket the socket to send a float value to
+	/**<p>Sends a float value to the {@code socket}</p>
+	 * <p>This method allocates a new byte buffer via {@link BitConverter#getBytes(float)} and then calls {@link #send(Socket, byte[])}
+	 * with the return value. </p>
+	 * @param socket any valid and open socket
 	 * @param val the float value to send
 	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
@@ -803,9 +848,10 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Sends a double value to the {@code socket}.
-	 * @param socket the socket to send a double value to
+	/**<p>Sends a double value to the {@code socket}</p>
+	 * <p>This method allocates a new byte buffer via {@link BitConverter#getBytes(double)} and then calls {@link #send(Socket, byte[])}
+	 * with the return value. </p>
+	 * @param socket any valid and open socket
 	 * @param val the double value to send
 	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
@@ -822,9 +868,10 @@ public final class TcpUtil {
 		}
 	}
 
-	/**
-	 * Sends a char value to the {@code socket}.
-	 * @param socket the socket to send a char value to
+	/**<p>Sends a char to the {@code socket}</p>
+	 * <p>This method allocates a new byte buffer via {@link BitConverter#getBytes(char)} and then calls {@link #send(Socket, byte[])}
+	 * with the return value. </p>
+	 * @param socket any valid and open socket
 	 * @param val the char value to send
 	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
@@ -842,8 +889,10 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Consecutively sends specified {@code str} and string's length via specified {@code socket}.
-	 * @param socket the socket to send a string to
+	 * <p>Consecutively sends specified {@code str}'s length and then the string itself using the specified {@code socket}.
+	 * <p>This method is to be used with {@link #receiveStringViaLength(Socket, Charset)} method for properly decoding the strings.</p>
+	 * <p>Uses standard charset (UTF-8)</p>
+	 * @param socket any valid and open socket
 	 * @param str the string to send
 	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
@@ -853,9 +902,10 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Consecutively sends specified {@code str} and string's length using the specified {@code socket}
-	 * and {@code charset}.
-	 * @param socket the socket to send a string to
+	 * <p>Consecutively sends specified {@code str}'s length and then the string itself using the specified {@code socket}
+	 * and {@code charset}.</p>
+	 * <p>This method is to be used with {@link #receiveStringViaLength(Socket, Charset)} method for properly decoding the strings.</p>
+ 	 * @param socket any valid and open socket
 	 * @param str the string to send
 	 * @param charset the charset of the text
 	 * @throws NetworkException if any problem occurs while sending through the socket
@@ -879,7 +929,7 @@ public final class TcpUtil {
 
 	/**
 	 * Sends the {@code str} to the {@code socket} using the default charset (UTF-8).
-	 * @param socket the Socket to send a string to
+	 * @param socket any valid and open socket
 	 * @param str the string to send
 	 */
 	public static void sendString(Socket socket, String str)
@@ -889,7 +939,7 @@ public final class TcpUtil {
 
 	/**
 	 * Sends the {@code str} to the {@code socket} using the specified {@code charset}.
-	 * @param socket the socket to send a string to
+	 * @param socket any valid and open socket
 	 * @param str the string to send
 	 * @param charset the charset of the text
 	 * @throws NetworkException if any problem occurs while sending through the socket
@@ -912,7 +962,7 @@ public final class TcpUtil {
 	/**
 	 * Takes the text {@code str}, terminates it by line break and sends it to the {@code socket},
 	 * using the default charset UTF-8.
-	 * @param socket the socket to send a text to
+	 * @param socket any valid and open socket
 	 * @param str the text to send
 	 * @throws NetworkException if any problem occurs while sending through the socket
 	 */
@@ -924,7 +974,7 @@ public final class TcpUtil {
 	/**
 	 * Takes the text {@code str}, terminates it by line break and sends it to {@code socket},
 	 * using the specified {@code charset}.
-	 * @param socket the socket to send a text to
+	 * @param socket any valid and open socket
 	 * @param str the text to send
 	 * @param charset the charset of the text
 	 * @throws NetworkException if any problem occurs while sending through the socket
@@ -943,8 +993,10 @@ public final class TcpUtil {
 	}
 
 	/**
-	 * Sends the {@code file} to the specified {@code socket}, using the specified {@code blockSize}.
-	 * @param socket the socket to send a File to
+	 * <p>Sends a {@code file} over the socket with specified block size.</p>
+	 * <p>This method functions the same way as {@link #sendFile(Socket, String, int)}, other than
+	 * requiting a {@link File} object.</p>
+	 * @param socket any valid and open socket
 	 * @param file the file to send
 	 * @param blockSize block size of the internal buffer
 	 * @throws NetworkException if any problem occurs while sending through the socket
@@ -954,10 +1006,10 @@ public final class TcpUtil {
 		sendFile(socket, file.getAbsolutePath(), blockSize);
 	}
 
-	/**
-	 * Creates a fileInputStream using the specified {@code path} and the {@code blockSize},
-	 * then sends to the specified {@code socket}.
-	 * @param socket the socket to send a File to
+	/**<p>Sends a file on given {@code path} over the socket with specified {@code blockSize}.</p>
+	 * <p>This method allocates a byte array of {@code blockSize} and pushes the file in {@code path} into a
+	 * {@link FileInputStream}. Then then loops by sending transferred byte amount and the actual data until EOF condition is met.</p>
+	 * @param socket any valid and open socket
 	 * @param path the path to the file to send
 	 * @param blockSize block size of the internal buffer
 	 * @throws NetworkException if any problem occurs while sending through the socket
