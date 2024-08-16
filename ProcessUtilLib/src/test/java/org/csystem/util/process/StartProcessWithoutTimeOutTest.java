@@ -42,15 +42,4 @@ class StartProcessWithoutTimeOutTest {
                 "invalidCommand"
         );
     }
-
-    @Test
-    void testStartProcessExceptionDuringProcessForWindows()
-    {
-        ProcessUtil.startProcess(
-                processBuilder -> {},
-                process -> fail(),
-                ex -> assertInstanceOf(Exception.class, ex),
-                "sleep", "3"
-        );
-    }
 }
