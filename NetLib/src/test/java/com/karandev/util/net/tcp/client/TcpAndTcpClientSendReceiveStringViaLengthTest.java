@@ -19,7 +19,7 @@ public class TcpAndTcpClientSendReceiveStringViaLengthTest {
     private void serverCallback()
     {
         try {
-            m_serverSocket = new ServerSocket(PORT);
+            m_serverSocket = new ServerSocket(PORT, 1024);
             var clientSocket = m_serverSocket.accept();
             var tcp = new TCP(clientSocket);
             var text = tcp.receiveStringViaLength();

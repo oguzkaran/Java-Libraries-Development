@@ -19,7 +19,7 @@ public class TcpUtilSendReceiveStringTest {
     private void serverCallback()
     {
         try {
-            m_serverSocket = new ServerSocket(PORT);
+            m_serverSocket = new ServerSocket(PORT, 1024);
             var clientSocket = m_serverSocket.accept();
             var text = TcpUtil.receiveString(clientSocket, SEND_TEXT.length());
             Assertions.assertEquals(SEND_TEXT, text);

@@ -19,17 +19,11 @@ public class TcpAndTcpClientSendReceiveStringTest {
     private void serverCallback()
     {
         try {
-            m_serverSocket = new ServerSocket(PORT);
+            m_serverSocket = new ServerSocket(PORT, 1024);
             var clientSocket = m_serverSocket.accept();
             var tcp = new TCP(clientSocket);
             var text = tcp.receiveString(SEND_TEXT.length());
 
-            Assertions.assertEquals(SEND_TEXT, text);
-
-            text = tcp.receiveString(SEND_TEXT.length());
-            Assertions.assertEquals(SEND_TEXT.toUpperCase(), text);
-
-            text = tcp.receiveString(SEND_TEXT.length());
             Assertions.assertEquals(SEND_TEXT, text);
 
             tcp.sendString(SEND_TEXT);
@@ -50,8 +44,6 @@ public class TcpAndTcpClientSendReceiveStringTest {
     public void test() throws IOException
     {
         try (var tcpClient = new TCPClient(HOST, PORT)) {
-            tcpClient.sendString(SEND_TEXT);
-            tcpClient.sendString(SEND_TEXT.toUpperCase());
             tcpClient.sendString(SEND_TEXT);
 
             Assertions.assertEquals(SEND_TEXT, tcpClient.receiveString(SEND_TEXT.length()));

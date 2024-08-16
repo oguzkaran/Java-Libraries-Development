@@ -2,40 +2,47 @@ package com.karandev.util.net.tcp.util;
 
 import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
-@Disabled
 public class TcpUtilGetFirstAvailableSocketTest {
+    private static final int MIN_PORT = 1024;
+    private static final int MAX_PORT = 8192;
+
     @Test
     public void givenPortNumberRange_whenAvailable_thenPortAssigned()
     {
-        var serverSocketOpt = TcpUtil.getFirstAvailableSocket(1, 1024, 65535);
+        try (var serverSocket = TcpUtil.getFirstAvailableSocket(1024, MIN_PORT, MAX_PORT).orElseThrow()) {
 
-        Assertions.assertTrue(serverSocketOpt.isPresent());
-        var localPort = serverSocketOpt.get().getLocalPort();
+            var localPort = serverSocket.getLocalPort();
 
-        Assertions.assertTrue(IntStream.rangeClosed(1024, 65535)
-                .anyMatch(i -> i == localPort));
+            Assertions.assertTrue(IntStream.rangeClosed(MIN_PORT, MAX_PORT)
+                    .anyMatch(i -> i == localPort));
 
-        System.out.printf("Assigned Port: %s%n", localPort);
+            System.out.printf("Assigned Port: %s%n", localPort);
+        }
+        catch (NoSuchElementException ex) {
+            Assertions.fail("No available ports in the range [%s, %s]".formatted(MIN_PORT, MAX_PORT));
+        }
+        catch (IOException ignore) {
+
+        }
     }
 
     @Test
     public void givenPortNumber_whenPortIsUsed_thenReturnEmptyOptional()
     {
-        var serverSocketOpt = TcpUtil.getFirstAvailableSocket(1, 1024, 65535);
-        int port;
+        try (var serverSocket = TcpUtil.getFirstAvailableSocket(1, MIN_PORT, MAX_PORT).orElseThrow()) {
+            var port = serverSocket.getLocalPort();
+            var portInUse = new int [] {port};
 
-        if (serverSocketOpt.isPresent()) {
-            port = serverSocketOpt.get().getLocalPort();
-            int[] ports = {port};
-
-            Assertions.assertTrue(TcpUtil.getFirstAvailableSocket(1, ports).isEmpty());
+            Assertions.assertTrue(TcpUtil.getFirstAvailableSocket(1, portInUse).isEmpty());
         }
-        else
-            Assertions.fail("No available ports");
+        catch (IOException ignore) {
+
+        }
     }
 }

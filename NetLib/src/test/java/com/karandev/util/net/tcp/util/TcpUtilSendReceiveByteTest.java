@@ -20,7 +20,7 @@ public class TcpUtilSendReceiveByteTest {
     private void serverCallback()
     {
         try {
-            m_serverSocket = new ServerSocket(PORT);
+            m_serverSocket = new ServerSocket(PORT, 1024);
             var clientSocket = m_serverSocket.accept();
             clientSocket.setSoTimeout(SOCKET_TIMEOUT);
             var receivedByte = TcpUtil.receiveByte(clientSocket);

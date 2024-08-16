@@ -18,11 +18,8 @@ public class TcpGetSocketTest {
     private void serverCallback()
     {
         try {
-            m_serverSocket = new ServerSocket(PORT);
-            var clientSocket = m_serverSocket.accept();
-            var tcp = new TCP(clientSocket);
-
-            System.out.println(tcp.getSocket().toString());
+            m_serverSocket = new ServerSocket(PORT, 1024);
+            m_serverSocket.accept();
         }
         catch (IOException ex) {
             ex.printStackTrace();

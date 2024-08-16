@@ -22,7 +22,7 @@ public class TcpUtilSendReceiveFileTest {
     private void serverCallback()
     {
         try {
-            m_serverSocket = new ServerSocket(PORT);
+            m_serverSocket = new ServerSocket(PORT, 1024);
             var clientSocket = m_serverSocket.accept();
             clientSocket.setSoTimeout(SOCKET_TIMEOUT);
             TcpUtil.receiveFile(clientSocket, RECEIVE_FILE);

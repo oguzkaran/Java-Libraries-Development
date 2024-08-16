@@ -1,6 +1,5 @@
 package com.karandev.util.net.tcp.client;
 
-import com.karandev.util.net.TCP;
 import com.karandev.util.net.TCPClient;
 import com.karandev.util.net.exception.NetworkException;
 import org.junit.jupiter.api.*;
@@ -19,11 +18,8 @@ public class TcpClientCloseTest {
     private void serverCallback()
     {
         try {
-            m_serverSocket = new ServerSocket(PORT);
-            var clientSocket = m_serverSocket.accept();
-
-            var tcp = new TCP(clientSocket);
-            tcp.sendInt(0);
+            m_serverSocket = new ServerSocket(PORT, 1024);
+            m_serverSocket.accept();
         }
         catch (IOException ex) {
             ex.printStackTrace();
