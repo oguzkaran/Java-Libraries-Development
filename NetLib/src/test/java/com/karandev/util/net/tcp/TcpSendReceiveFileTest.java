@@ -47,6 +47,7 @@ public class TcpSendReceiveFileTest {
     public void test() throws IOException, InterruptedException
     {
         SEND_FILE.createNewFile();
+        Thread.sleep(100);
 
         try (var socket = new Socket(HOST, PORT)) {
             var tcp = new TCP(socket);

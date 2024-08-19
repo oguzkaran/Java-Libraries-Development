@@ -13,13 +13,14 @@ public class TcpUtilGetFirstAvailableSocketTest {
     private static final int MAX_PORT = 8192;
 
     @Test
-    public void givenPortNumberRange_whenAvailable_thenPortAssigned()
+    public void givenPortNumberRange_whenAvailable_thenPortAssigned() throws InterruptedException
     {
+        Thread.sleep(100);
         try (var serverSocket = TcpUtil.getFirstAvailableSocket(1024, MIN_PORT, MAX_PORT).orElseThrow()) {
 
             var localPort = serverSocket.getLocalPort();
 
-            Assertions.assertTrue(IntStream.rangeClosed(MIN_PORT, MAX_PORT)
+            Assertions.assertTrue(IntStream.rangeClosed(MIN_PORT, MAX_PORT).limit(5)
                     .anyMatch(i -> i == localPort));
 
             System.out.printf("Assigned Port: %s%n", localPort);
@@ -33,8 +34,9 @@ public class TcpUtilGetFirstAvailableSocketTest {
     }
 
     @Test
-    public void givenPortNumber_whenPortIsUsed_thenReturnEmptyOptional()
+    public void givenPortNumber_whenPortIsUsed_thenReturnEmptyOptional() throws InterruptedException
     {
+        Thread.sleep(100);
         try (var serverSocket = TcpUtil.getFirstAvailableSocket(1, MIN_PORT, MAX_PORT).orElseThrow()) {
             var port = serverSocket.getLocalPort();
             var portInUse = new int [] {port};

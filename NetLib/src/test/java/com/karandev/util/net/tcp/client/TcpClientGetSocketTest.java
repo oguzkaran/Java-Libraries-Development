@@ -33,8 +33,9 @@ public class TcpClientGetSocketTest {
     }
 
     @Test
-    public void getSocketTest()
+    public void getSocketTest() throws InterruptedException
     {
+        Thread.sleep(100);
         try (var tcpClient = new TCPClient(HOST, PORT)) {
             Assertions.assertNotNull(tcpClient.getSocket());
             Assertions.assertEquals(HOST, tcpClient.getSocket().getInetAddress().getHostName());

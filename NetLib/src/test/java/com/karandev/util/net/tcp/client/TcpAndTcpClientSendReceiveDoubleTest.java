@@ -43,8 +43,9 @@ public class TcpAndTcpClientSendReceiveDoubleTest {
     }
 
     @Test
-    public void test() throws IOException
+    public void test() throws IOException, InterruptedException
     {
+        Thread.sleep(100);
         try (var tcpClient = new TCPClient(HOST, PORT)) {
             tcpClient.sendDouble(SEND_DOUBLE);
 

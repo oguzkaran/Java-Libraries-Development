@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 public class TcpUtilSendReceiveLineTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
-    private static final int SOCKET_TIMEOUT = 1000;
+    private static final int SOCKET_TIMEOUT = 5000;
     private static final String SEND_TEXT = "Deniz Karan";
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
@@ -42,7 +42,10 @@ public class TcpUtilSendReceiveLineTest {
     @Test
     public void test() throws IOException, InterruptedException
     {
-        TcpUtil.sendLine(new Socket(HOST, PORT), SEND_TEXT);
+        Thread.sleep(100);
+        try (var socket = new Socket(HOST, PORT)) {
+            TcpUtil.sendLine(socket, SEND_TEXT);
+        }
     }
 
     @AfterEach

@@ -44,10 +44,11 @@ public class TcpAndTcpClientSendReceiveFileTest {
     }
 
     @Test
-    public void test() throws IOException
+    public void test() throws IOException, InterruptedException
     {
         SEND_FILE.createNewFile();
 
+        Thread.sleep(100);
         try (var tcpClient = new TCPClient(HOST, PORT)) {
             tcpClient.sendFile(SEND_FILE, 2048);
         }

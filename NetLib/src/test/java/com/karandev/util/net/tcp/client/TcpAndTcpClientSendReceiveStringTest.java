@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 public class TcpAndTcpClientSendReceiveStringTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
+    private static final int SOCKET_TIMEOUT = 5000;
     private static final String SEND_TEXT = "Oguz Karan";
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
@@ -21,6 +22,7 @@ public class TcpAndTcpClientSendReceiveStringTest {
         try {
             m_serverSocket = new ServerSocket(PORT, 1024);
             var clientSocket = m_serverSocket.accept();
+            clientSocket.setSoTimeout(SOCKET_TIMEOUT);
             var tcp = new TCP(clientSocket);
             var text = tcp.receiveString(SEND_TEXT.length());
 
@@ -41,8 +43,9 @@ public class TcpAndTcpClientSendReceiveStringTest {
     }
 
     @Test
-    public void test() throws IOException
+    public void test() throws IOException, InterruptedException
     {
+        Thread.sleep(100);
         try (var tcpClient = new TCPClient(HOST, PORT)) {
             tcpClient.sendString(SEND_TEXT);
 

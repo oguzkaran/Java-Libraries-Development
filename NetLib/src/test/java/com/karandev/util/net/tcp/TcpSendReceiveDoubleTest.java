@@ -42,8 +42,9 @@ public class TcpSendReceiveDoubleTest {
     }
 
     @Test
-    public void test() throws IOException
+    public void test() throws IOException, InterruptedException
     {
+        Thread.sleep(100);
         try (var socket = new Socket(HOST, PORT)) {
             var tcp = new TCP(socket);
 

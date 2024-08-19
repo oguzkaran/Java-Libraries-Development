@@ -45,6 +45,8 @@ public class TcpUtilSendReceiveFileTest {
     public void test() throws IOException, InterruptedException
     {
         SEND_FILE.createNewFile();
+        Thread.sleep(100);
+
         TcpUtil.sendFile(new Socket(HOST, PORT), SEND_FILE, 2048);
     }
 

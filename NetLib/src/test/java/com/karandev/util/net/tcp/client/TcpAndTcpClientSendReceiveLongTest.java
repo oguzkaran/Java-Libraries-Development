@@ -44,8 +44,9 @@ public class TcpAndTcpClientSendReceiveLongTest {
     }
 
     @Test
-    public void test() throws IOException
+    public void test() throws IOException, InterruptedException
     {
+        Thread.sleep(100);
         try (var tcpClient = new TCPClient(HOST, PORT)) {
             tcpClient.sendLong(SEND_LONG);
 

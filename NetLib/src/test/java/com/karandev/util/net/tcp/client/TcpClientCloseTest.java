@@ -34,8 +34,9 @@ public class TcpClientCloseTest {
     }
 
     @Test
-    public void closeTest()
+    public void closeTest() throws InterruptedException
     {
+        Thread.sleep(100);
         try (var tcpClient = new TCPClient(HOST, PORT)) {
             tcpClient.close();
 
