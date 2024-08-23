@@ -5,6 +5,7 @@ import com.karandev.util.net.exception.NetworkException;
 import java.io.File;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Immutable TCP class for TCP socket operations
@@ -17,8 +18,9 @@ public class TCP {
     private final Socket m_socket;
 
     /**
+     * <p>Constructor to initialize a TCP instance with a provided socket.</p>
      *
-     * @param socket
+     * @param socket the {@link Socket} instance to be used for TCP communication
      */
     public TCP(Socket socket)
     {
@@ -26,10 +28,11 @@ public class TCP {
     }
 
     /**
+     * <p>Constructor to initialize a TCP instance with a provided socket and set a socket timeout.</p>
      *
-     * @param socket
-     * @param timeout
-     * @throws NetworkException
+     * @param socket the {@link Socket} instance to be used for TCP communication
+     * @param timeout the timeout duration in milliseconds for socket operations
+     * @throws NetworkException if an error occurs when setting the timeout
      */
     public TCP(Socket socket, int timeout)
     {
@@ -43,8 +46,9 @@ public class TCP {
     }
 
     /**
+     * <p> Checks if the socket is open and ready for communication.</p>
      *
-     * @return
+     * @return {@code true} if the socket is open, otherwise {@code false}
      */
     public boolean isOpen()
     {
@@ -52,8 +56,9 @@ public class TCP {
     }
 
     /**
+     * <p>Retrieves the underlying socket used by this TCP instance.</p>
      *
-     * @return
+     * @return the {@link Socket} used for communication
      */
     public Socket getSocket()
     {
@@ -61,12 +66,14 @@ public class TCP {
     }
 
     /**
+     * <p>Receives data from the socket.</p>
      *
-     * @param data
-     * @param offset
-     * @param length
-     * @return
-     * @throws NetworkException
+     * @param data the buffer to store received data
+     * @param offset the offset into the buffer to start storing data
+     * @param length the maximum number of bytes to read
+     * @return the number of bytes actually read
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receive(Socket, byte[], int, int)
      */
     public int receive(byte [] data, int offset, int length)
     {
@@ -74,10 +81,12 @@ public class TCP {
     }
 
     /**
+     * <p>Receives data from the socket.</p>
      *
-     * @param data
-     * @return
-     * @throws NetworkException
+     * @param data the buffer to store received data
+     * @return the number of bytes actually read
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receive(Socket, byte[]) 
      */
     public int receive(byte [] data)
     {
@@ -85,12 +94,14 @@ public class TCP {
     }
 
     /**
+     * <p>Sends data to the socket.</p>
      *
-     * @param data
-     * @param offset
-     * @param length
-     * @return
-     * @throws NetworkException
+     * @param data the data to send
+     * @param offset the offset into the buffer to start sending from
+     * @param length the number of bytes to send
+     * @return the number of bytes actually sent
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#send(Socket, byte[], int, int) 
      */
     public int send(byte [] data, int offset, int length)
     {
@@ -98,10 +109,12 @@ public class TCP {
     }
 
     /**
+     * <p>Sends data to the socket.</p>
      *
-     * @param data
-     * @return
-     * @throws NetworkException
+     * @param data the data to send
+     * @return the number of bytes actually sent
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#send(Socket, byte[]) 
      */
     public int send(byte [] data)
     {
@@ -109,9 +122,11 @@ public class TCP {
     }
 
     /**
+     * <p>Receives a single byte from the socket.</p>
      *
-     * @return
-     * @throws NetworkException
+     * @return the byte received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receiveByte(Socket) 
      */
     public byte receiveByte()
     {
@@ -119,9 +134,11 @@ public class TCP {
     }
 
     /**
+     * Receives a short value from the socket.
      *
-     * @return
-     * @throws NetworkException
+     * @return the short value received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#
      */
     public short receiveShort()
     {
@@ -129,9 +146,11 @@ public class TCP {
     }
 
     /**
+     * Receives an integer from the socket.
      *
-     * @return
-     * @throws NetworkException
+     * @return the integer received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#
      */
     public int receiveInt()
     {
@@ -139,9 +158,11 @@ public class TCP {
     }
 
     /**
+     * Receives a long value from the socket.
      *
-     * @return
-     * @throws NetworkException
+     * @return the long value received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receiveLong(Socket)
      */
     public long receiveLong()
     {
@@ -149,9 +170,11 @@ public class TCP {
     }
 
     /**
+     * Receives a float value from the socket.
      *
-     * @return
-     * @throws NetworkException
+     * @return the float value received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receiveFloat(Socket)
      */
     public float receiveFloat()
     {
@@ -159,9 +182,11 @@ public class TCP {
     }
 
     /**
+     * Receives a double value from the socket.
      *
-     * @return
-     * @throws NetworkException
+     * @return the double value received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receiveDouble(Socket)
      */
     public double receiveDouble()
     {
@@ -169,9 +194,11 @@ public class TCP {
     }
 
     /**
+     * Receives a char value from the socket.
      *
-     * @return
-     * @throws NetworkException
+     * @return the char value received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receiveChar(Socket)
      */
     public char receiveChar()
     {
@@ -179,9 +206,11 @@ public class TCP {
     }
 
     /**
-     *
-     * @return
-     * @throws NetworkException
+     * <p>Receives a length-prefixed string from the socket using default charset {@link StandardCharsets#UTF_8}</p>
+     * <p>Sender must use matching {@link #sendStringViaLength(String)} method for successful transfer. </p>
+     * @return the string received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receiveStringViaLength(Socket)
      */
     public String receiveStringViaLength()
     {
@@ -189,10 +218,12 @@ public class TCP {
     }
 
     /**
-     *
-     * @param charset
-     * @return
-     * @throws NetworkException
+     * <p>Receives a length-prefixed string from the socket using specified {@code charset}.</p>
+     * <p>Sender must use matching {@link #sendStringViaLength(String, Charset)} method for successful transfer. </p>
+     * @param charset the {@link Charset} to use for decoding the string
+     * @return the string received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receiveString(Socket, int, Charset)
      */
     public String receiveStringViaLength(Charset charset)
     {
@@ -200,10 +231,12 @@ public class TCP {
     }
 
     /**
+     * <p>Receives a string of a specified {@code length} using default charset {@link StandardCharsets#UTF_8}.</p>
      *
-     * @param length
-     * @return
-     * @throws NetworkException
+     * @param length the number of characters to read
+     * @return the string received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receiveString(Socket, int)
      */
     public String receiveString(int length)
     {
@@ -211,11 +244,13 @@ public class TCP {
     }
 
     /**
+     * <p>Receives a string of a specified {@code length}, using a specified {@code charset}.</p>
      *
-     * @param length
-     * @param charset
-     * @return
-     * @throws NetworkException
+     * @param length the number of characters to read
+     * @param charset the {@link Charset} to use for decoding the string
+     * @return the string received
+     * @throws NetworkException if an error occurs while receiving data
+     * @see TcpUtil#receiveString(Socket, int, Charset)
      */
     public String receiveString(int length, Charset charset)
     {
@@ -223,11 +258,13 @@ public class TCP {
     }
 
     /**
-     *
-     * @return
-     * @throws NetworkException
-     * @throws NullPointerException
-     * @throws NegativeArraySizeException
+     * <p>Receives a line of text.</p>
+     * <p>Uses default charset {@link StandardCharsets#UTF_8}</p>
+     * @return the line received
+     * @throws NetworkException if an error occurs while receiving data
+     * @throws NullPointerException if an unexpected null value is encountered
+     * @throws NegativeArraySizeException if an invalid size for data buffer is specified
+     * @see TcpUtil#receiveLine(Socket)
      */
     public String receiveLine()
     {
@@ -235,12 +272,13 @@ public class TCP {
     }
 
     /**
-     *
-     * @param charset
-     * @return
-     * @throws NetworkException
-     * @throws NullPointerException
-     * @throws NegativeArraySizeException
+     * <p>Receives a line of text using specified {@code charset}</p>
+     * @param charset the {@link Charset} to use for decoding the string
+     * @return the line received
+     * @throws NetworkException if an error occurs while receiving data
+     * @throws NullPointerException if an unexpected null value is encountered
+     * @throws NegativeArraySizeException if an invalid size for data buffer is specified
+     * @see TcpUtil#receiveLine(Socket, Charset)
      */
     public String receiveLine(Charset charset)
     {
@@ -248,12 +286,13 @@ public class TCP {
     }
 
     /**
-     *
-     * @param blockSize
-     * @return
-     * @throws NetworkException
-     * @throws NullPointerException
-     * @throws NegativeArraySizeException
+     * <p>Receives a line of text with a specified {@code blockSize}.</p>
+     * @param blockSize the number of bytes to read in each block
+     * @return the line received
+     * @throws NetworkException if an error occurs while receiving data
+     * @throws NullPointerException if an unexpected null value is encountered
+     * @throws NegativeArraySizeException if an invalid size for data buffer is specified
+     * @see TcpUtil#receiveLine(Socket, int)
      */
     public String receiveLine(int blockSize)
     {
@@ -261,13 +300,15 @@ public class TCP {
     }
 
     /**
-     *
-     * @param charset
-     * @param blockSize
-     * @return
-     * @throws NetworkException
-     * @throws NullPointerException
-     * @throws NegativeArraySizeException
+     * <p>Receives a line of text using a specified {@code charset} and {@code blockSize}</p>
+
+     * @param charset the {@link Charset} to use for decoding the string
+     * @param blockSize the number of bytes to read in each block
+     * @return the line received
+     * @throws NetworkException if an error occurs while receiving data
+     * @throws NullPointerException if an unexpected null value is encountered
+     * @throws NegativeArraySizeException if an invalid size for data buffer is specified
+     * @see TcpUtil#receiveLine(Socket, Charset, int)
      */
     public String receiveLine(Charset charset, int blockSize)
     {
@@ -275,9 +316,11 @@ public class TCP {
     }
 
     /**
+     * <p>Receives a file from the socket and saves it to a specified {@code file} object's path.</p>
      *
-     * @param file
-     * @throws NetworkException
+     * @param file the {@link File} to save the received data to
+     * @throws NetworkException if an error occurs while receiving the file
+     * @see TcpUtil#receiveFile(Socket, File)
      */
     public void receiveFile(File file)
     {
@@ -285,9 +328,11 @@ public class TCP {
     }
 
     /**
+     * <p>Receives a file from the socket and saves it to a specified file {@code path}.</p>
      *
-     * @param path
-     * @throws NetworkException
+     * @param path the path where the file should be saved
+     * @throws NetworkException if an error occurs while receiving the file
+     * @see TcpUtil#receiveFile(Socket, String)
      */
     public void receiveFile(String path)
     {
@@ -295,9 +340,11 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a single byte to the socket.</p>
      *
-     * @param val
-     * @throws NetworkException
+     * @param val the byte value to send
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendByte(Socket, byte)
      */
     public void sendByte(byte val)
     {
@@ -305,9 +352,11 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a short value to the socket.</p>
      *
-     * @param val
-     * @throws NetworkException
+     * @param val the short value to send
+     * @throws NetworkException if an error occurs while sending data
+     *  @see TcpUtil#sendShort(Socket, short)
      */
     public void sendShort(short val)
     {
@@ -315,9 +364,11 @@ public class TCP {
     }
 
     /**
+     * <p>Sends an integer to the socket.</p>
      *
-     * @param val
-     * @throws NetworkException
+     * @param val the integer value to send
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendInt(Socket, int)
      */
     public void sendInt(int val)
     {
@@ -325,9 +376,11 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a long value to the socket.</p>
      *
-     * @param val
-     * @throws NetworkException
+     * @param val the long value to send
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendLong(Socket, long)
      */
     public void sendLong(long val)
     {
@@ -335,9 +388,11 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a float value to the socket.</p>
      *
-     * @param val
-     * @throws NetworkException
+     * @param val the float value to send
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendFloat(Socket, float)
      */
     public void sendFloat(float val)
     {
@@ -345,9 +400,11 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a double value to the socket.</p>
      *
-     * @param val
-     * @throws NetworkException
+     * @param val the double value to send
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendDouble(Socket, double)
      */
     public void sendDouble(double val)
     {
@@ -355,9 +412,11 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a char value to the socket.</p>
      *
-     * @param val
-     * @throws NetworkException
+     * @param val the char value to send
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendChar(Socket, char)
      */
     public void sendChar(char val)
     {
@@ -365,9 +424,11 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a string {@code str} using a length-prefixed protocol with default charset {@link StandardCharsets#UTF_8}</p>
      *
-     * @param str
-     * @throws NetworkException
+     * @param str the string to send
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendStringViaLength(Socket, String)
      */
     public void sendStringViaLength(String str)
     {
@@ -375,10 +436,12 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a string {@code str} using a length-prefixed protocol with a specified {@code charset}.</p>
      *
-     * @param str
-     * @param charset
-     * @throws NetworkException
+     * @param str the string to send
+     * @param charset the {@link Charset} to use for encoding the string
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendStringViaLength(Socket, String, Charset)
      */
     public void sendStringViaLength(String str, Charset charset)
     {
@@ -386,9 +449,11 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a string {@code str} to the socket.</p>
      *
-     * @param str
-     * @throws NetworkException
+     * @param str the string to send
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendString(Socket, String)
      */
     public void sendString(String str)
     {
@@ -396,10 +461,12 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a string to the socket, using a specified {@code charset}</p>
      *
-     * @param str
-     * @param charset
-     * @throws NetworkException
+     * @param str the string to send
+     * @param charset the {@link Charset} to use for encoding the string
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendString(Socket, String, Charset)
      */
     public void sendString(String str, Charset charset)
     {
@@ -407,9 +474,11 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a `\n\r` terminated {@code str} to the socket.</p>
      *
-     * @param str
-     * @throws NetworkException
+     * @param str the line of text to send
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendLine(Socket, String)
      */
     public void sendLine(String str)
     {
@@ -417,10 +486,12 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a `\n\r` terminated {@code str} to the socket using specified {@code charset}.</p>
      *
-     * @param str
-     * @param charset
-     * @throws NetworkException
+     * @param str the line of text to send
+     * @param charset the {@link Charset} to use for encoding the text
+     * @throws NetworkException if an error occurs while sending data
+     * @see TcpUtil#sendLine(Socket, String, Charset)
      */
     public void sendLine(String str, Charset charset)
     {
@@ -428,10 +499,12 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a {@code file} to the socket, with a specified {@code blockSize}.</p>
      *
-     * @param file
-     * @param blockSize
-     * @throws NetworkException
+     * @param file the {@link File} to send
+     * @param blockSize the size of blocks to send the file in
+     * @throws NetworkException if an error occurs while sending the file
+     * @see TcpUtil#sendFile(Socket, File, int)
      */
     public void sendFile(File file, int blockSize)
     {
@@ -439,10 +512,12 @@ public class TCP {
     }
 
     /**
+     * <p>Sends a file at {@code path} to the socket, with a specified {@code blockSize}.</p>
      *
-     * @param path
-     * @param blockSize
-     * @throws NetworkException
+     * @param path the path of the file to send
+     * @param blockSize the size of blocks to send the file in
+     * @throws NetworkException if an error occurs while sending the file
+     * @see TcpUtil#sendFile(Socket, String, int)
      */
     public void sendFile(String path, int blockSize)
     {
