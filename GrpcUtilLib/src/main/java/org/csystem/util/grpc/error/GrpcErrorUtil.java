@@ -23,11 +23,11 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Converts a gRPC {@link io.grpc.Status} to a runtime exception and passes it to the given {@link io.grpc.stub.StreamObserver}.
-     * streamObserver the stream observer that will receive the error
-     * status the gRPC status code to use for the error
-     * description a human-readable description of the error
-     * <T> the type of the stream observer's response
+     * Converts a gRPC {@link Status} to a runtime exception and passes it to the given {@link StreamObserver}.
+     * @param streamObserver the stream observer that will receive the error
+     * @param status the gRPC status code to use for the error
+     * @param description a human-readable description of the error
+     * @param <T> the type of the stream observer's response
      */
 
     private static <T> void asRuntimeException(StreamObserver<T> streamObserver, Status status, String description)
@@ -36,7 +36,7 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#INVALID_ARGUMENT} error to the provided stream observer.
+     * Sends an {@link Status#INVALID_ARGUMENT} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -47,7 +47,7 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#OUT_OF_RANGE} error to the provided stream observer.
+     * Sends an {@link Status#OUT_OF_RANGE} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -58,7 +58,7 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#DEADLINE_EXCEEDED} error to the provided stream observer.
+     * Sends an {@link Status#DEADLINE_EXCEEDED} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -69,7 +69,7 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#NOT_FOUND} error to the provided stream observer.
+     * Sends an {@link Status#NOT_FOUND} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -80,7 +80,7 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#ALREADY_EXISTS} error to the provided stream observer.
+     * Sends an {@link Status#ALREADY_EXISTS} error to the provided stream observer.
      * @param streamObserver streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -91,7 +91,7 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#PERMISSION_DENIED} error to the provided stream observer.
+     * Sends an {@link Status#PERMISSION_DENIED} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -102,7 +102,7 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#RESOURCE_EXHAUSTED} error to the provided stream observer.
+     * Sends an {@link Status#RESOURCE_EXHAUSTED} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -113,7 +113,7 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#FAILED_PRECONDITION} error to the provided stream observer.
+     * Sends an {@link Status#FAILED_PRECONDITION} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -125,7 +125,7 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#ABORTED} error to the provided stream observer.
+     * Sends an {@link Status#ABORTED} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -136,18 +136,18 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#UNIMPLEMENTED} error to the provided stream observer.
+     * Sends an {@link Status#UNIMPLEMENTED} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
      */
-    public static <T> void unimplementedError(StreamObserver<T> streamObserver, String description)
+    public static <T> void unImplementedError(StreamObserver<T> streamObserver, String description)
     {
         asRuntimeException(streamObserver, Status.UNIMPLEMENTED, description);
     }
 
     /**
-     * Sends an {@link io.grpc.Status#INTERNAL} error to the provided stream observer.
+     * Sends an {@link Status#INTERNAL} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -158,18 +158,18 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#UNAVAILABLE} error to the provided stream observer.
+     * Sends an {@link Status#UNAVAILABLE} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
      */
-    public static <T> void unavailableError(StreamObserver<T> streamObserver, String description)
+    public static <T> void unAvailableError(StreamObserver<T> streamObserver, String description)
     {
         asRuntimeException(streamObserver, Status.UNAVAILABLE, description);
     }
 
     /**
-     * Sends an {@link io.grpc.Status#DATA_LOSS} error to the provided stream observer.
+     * Sends an {@link Status#DATA_LOSS} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
@@ -180,15 +180,36 @@ public final class GrpcErrorUtil {
     }
 
     /**
-     * Sends an {@link io.grpc.Status#UNAUTHENTICATED} error to the provided stream observer.
+     * Sends an {@link Status#UNAUTHENTICATED} error to the provided stream observer.
      * @param streamObserver the stream observer that will receive the error
      * @param description a human-readable description of the error
      * @param <T> the type of the stream observer's response
      */
-    public static <T> void unauthenticatedError(StreamObserver<T> streamObserver, String description)
+    public static <T> void unAuthenticatedError(StreamObserver<T> streamObserver, String description)
     {
         asRuntimeException(streamObserver, Status.UNAUTHENTICATED, description);
+    }
 
+    /**
+     * Sends an {@link Status#UNKNOWN} error to the provided stream observer.
+     * @param streamObserver the stream observer that will receive the error
+     * @param description a human-readable description of the error
+     * @param <T> the type of the stream observer's response
+     */
+    public static <T> void unKnownError(StreamObserver<T> streamObserver, String description)
+    {
+        asRuntimeException(streamObserver, Status.UNKNOWN, description);
+    }
+
+    /**
+     * Sends an {@link Status#CANCELLED} error to the provided stream observer.
+     * @param streamObserver the stream observer that will receive the error
+     * @param description a human-readable description of the error
+     * @param <T> the type of the stream observer's response
+     */
+    public static <T> void CancelledError(StreamObserver<T> streamObserver, String description)
+    {
+        asRuntimeException(streamObserver, Status.CANCELLED, description);
     }
     //...
 }

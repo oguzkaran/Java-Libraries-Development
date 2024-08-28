@@ -4,27 +4,47 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2fc17f13-8da8-4fc4-ba72-35ab17dc1e1e" name="Changes" comment="update in lecture" />
+    <list default="true" id="2fc17f13-8da8-4fc4-ba72-35ab17dc1e1e" name="Changes" comment="update in lecture">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/csystem/util/grpc/error/GrpcErrorUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/csystem/util/grpc/error/GrpcErrorUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/csystem/util/grpc/error/GrpcErrorUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/csystem/util/grpc/error/GrpcErrorUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/org-csystem-util-grpc-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/org-csystem-util-grpc-1.0.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-org.csystem.GrpcErrorUtilTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-org.csystem.GrpcErrorUtilTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/org.csystem.GrpcErrorUtilTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/org.csystem.GrpcErrorUtilTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/org/csystem/GrpcErrorUtilTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/org/csystem/GrpcErrorUtilTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ProcessUtilLib/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ProcessUtilLib/.idea/misc.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "oguzkaran"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;oguzkaran&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/oguzkaran/Java-Libraries-Development.git",
-    "accountId": "116d774e-8b37-45b1-a388-8a8b2a0440ef"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/oguzkaran/Java-Libraries-Development.git&quot;,
+    &quot;accountId&quot;: &quot;116d774e-8b37-45b1-a388-8a8b2a0440ef&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -39,10 +59,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Maven.GenericLib [clean].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "mesutmehmet/gRPC-ErrorUtil",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Repositories/Projects/Java-Libraries-Development/GrpcUtilLib",
+    "last_opened_file_path": "C:/Users/Mehmet/Desktop/Java-Libraries-Development/GrpcUtilLib",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
