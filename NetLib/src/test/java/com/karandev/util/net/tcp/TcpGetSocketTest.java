@@ -1,5 +1,6 @@
-package com.karandev.util.net;
+package com.karandev.util.net.tcp;
 
+import com.karandev.util.net.TCP;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -8,28 +9,19 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Disabled("Run the debug test")
-public class TcpUtilSendReceiveStringViaLengthTest {
+public class TcpGetSocketTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
-    private static final int SOCKET_TIMEOUT = 1000;
-    private static final String SEND_TEXT = "Deniz Karan";
-    private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
+    private ServerSocket m_serverSocket;
 
     private void serverCallback()
     {
         try {
-            m_serverSocket = new ServerSocket(PORT);
-            var clientSocket = m_serverSocket.accept();
-            var text = TcpUtil.receiveStringViaLength(clientSocket);
-
-            Assertions.assertEquals(SEND_TEXT, text);
-
-            text = TcpUtil.receiveStringViaLength(clientSocket);
-            Assertions.assertEquals(SEND_TEXT.toUpperCase(), text);
+            m_serverSocket = new ServerSocket(PORT, 1024);
+            m_serverSocket.accept();
         }
-        catch (Throwable ex) {
+        catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -42,11 +34,15 @@ public class TcpUtilSendReceiveStringViaLengthTest {
     }
 
     @Test
-    public void test() throws IOException
+    public void getSocketTest() throws IOException, InterruptedException
     {
+        Thread.sleep(100);
         try (var socket = new Socket(HOST, PORT)) {
-            TcpUtil.sendStringViaLength(socket, SEND_TEXT);
-            TcpUtil.sendStringViaLength(socket, SEND_TEXT.toUpperCase());
+            var tcp = new TCP(socket);
+
+            Assertions.assertNotNull(tcp.getSocket());
+            Assertions.assertEquals(HOST, tcp.getSocket().getInetAddress().getHostName());
+            Assertions.assertEquals(PORT, tcp.getSocket().getPort());
         }
     }
 
