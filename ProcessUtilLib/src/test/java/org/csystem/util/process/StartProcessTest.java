@@ -7,7 +7,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled("Written by Bartu Çankaya")
+//@Disabled("Written by Bartu Çankaya")
 class StartProcessTest {
     @Test
     void testStartProcessExitAction() {
