@@ -7,38 +7,80 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+
+/**
+ * Utility class for iterable operations including {@link java.util.Collection} and {@link java.util.Map}
+ * <p>1993 by C and System Programmers Association (CSD) All Rights Free</p>
+ * @author JavaApp2-Jan-2024 Group
+ * @version 1.0.0
+ */
 public final class IterableUtil {
     private IterableUtil()
     {
     }
 
+    /**
+     *  Checks if all elements in the specified {@link Iterable} are distinct.
+     * @param iterable the {@link Iterable} to check if all elements are distinct
+     * @return true if all elements are distinct otherwise return false
+     * @param <T> the type of the elements in the {@link Iterable}
+     */
     public static <T> boolean areAllDistinct(Iterable<? extends T> iterable)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
 
-    // Check if all are not null
+    /**
+     * Checks if all elements in the specified {@link Iterable} are not null.
+     * @param iterables the {@link Iterable} to check if all elements are not null
+     * @return true if all elements are not null otherwise return false
+     * @param <?> the type of the elements in the {@link Iterable}
+     * @throws NullPointerException if collection is null
+     */
     public static boolean checkAllNotNull(Iterable<?>... iterables)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
+    /**
+     * Merges two iterables into a single, sorted List by comparator
+     * @param a the {@link Iterable} to collate
+     * @param b the {@link Iterable} to collate
+     * @param comparator the {@link Comparator} to compare the elements to determine the order
+     * @param <T> the type of the elements
+     * @return List<T> the collated {@link List} of the two {@link Iterable}
+     * @throws NullPointerException if iterables is null
+     */
     public static <T> List<T> collate(Iterable<? extends T> a, Iterable<? extends T> b,
                                       Comparator<? super T> comparator)
     {
         return collate(a, b, comparator, true);
     }
 
-    // Checks if the object is contained in the given iterable.
-    // Instead of dealing with a loop, this method with two parameters can be used for a quick check.
+    /** Checks if the object is contained in the given iterable.
+     * Instead of dealing with a loop, this method with two parameters can be used for a quick check.
+     * @param iterable the {@link Iterable} iterable to check if the object is contained
+     * @param object the object to check if it is contained in the iterable
+     * @return  true if the object is contained in the iterable, false otherwise
+     * @param <T> the type of the elements in the iterable
+     * @throws NullPointerException if collection or object is null
+     */
     public static <T> boolean contains(Iterable<T> iterable, Object object)
     {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    // Merges two sorted Collections into a single, sorted List
-    // such that the ordering of the elements according to Comparator c is retained.
+    /**
+     * Merges two iterables into a single, sorted List by comparator
+     * @param a the {@link Iterable} to collate
+     * @param b the {@link Iterable} to collate
+     * @param includeDuplicates if true, duplicate elements are included
+     * @param comparator the {@link Comparator} to compare the elements to determine the order
+     * @param <T> the type of the elements
+     * @return List<T> the collated {@link List} of the two {@link Iterable}
+     * @throws NullPointerException if iterables is null
+     */
     public static <T> List<T> collate(Iterable<? extends T> a, Iterable<? extends T> b,
                                       Comparator<? super T> comparator, boolean includeDuplicates)
     {
@@ -46,6 +88,14 @@ public final class IterableUtil {
     }
 
     //Combines multiple iterables into a single iterable.
+
+    /**
+     * Combines multiple iterables into a single iterable
+     * @param iterable the {@link Iterable} to combine
+     * @return iterable the combined {@link Iterable}
+     * @param <T>  the type of the elements in the iterable
+     * @throws NullPointerException if iterable is null
+     */
     public static <T> Iterable<T> concat(Iterable<? extends Iterable<? extends T>> iterable)
     {
         throw new UnsupportedOperationException("Not yet implemented");
@@ -57,13 +107,27 @@ public final class IterableUtil {
         throw new UnsupportedOperationException("Will be written by Oğuz Karan");
     }
 
-    //Returns an Optional containing the first element in iterable that satisfies the given predicate, if such an element exists.
+
+    /**
+     * Find the first element in iterable that satisfies the given predicate.
+     * @param iterable the {@link Iterable} to searched
+     * @param predicate the {@link Predicate} to search by given condition
+     * @return {@link Optional} containing the first element in iterable that satisfies the given predicate
+     * @param <T> the type of the elements in the iterable
+     * @throws NullPointerException if iterable or predicate is null
+     */
     static <T> Optional<T> findFirst(Iterable<T> iterable, Predicate<? super T> predicate)
     {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    //It is used to search for a component of a specific type within collections containing multiple types.
+    /**
+     * It is used to search for a component of a specific type within collections containing multiple types.
+     * @param  collection   collection containing elements to search through
+     * @param  types        array of types to search for
+     * @return              the found object of the specified type
+     * @throws NullPointerException if the collection is null
+     */
     public static Object findValueOfType(Iterable<?> collection, Class<?>[] types)
     {
         throw new UnsupportedOperationException("Not yet implemented");
