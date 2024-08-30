@@ -87,7 +87,6 @@ public final class IterableUtil {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    //Combines multiple iterables into a single iterable.
 
     /**
      * Combines multiple iterables into a single iterable
