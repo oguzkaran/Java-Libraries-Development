@@ -20,11 +20,11 @@ public final class IterableUtil {
     }
 
     /**
-     *  Checks if all elements in the specified {@link Iterable} are distinct.
+     * Checks if all elements in the specified {@link Iterable} are distinct.
      * @param iterable the {@link Iterable} to check if all elements are distinct
      * @return true if all elements are distinct otherwise return false
      * @param <T> the type of the elements in the {@link Iterable}
-     * @throws NullPointerException if iterable is null
+     * @throws NullPointerException if {@code iterable} is null
      */
     public static <T> boolean areAllDistinct(Iterable<? extends T> iterable)
     {
@@ -36,7 +36,7 @@ public final class IterableUtil {
      * @param iterables the {@link Iterable} to check if all elements are not null
      * @return true if all elements are not null otherwise return false
      * @param <?> the type of the elements in the {@link Iterable}
-     * @throws NullPointerException if iterables is null
+     * @throws NullPointerException if  {@code iterables} is null
      */
     public static boolean checkAllNotNull(Iterable<?>... iterables)
     {
@@ -50,7 +50,7 @@ public final class IterableUtil {
      * @param comparator the {@link Comparator} to compare the elements to determine the order
      * @param <T> the type of the elements
      * @return List<T> the collated {@link List} of the two {@link Iterable}
-     * @throws NullPointerException if iterables is null
+     * @throws NullPointerException if {@code a}, {@code b} or {@code comparator} is null
      */
     public static <T> List<T> collate(Iterable<? extends T> a, Iterable<? extends T> b,
                                       Comparator<? super T> comparator)
@@ -64,7 +64,7 @@ public final class IterableUtil {
      * @param object the object to check if it is contained in the iterable
      * @return  true if the object is contained in the iterable, false otherwise
      * @param <T> the type of the elements in the iterable
-     * @throws NullPointerException if iterable or object is null
+     * @throws NullPointerException if {@code iterable} or {@code object} is null
      */
     public static <T> boolean contains(Iterable<T> iterable, Object object)
     {
@@ -79,7 +79,7 @@ public final class IterableUtil {
      * @param comparator the {@link Comparator} to compare the elements to determine the order
      * @param <T> the type of the elements
      * @return List<T> the collated {@link List} of the two {@link Iterable}
-     * @throws NullPointerException if iterables is null
+     * @throws NullPointerException if {@code a}, {@code b} or {@code comparator} is null
      */
     public static <T> List<T> collate(Iterable<? extends T> a, Iterable<? extends T> b,
                                       Comparator<? super T> comparator, boolean includeDuplicates)
@@ -93,7 +93,7 @@ public final class IterableUtil {
      * @param iterable the {@link Iterable} to combine
      * @return iterable the combined {@link Iterable}
      * @param <T>  the type of the elements in the iterable
-     * @throws NullPointerException if iterable is null
+     * @throws NullPointerException if {@code iterable} is null
      */
     public static <T> Iterable<T> concat(Iterable<? extends Iterable<? extends T>> iterable)
     {
@@ -113,7 +113,7 @@ public final class IterableUtil {
      * @param predicate the {@link Predicate} to search by given condition
      * @return {@link Optional} containing the first element in iterable that satisfies the given predicate
      * @param <T> the type of the elements in the iterable
-     * @throws NullPointerException if iterable or predicate is null
+     * @throws NullPointerException if {@code predicate} or {@code iterable} is null
      */
     static <T> Optional<T> findFirst(Iterable<T> iterable, Predicate<? super T> predicate)
     {
@@ -124,8 +124,9 @@ public final class IterableUtil {
      * It is used to search for a component of a specific type within collections containing multiple types.
      * @param  collection   the {@link Iterable} containing elements to search through
      * @param  types        array of types to search for
+     * @param <?>           the type of the object to search for
      * @return              the found object of the specified type
-     * @throws NullPointerException if the collection is null
+     * @throws NullPointerException if the {@code collection} or {@code types} is null
      */
     public static Object findValueOfType(Iterable<?> collection, Class<?>[] types)
     {
@@ -139,7 +140,7 @@ public final class IterableUtil {
      * @param  <E>       the type of elements in the collection
      * @param  <T>      the type of the object to search for, which must be a subtype of E
      * @return           the frequency of the object in the collection
-     * @throws          NullPointerException if iterable or obj is null
+     * @throws NullPointerException if the {@code iterable} or {@code obj} is null
      */
     public static <E, T extends E> int frequency(Iterable<E> iterable, T obj)
     {
@@ -149,8 +150,9 @@ public final class IterableUtil {
     /**
      * Returns a map containing the cardinality of each element in the given iterable.
      * @param  coll the {@link Iterable} to get the cardinality map from
+     * @param  <T>  the type of elements in the iterable
      * @return      map the {@link Map} containing the cardinality of each element in the iterable
-     * @throws      NullPointerException if coll is null
+     * @throws      NullPointerException if {@code coll} is null
      */
     public static <T> Map<T, Integer> getCardinalityMap(Iterable<? extends T> coll)
     {
@@ -192,6 +194,7 @@ public final class IterableUtil {
      * Returns a limited iterable from the given iterable.
      * @param  iterable  the {@link Iterable} to limit
      * @param  limitSize the maximum number of elements to return
+     * @param  <T>       the type of elements in the iterable
      * @return          an iterable containing at most limitSize elements from the given iterable
      * @throws          NullPointerException if {@code iterable} is null
      * @throws          IllegalArgumentException if {@code limitSize} is negative
@@ -219,9 +222,10 @@ public final class IterableUtil {
      * Retains only the elements in the given iterable that are also contained in the given collection.
      * @param  removeFrom    the {@link Iterable} from which elements will be removed
      * @param  elementsToRetain the {@link Collection} containing the elements to retain
+     * @param <?>         the type of elements in the {@code removeFrom} and {@code elementsToRetain}
      * @return               true if any elements were removed from the iterable, false otherwise
      * @throws UnsupportedOperationException if the {@code iterable} does not support the remove operation
-     * @throws NullPointerException if either parameter is null
+     * @throws NullPointerException if {@code removeFrom} or {@code elementsToRetain} is null
      */
     public static boolean retainAll(Iterable<?> removeFrom, Collection<?> elementsToRetain)
     {
@@ -232,6 +236,8 @@ public final class IterableUtil {
      * Returns a list containing the result of applying the given function to each element of the given iterable.
      * @param iterable the {@link Iterable} to transform
      * @param func the {@link Function} function to apply to each element
+     * @param <T> the type of elements in the iterable
+     * @param <R> the type of elements in the list
      * @return a {@link List} containing the result of applying the given function to each element of the given iterable
      * @throws NullPointerException if {@code iterable} or {@code func} is null
      */
@@ -244,6 +250,8 @@ public final class IterableUtil {
      * Returns an iterable containing the result of applying the given function to each element of the given iterable.
      * @param iterable the {@link Iterable} to transform
      * @param func the {@link Function} function to apply to each element
+     * @param <T> the type of elements in the iterable
+     * @param <R> the type of elements in the Iterable
      * @return an {@link Iterable} containing the result of applying the given function to each element of the given iterable
      * @throws NullPointerException if {@code iterable} or {@code func} is null
      */
@@ -257,6 +265,8 @@ public final class IterableUtil {
      * @param iterable the {@link Iterable} to transform
      * @param func the {@link Function} function to apply to each element
      * @param parallel whether to use parallel streams
+     * @param <T> the type of elements in the iterable
+     * @param <R> the type of elements in the list
      * @return a {@link List} containing the result of applying the given function to each element of the given iterable
      * @throws NullPointerException if {@code iterable} or {@code func} is null
      */
@@ -270,6 +280,8 @@ public final class IterableUtil {
      * @param iterable the {@link Iterable} to transform
      * @param func the {@link Function} function to apply to each element
      * @param parallel whether to use parallel streams
+     * @param <T> the type of elements in the iterable
+     * @param <R> the type of elements in the Iterable
      * @return an {@link Iterable} containing the result of applying the given function to each element of the given iterable
      * @throws NullPointerException if {@code iterable} or {@code func} is null
      */
@@ -282,6 +294,7 @@ public final class IterableUtil {
      * Performs an action for each element of the given iterable.
      * @param iterable the {@link Iterable} to loop over
      * @param consumer the {@link Consumer} action to perform on each element
+     * @param <T> the type of elements in the iterable
      * @throws NullPointerException if {@code iterable} or {@code consumer} is null
      */
     public static <T> void forEach(Iterable<T> iterable, Consumer<? super T> consumer)
@@ -293,6 +306,7 @@ public final class IterableUtil {
      * Performs an action for each element of the given iterable, optionally using parallel streams.
      * @param iterable the {@link Iterable} to loop over
      * @param consumer the {@link Consumer} action to perform on each element
+     * @param <T> the type of elements in the iterable and in the consumer
      * @param parallel whether to use parallel streams
      * @throws NullPointerException if {@code iterable} or {@code consumer} is null
      */
@@ -306,6 +320,7 @@ public final class IterableUtil {
      * Returns a {@link Collection} containing the union of the given collections.
      * @param  a  the first {@link Iterable} to include in the union
      * @param  b  the second {@link Iterable} to include in the union
+     * @param <O> the type of the elements in the collection
      * @return  a {@link Collection} containing the union of the given collections
      * @throws NullPointerException if the both parameters are null
      */
@@ -320,6 +335,7 @@ public final class IterableUtil {
      * Returns a {@link Collection} containing all elements from the given collections.
      * @param a  the first {@link Iterable} to include in the collection
      * @param b  the second {@link Iterable} to include in the collection
+     * @param <O> the type of the elements in the collection
      * @return  a {@link Collection} containing all elements from the given collections
      * @throws NullPointerException if the both parameters are null
      */

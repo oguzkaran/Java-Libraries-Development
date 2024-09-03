@@ -20,10 +20,10 @@ public final class CollectionUtil {
     /**
      * Adds the specified object to the given collection if the object is not null.
      * @param collection the {@link Collection} to add the object to
-     * @param object the object to add
-     * @return true if the object was added, false otherwise
+     * @param object the {@link Object} to add
+     * @return true if the {@code object} was added, false otherwise
      * @param <E> the type of the elements in the collection
-     * @throws NullPointerException if collection or object is null
+     * @throws NullPointerException if {@code collection} or {@code object} is null
      */
     public static <E> boolean addIfNotNull(Collection<E> collection, E object)
     {
@@ -46,10 +46,10 @@ public final class CollectionUtil {
      * Checks if the object is contained in the given iterable.
      * Instead of dealing with a loop, this method with two parameters can be used for a quick check.
      * @param iterable the {@link Iterable} iterable to check if the object is contained
-     * @param object the object to check if it is contained in the iterable
+     * @param object the {@link Object} to check if it is contained in the iterable
      * @return true if the object is contained in the iterable, false otherwise
      * @param <E> the type of the elements in the iterable
-     * @throws NullPointerException if collection or object is null
+     * @throws NullPointerException if {@code iterable} or {@code object} is null
      */
     public static <E> boolean contains(Collection<E> iterable, Object object)
     {
@@ -63,9 +63,9 @@ public final class CollectionUtil {
      * @param collection the {@link Collection} to extract a single element from
      * @return the single element contained in the given collection, or null if the collection is empty
      * or contains more than one element
-     * @throws NullPointerException if collection is null
-     * @throws IllegalArgumentException if collection is empty or contains more than one element
-     * @param <E> the type of the elements in the collection
+     * @throws NullPointerException if {@code collection} is null
+     * @throws IllegalArgumentException if {@code collection} is empty or contains more than one element
+     * @param <E> the type of the elements in the {@code collection}
      */
     public static <E> E extractSingleton(Collection<E> collection)
     {
@@ -78,7 +78,7 @@ public final class CollectionUtil {
      * @param collection the {@link Collection} to search for the object of the specific type
      * @param types the types of the objects to search for in the collection
      * @return the object of the specific type if found, otherwise return null
-     * @throws NullPointerException if collection is null
+     * @throws NullPointerException if {@code collection} is null
      */
     public static Object findValueOfType(Collection<?> collection, Class<?>[] types)
     {
@@ -90,10 +90,10 @@ public final class CollectionUtil {
      * @param map the {@link Map} to get the element from
      * @param index the index to get the element from
      * @return the element at the given index from the given map
-     * @throws NullPointerException if map is null
-     * @throws IndexOutOfBoundsException if index is out of range
-     * @param <K> the type of the keys in the map
-     * @param <V> the type of the values in the map
+     * @throws NullPointerException if {@code map} is null
+     * @throws IndexOutOfBoundsException if {@code index} is out of range
+     * @param <K> the type of the keys in the {@code map}
+     * @param <V> the type of the values in the
      */
     public static <K, V> Map.Entry<K, V> get(Map<K, V> map, int index)
     {
@@ -107,10 +107,10 @@ public final class CollectionUtil {
      * @param input the {@link Collection} to remove elements from
      * @param startIndex the index to start removing from
      * @param count the number of elements to remove
-     * @return a new collection with the elements that have been removed
-     * @throws NullPointerException if input is null
-     * @throws IndexOutOfBoundsException if startIndex is out of range
-     * @throws IllegalArgumentException if count is less than 0
+     * @return a new {@link Collection} with the elements that have been removed
+     * @throws NullPointerException if {@code input} is null
+     * @throws IndexOutOfBoundsException if {@code startIndex} is out of range
+     * @throws IllegalArgumentException if {@code count} is less than 0
      */
     public static <E> Collection<E> removeCount(Collection<E> input, int startIndex, int count)
     {
