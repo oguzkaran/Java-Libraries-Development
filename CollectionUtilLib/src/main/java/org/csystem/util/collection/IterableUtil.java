@@ -165,7 +165,7 @@ public final class IterableUtil {
      * @param  b   the second {@link Iterable} to get the intersection from
      * @param  <T> the type of elements in the iterables
      * @return     a collection containing the intersection of the two iterables
-     * @throws UnsupportedOperationException if the operation is not yet implemented
+     * @throws NullPointerException if {@code a} or {@code a} is null
      */
     public static <T> Collection<T> intersection(Iterable<? extends T> a, Iterable<? extends T> b)
     {
@@ -228,31 +228,74 @@ public final class IterableUtil {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    /**
+     * Returns a list containing the result of applying the given function to each element of the given iterable.
+     * @param iterable the {@link Iterable} to transform
+     * @param func the {@link Function} function to apply to each element
+     * @return a {@link List} containing the result of applying the given function to each element of the given iterable
+     * @throws NullPointerException if {@code iterable} or {@code func} is null
+     */
     public static <T, R> List<R> toList(Iterable<T> iterable, Function<? super T, R> func)
     {
         return toList(iterable, func, false);
     }
 
+    /**
+     * Returns an iterable containing the result of applying the given function to each element of the given iterable.
+     * @param iterable the {@link Iterable} to transform
+     * @param func the {@link Function} function to apply to each element
+     * @return an {@link Iterable} containing the result of applying the given function to each element of the given iterable
+     * @throws NullPointerException if {@code iterable} or {@code func} is null
+     */
     public static <T, R> Iterable<R> toIterable(Iterable<T> iterable, Function<? super T, R> func)
     {
         return toIterable(iterable, func, false);
     }
 
+    /**
+     * Returns a list containing the result of applying the given function to each element of the given iterable.
+     * @param iterable the {@link Iterable} to transform
+     * @param func the {@link Function} function to apply to each element
+     * @param parallel whether to use parallel streams
+     * @return a {@link List} containing the result of applying the given function to each element of the given iterable
+     * @throws NullPointerException if {@code iterable} or {@code func} is null
+     */
     public static <T, R> List<R> toList(Iterable<T> iterable, Function<? super T, R> func, boolean parallel)
     {
         return StreamSupport.stream(iterable.spliterator(), parallel).map(func).collect(Collectors.toList());
     }
 
+    /**
+     * Returns an iterable containing the result of applying the given function to each element of the given iterable.
+     * @param iterable the {@link Iterable} to transform
+     * @param func the {@link Function} function to apply to each element
+     * @param parallel whether to use parallel streams
+     * @return an {@link Iterable} containing the result of applying the given function to each element of the given iterable
+     * @throws NullPointerException if {@code iterable} or {@code func} is null
+     */
     public static <T, R> Iterable<R> toIterable(Iterable<T> iterable, Function<? super T, R> func, boolean parallel)
     {
         return toList(iterable, func, parallel);
     }
 
+    /**
+     * Performs an action for each element of the given iterable.
+     * @param iterable the {@link Iterable} to loop over
+     * @param consumer the {@link Consumer} action to perform on each element
+     * @throws NullPointerException if {@code iterable} or {@code consumer} is null
+     */
     public static <T> void forEach(Iterable<T> iterable, Consumer<? super T> consumer)
     {
         forEach(iterable, consumer, false);
     }
 
+    /**
+     * Performs an action for each element of the given iterable, optionally using parallel streams.
+     * @param iterable the {@link Iterable} to loop over
+     * @param consumer the {@link Consumer} action to perform on each element
+     * @param parallel whether to use parallel streams
+     * @throws NullPointerException if {@code iterable} or {@code consumer} is null
+     */
     public static <T> void forEach(Iterable<T> iterable, Consumer<? super T> consumer, boolean parallel)
     {
         StreamSupport.stream(iterable.spliterator(), parallel).forEach(consumer);
