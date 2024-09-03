@@ -3,6 +3,7 @@ package org.csystem.util.collection;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Utility class for collection operations including {@link java.util.Collection} and {@link java.util.Map}
@@ -22,6 +23,7 @@ public final class CollectionUtil {
      * @param object the object to add
      * @return true if the object was added, false otherwise
      * @param <E> the type of the elements in the collection
+     * @throws NullPointerException if collection or object is null
      */
     public static <E> boolean addIfNotNull(Collection<E> collection, E object)
     {
@@ -47,6 +49,7 @@ public final class CollectionUtil {
      * @param object the object to check if it is contained in the iterable
      * @return true if the object is contained in the iterable, false otherwise
      * @param <E> the type of the elements in the iterable
+     * @throws NullPointerException if collection or object is null
      */
     public static <E> boolean contains(Collection<E> iterable, Object object)
     {

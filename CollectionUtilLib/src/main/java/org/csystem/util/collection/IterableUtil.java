@@ -24,19 +24,19 @@ public final class IterableUtil {
      * @param iterable the {@link Iterable} to check if all elements are distinct
      * @return true if all elements are distinct otherwise return false
      * @param <T> the type of the elements in the {@link Iterable}
+     * @throws NullPointerException if iterable is null
      */
     public static <T> boolean areAllDistinct(Iterable<? extends T> iterable)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
-
     /**
      * Checks if all elements in the specified {@link Iterable} are not null.
      * @param iterables the {@link Iterable} to check if all elements are not null
      * @return true if all elements are not null otherwise return false
      * @param <?> the type of the elements in the {@link Iterable}
-     * @throws NullPointerException if collection is null
+     * @throws NullPointerException if iterables is null
      */
     public static boolean checkAllNotNull(Iterable<?>... iterables)
     {
@@ -64,7 +64,7 @@ public final class IterableUtil {
      * @param object the object to check if it is contained in the iterable
      * @return  true if the object is contained in the iterable, false otherwise
      * @param <T> the type of the elements in the iterable
-     * @throws NullPointerException if collection or object is null
+     * @throws NullPointerException if iterable or object is null
      */
     public static <T> boolean contains(Iterable<T> iterable, Object object)
     {
@@ -122,7 +122,7 @@ public final class IterableUtil {
 
     /**
      * It is used to search for a component of a specific type within collections containing multiple types.
-     * @param  collection   collection containing elements to search through
+     * @param  collection   the {@link Iterable} containing elements to search through
      * @param  types        array of types to search for
      * @return              the found object of the specified type
      * @throws NullPointerException if the collection is null
@@ -132,25 +132,54 @@ public final class IterableUtil {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    // Returns the number of occurrences of the provided object in the iterable.
+    /**
+     * Calculates the frequency of a given object in an iterable collection.
+     * @param  iterable  the {@link Iterable} to search for the object
+     * @param  obj       the object to search for
+     * @param  <E>       the type of elements in the collection
+     * @param  <T>      the type of the object to search for, which must be a subtype of E
+     * @return           the frequency of the object in the collection
+     * @throws          NullPointerException if iterable or obj is null
+     */
     public static <E, T extends E> int frequency(Iterable<E> iterable, T obj)
     {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    // Returns a {@link Map} mapping each unique element in the given collection to its cardinality.
+    /**
+     * Returns a map containing the cardinality of each element in the given iterable.
+     * @param  coll the {@link Iterable} to get the cardinality map from
+     * @return      map the {@link Map} containing the cardinality of each element in the iterable
+     * @throws      NullPointerException if coll is null
+     */
     public static <T> Map<T, Integer> getCardinalityMap(Iterable<? extends T> coll)
     {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    // Returns a {@link Collection} containing the intersection of the given collections.
+
+    /**
+     * Returns a collection containing the intersection of two iterables. The intersection is the set of elements that
+     * are common to both iterables.
+     * @param  a   the first {@link Iterable} to get the intersection from
+     * @param  b   the second {@link Iterable} to get the intersection from
+     * @param  <T> the type of elements in the iterables
+     * @return     a collection containing the intersection of the two iterables
+     * @throws UnsupportedOperationException if the operation is not yet implemented
+     */
     public static <T> Collection<T> intersection(Iterable<? extends T> a, Iterable<? extends T> b)
     {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    // Returns {@code true} iff <em>a</em> is a sub-collection of <em>b</em>.
+
+    /**
+     * Checks if the first collection is a subset of the second collection.
+     * @param a   the {@link Collection} to check as a subset
+     * @param b   the {@link Collection} to check against
+     * @return    true if {@code a} is a subset of {@code b}, false otherwise
+     * @throws NullPointerException if {@code a} or {@code a} is null
+     */
     public static boolean isSubCollection(Collection<?> a, Collection<?> b)
     {
         throw new UnsupportedOperationException("Not yet implemented");
@@ -158,26 +187,42 @@ public final class IterableUtil {
 
 
 
-    //Returns a view of iterable containing its first limitSize elements.
+
+    /**
+     * Returns a limited iterable from the given iterable.
+     * @param  iterable  the {@link Iterable} to limit
+     * @param  limitSize the maximum number of elements to return
+     * @return          an iterable containing at most limitSize elements from the given iterable
+     * @throws          NullPointerException if {@code iterable} is null
+     * @throws          IllegalArgumentException if {@code limitSize} is negative
+     */
     public static <T> Iterable<T> limit(Iterable<T> iterable, int limitSize)
     {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    //Returns an iterable over the merged contents of all given iterables.
+
     static <T> Iterable<T> mergeSorted(Iterable<? extends Iterable<? extends T>> iterables,
                                       Comparator<? super T> comparator)
     {
         throw new UnsupportedOperationException("Will be written by Oğuz Karan");
     }
 
-    //Divides an iterable into unmodifiable sublists of the given size, padding the final iterable with null values if necessary.
+
     public static <T> Iterable<List<T>> paddedPartition(Iterable<T> iterable, int size)
     {
         throw new UnsupportedOperationException("Will be written by Oğuz Karan");
     }
 
-    //Removes, from an iterable, every element that does not belong to the provided collection.
+
+    /**
+     * Retains only the elements in the given iterable that are also contained in the given collection.
+     * @param  removeFrom    the {@link Iterable} from which elements will be removed
+     * @param  elementsToRetain the {@link Collection} containing the elements to retain
+     * @return               true if any elements were removed from the iterable, false otherwise
+     * @throws UnsupportedOperationException if the {@code iterable} does not support the remove operation
+     * @throws NullPointerException if either parameter is null
+     */
     public static boolean retainAll(Iterable<?> removeFrom, Collection<?> elementsToRetain)
     {
         throw new UnsupportedOperationException("Not yet implemented");
@@ -213,15 +258,28 @@ public final class IterableUtil {
         StreamSupport.stream(iterable.spliterator(), parallel).forEach(consumer);
     }
 
-    // Returns a {@link Collection} containing the union of the given collections.
-    // Two lists can be combined and made unique using getCardinalityMap.
+
+    /**
+     * Returns a {@link Collection} containing the union of the given collections.
+     * @param  a  the first {@link Iterable} to include in the union
+     * @param  b  the second {@link Iterable} to include in the union
+     * @return  a {@link Collection} containing the union of the given collections
+     * @throws NullPointerException if the both parameters are null
+     */
     public static <O> Collection<O> union(Iterable<? extends O> a, Iterable<? extends O> b)
     {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    // Returns a {@link Collection} containing the union of the given collections.
-    // Two lists can be combined with all elements
+    // TODO: THESE 2 METHODS WILL BE DISCUSED LATER
+
+    /**
+     * Returns a {@link Collection} containing all elements from the given collections.
+     * @param a  the first {@link Iterable} to include in the collection
+     * @param b  the second {@link Iterable} to include in the collection
+     * @return  a {@link Collection} containing all elements from the given collections
+     * @throws NullPointerException if the both parameters are null
+     */
     public static <O> Collection<O> unionAll(Iterable<? extends O> a, Iterable<? extends O> b)
     {
         throw new UnsupportedOperationException("Not yet implemented");
