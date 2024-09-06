@@ -1,9 +1,9 @@
 package org.csystem.util.collection;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 /**
  * Utility class for collection operations including {@link java.util.Collection} and {@link java.util.Map}
@@ -23,11 +23,14 @@ public final class CollectionUtil {
      * @param object the {@link Object} to add
      * @return true if the {@code object} was added, false otherwise
      * @param <E> the type of the elements in the collection
-     * @throws NullPointerException if {@code collection} or {@code object} is null
+     * @throws NullPointerException if {@code collection}
      */
     public static <E> boolean addIfNotNull(Collection<E> collection, E object)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (collection == null)
+            throw new NullPointerException();
+
+        return object != null && collection.add(object);
     }
 
     /**
@@ -53,7 +56,10 @@ public final class CollectionUtil {
      */
     public static <E> boolean contains(Collection<E> iterable, Object object)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (iterable == null || object == null)
+            throw new NullPointerException();
+
+        throw new UnsupportedOperationException("Not yet implemented"); // Binary search
     }
 
 
@@ -97,24 +103,48 @@ public final class CollectionUtil {
      */
     public static <K, V> Map.Entry<K, V> get(Map<K, V> map, int index)
     {
+        if (map == null)
+            throw new NullPointerException();
+        if (index < 0 || map.size() < index)
+            throw new IndexOutOfBoundsException();
+
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
 
     /**
-     * Removes elements from the given collection starting from the specified start index
-     * for the specified count.
+     * Removes the specified number of elements from the start index in the collection and returns them.
+     * This method modifies the input collections.
      * @param input the {@link Collection} to remove elements from
      * @param startIndex the index to start removing from
      * @param count the number of elements to remove
      * @return a new {@link Collection} with the elements that have been removed
      * @throws NullPointerException if {@code input} is null
      * @throws IndexOutOfBoundsException if {@code startIndex} is out of range
-     * @throws IllegalArgumentException if {@code count} is less than 0
      */
     public static <E> Collection<E> removeCount(Collection<E> input, int startIndex, int count)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (input == null)
+            throw new NullPointerException();
+        if (startIndex < 0 || input.size() < startIndex || input.size() < startIndex + count || count < 0)
+            throw new IndexOutOfBoundsException();
+
+        var list = new ArrayList<E>();
+
+        var x = input.stream().skip(startIndex).limit(count).collect(Collectors.toList());
+
+        x.forEach(input::remove);
+
+        return list;
+    }
+
+
+    public static void main(String[] args) {
+        var list = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+
+        var x = removeCount(list, 4, 3);
+        System.out.println(x.size());
+        x.forEach(System.out::println);
     }
 
     //...
