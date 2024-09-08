@@ -160,6 +160,7 @@ class ConcurrentServerTest {
 	public void createAndStartServerWithSocketConsumer_ThenConnectAndConfirmCommunicationTest()
 	{
 		m_concurrentServer.setClientSocketConsumer(this::socketConsumerCallback).start();
+		delayThread();
 
 		try (var socket = new Socket("localhost", DEFAULT_PORT)) {
 			Assertions.assertArrayEquals(SOCKET_CONSUMER_MESSAGE.getBytes(),
@@ -191,7 +192,7 @@ class ConcurrentServerTest {
 		}
 	}
 
-	@Order(6)
+	@Order(7)
 	@Test
 	public void createAndStartServerWithAllFeatures_ThenConnectAndCheckResultsTest()
 	{
@@ -217,7 +218,7 @@ class ConcurrentServerTest {
 		}
 	}
 
-	@Order(7)
+	@Order(8)
 	@Test
 	public void createAndStartServerWithDefaultPortAndBacklog_ThenConnectWithMultipleClients()
 	{
