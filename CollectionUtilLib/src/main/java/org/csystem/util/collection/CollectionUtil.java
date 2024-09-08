@@ -27,8 +27,9 @@ public final class CollectionUtil {
      */
     public static <E> boolean addIfNotNull(Collection<E> collection, E object)
     {
+
         if (collection == null)
-            throw new NullPointerException();
+            throw new NullPointerException("Collection cannot be null");
 
         return object != null && collection.add(object);
     }
@@ -48,7 +49,7 @@ public final class CollectionUtil {
     /**
      * Checks if the object is contained in the given iterable.
      * Instead of dealing with a loop, this method with two parameters can be used for a quick check.
-     * @param iterable the {@link Iterable} iterable to check if the object is contained
+     * @param iterable the {@link Collection} iterable to check if the object is contained
      * @param object the {@link Object} to check if it is contained in the iterable
      * @return true if the object is contained in the iterable, false otherwise
      * @param <E> the type of the elements in the iterable
@@ -104,9 +105,9 @@ public final class CollectionUtil {
     public static <K, V> Map.Entry<K, V> get(Map<K, V> map, int index)
     {
         if (map == null)
-            throw new NullPointerException();
+            throw new NullPointerException("map cannot be null");
         if (index < 0 || map.size() < index)
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("index cannot be out of range");
 
         throw new UnsupportedOperationException("Not yet implemented");
     }
@@ -125,27 +126,22 @@ public final class CollectionUtil {
     public static <E> Collection<E> removeCount(Collection<E> input, int startIndex, int count)
     {
         if (input == null)
-            throw new NullPointerException();
-        if (startIndex < 0 || input.size() < startIndex || input.size() < startIndex + count || count < 0)
-            throw new IndexOutOfBoundsException();
+            throw new NullPointerException("input cannot be null");
+        if (startIndex < 0 || input.size() < startIndex)
+            throw new IndexOutOfBoundsException("startIndex cannot be out of range");
+        if (input.size() < startIndex + count || count < 0)
+            throw new IndexOutOfBoundsException("count cannot be out of range");
 
-        var list = new ArrayList<E>();
+        var removedElements = new ArrayList<E>();
 
-        var x = input.stream().skip(startIndex).limit(count).collect(Collectors.toList());
+        input.stream().
+            skip(startIndex).
+            limit(count).
+            forEach(removedElements::add);
 
-        x.forEach(input::remove);
+        input.removeAll(removedElements);
 
-        return list;
+        return removedElements;
     }
 
-
-    public static void main(String[] args) {
-        var list = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
-
-        var x = removeCount(list, 4, 3);
-        System.out.println(x.size());
-        x.forEach(System.out::println);
-    }
-
-    //...
 }

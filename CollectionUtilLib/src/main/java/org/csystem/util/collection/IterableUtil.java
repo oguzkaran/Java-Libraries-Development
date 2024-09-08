@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 
@@ -28,7 +29,12 @@ public final class IterableUtil {
      */
     public static <T> boolean areAllDistinct(Iterable<? extends T> iterable)
     {
-        throw new UnsupportedOperationException("TODO");
+        Objects.requireNonNull(iterable,"Iterable cannot be null");
+
+        var iterableList = StreamSupport.stream(iterable.spliterator(), false)
+            .collect(Collectors.toList());
+
+        return iterableList.size() == new HashSet<T>(iterableList).size();
     }
 
     /**
@@ -40,7 +46,11 @@ public final class IterableUtil {
      */
     public static boolean checkAllNotNull(Iterable<?>... iterables)
     {
-        throw new UnsupportedOperationException("TODO");
+       Objects.requireNonNull(iterables,"Iterable cannot be null");
+
+       return Stream.of(iterables).flatMap(i -> StreamSupport.stream(i.spliterator(), false))
+           .allMatch(Objects::nonNull);
+
     }
 
     /**
@@ -55,6 +65,10 @@ public final class IterableUtil {
     public static <T> List<T> collate(Iterable<? extends T> a, Iterable<? extends T> b,
                                       Comparator<? super T> comparator)
     {
+        Objects.requireNonNull(a, "a cannot be null");
+        Objects.requireNonNull(b, "b cannot be null");
+        Objects.requireNonNull(comparator, "comparator cannot be null");
+
         return collate(a, b, comparator, true);
     }
 
@@ -68,6 +82,9 @@ public final class IterableUtil {
      */
     public static <T> boolean contains(Iterable<T> iterable, Object object)
     {
+        Objects.requireNonNull(iterable, "iterable cannot be null");
+        Objects.requireNonNull(object, "object cannot be null");
+        //TODO: How to approach this?
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -97,7 +114,12 @@ public final class IterableUtil {
      */
     public static <T> Iterable<T> concat(Iterable<? extends Iterable<? extends T>> iterable)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Objects.requireNonNull(iterable, "iterable cannot be null");
+
+        return StreamSupport.stream(iterable.spliterator(), false)
+            .flatMap(i -> StreamSupport.stream(i.spliterator(), false))
+            .collect(Collectors.toList());
+
     }
 
     //Returns an iterable whose iterators cycle indefinitely over the elements of iterable.
@@ -117,7 +139,13 @@ public final class IterableUtil {
      */
     static <T> Optional<T> findFirst(Iterable<T> iterable, Predicate<? super T> predicate)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Objects.requireNonNull(iterable, "iterable cannot be null");
+        Objects.requireNonNull(predicate, "predicate cannot be null");
+
+        return StreamSupport.stream(iterable.spliterator(), false)
+            .filter(predicate)
+            .findFirst();
+
     }
 
     /**
@@ -130,6 +158,7 @@ public final class IterableUtil {
      */
     public static Object findValueOfType(Iterable<?> collection, Class<?>[] types)
     {
+        Objects.requireNonNull(collection, "collection cannot be null");
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
