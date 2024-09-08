@@ -1,116 +1,177 @@
 package org.csystem.net.tcp.server;
 
 import org.junit.jupiter.api.*;
+
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ConcurrentServerTest {
     private ConcurrentServer m_concurrentServer;
+    private final int DEFAULT_PORT = 6767;
 
     @BeforeEach
     void setUp() throws IOException
     {
-        // Basic configuration for testing
-        m_concurrentServer = ConcurrentServer.builder()
-                .setPort(8080)
+        m_concurrentServer = ConcurrentServer.builder().setPort(DEFAULT_PORT)
                 .setBacklog(100)
                 .setInitRunnable(() -> System.out.println("Server initialized"))
                 .setBeforeAcceptRunnable(() -> System.out.println("Before accept"))
                 .setClientSocketConsumer(socket -> {
-                    try {
-                        // Simulate basic client socket handling
-                        socket.getOutputStream().write("Hello Client".getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                })
-                .setServerExceptionConsumer(Throwable::printStackTrace)
-                .build();
+            try {
+                socket.getOutputStream().write("Hello Client".getBytes());
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).setServerExceptionConsumer(Throwable::printStackTrace).build();
     }
 
     @Test
     @Order(1)
-    void testServerStart() throws IOException
+    void testServerStopAndStop() throws IOException
     {
-        // Ensure the server starts without exception
-        assertDoesNotThrow(() -> m_concurrentServer.start());
-    }
-
-    @Test
-    @Order(2)
-    void testServerStop() throws IOException
-    {
-        // Start and stop the server to ensure it stops without exception
         m_concurrentServer.start();
         assertDoesNotThrow(() -> m_concurrentServer.stop());
     }
 
     @Test
-    @Order(3)
+    @Order(2)
     void testClientHandling() throws IOException, InterruptedException
     {
-        // Start the server
         m_concurrentServer.start();
 
-        // Start a client connection in a separate thread
         ExecutorService clientExecutor = Executors.newSingleThreadExecutor();
         clientExecutor.submit(() -> {
-            try (Socket clientSocket = new Socket("localhost", 8080)) {
+            try (Socket clientSocket = new Socket("localhost", DEFAULT_PORT)) {
                 byte[] response = new byte[100];
                 int bytesRead = clientSocket.getInputStream().read(response);
-                assertEquals("Hello Client", new String(response, 0, bytesRead));  // Validate server response
+
+                var stringResponse = new String(response, 0, bytesRead);
+                System.out.println(stringResponse);
+
+                assertEquals("Hello Client", stringResponse);
             }
             catch (IOException e) {
                 fail("Client connection failed: " + e.getMessage());
             }
         });
 
-        // Give the server time to handle the client
-        Thread.sleep(1000);  // Delay to ensure the server has time to accept and handle the client request
+        Thread.sleep(1000);
 
-        // Clean up by shutting down the server after client interaction
         assertDoesNotThrow(() -> m_concurrentServer.stop());
-
-        // Clean up the client executor
         clientExecutor.shutdown();
-        assertTrue(clientExecutor.awaitTermination(2, java.util.concurrent.TimeUnit.SECONDS)); // Wait for client thread to finish
+        assertTrue(clientExecutor.awaitTermination(2, java.util.concurrent.TimeUnit.SECONDS));
     }
 
+    @Test
+    @Order(3)
+    void testMultipleClientConnections() throws IOException, InterruptedException
+    {
+        m_concurrentServer.start();
 
+        int clientCount = 5;
+        ExecutorService clientExecutor = Executors.newFixedThreadPool(clientCount);
+        CountDownLatch latch = new CountDownLatch(clientCount);
+
+        for (int i = 0; i < clientCount; i++) {
+            clientExecutor.submit(() -> {
+                try (Socket clientSocket = new Socket("localhost", DEFAULT_PORT)) {
+                    byte[] response = new byte[100];
+                    int bytesRead = clientSocket.getInputStream().read(response);
+
+                    var stringResponse = new String(response, 0, bytesRead);
+                    System.out.println("Response from server: " + stringResponse);
+
+                    assertEquals("Hello Client", stringResponse);
+                    latch.countDown();
+                }
+                catch (IOException e) {
+                    fail("Client connection failed: " + e.getMessage());
+                }
+            });
+        }
+
+        latch.await(5, TimeUnit.SECONDS);
+        clientExecutor.shutdown();
+        assertTrue(clientExecutor.awaitTermination(2, TimeUnit.SECONDS));
+        assertDoesNotThrow(() -> m_concurrentServer.stop());
+    }
 
     @Test
     @Order(4)
-    void testInitRunnable() throws IOException
+    void testServerExceptionHandling() throws IOException
     {
-        ConcurrentServer server = ConcurrentServer.builder()
-                .setPort(9090)
-                .setInitRunnable(() -> {
-                    System.out.println("Initialization logic ran");
-                    assertTrue(true);  // Just to assert the logic ran
-                })
-                .build();
+        m_concurrentServer = ConcurrentServer.builder().setPort(DEFAULT_PORT).setClientSocketConsumer(socket -> {
+            throw new IOException("Simulated exception");
+        }).setServerExceptionConsumer(ex -> assertInstanceOf(IOException.class, ex)).build();
 
-        assertDoesNotThrow(server::start);
-        server.stop();
+        m_concurrentServer.start();
+
+        try (Socket clientSocket = new Socket("localhost", DEFAULT_PORT)) {
+            clientSocket.getOutputStream().write("Test".getBytes());
+        }
+        catch (IOException e) {
+            //..
+        }
+
+        assertDoesNotThrow(() -> m_concurrentServer.stop());
     }
 
     @Test
     @Order(5)
-    void testBeforeAcceptRunnable() throws IOException
+    void testClientConnectionTimeout() throws IOException, InterruptedException
     {
-        ConcurrentServer server = ConcurrentServer.builder()
-                .setPort(9091)
-                .setBeforeAcceptRunnable(() -> {
-                    System.out.println("Before accept logic ran");
-                    assertTrue(true);  // To assert the before accept logic ran
-                })
-                .build();
+        m_concurrentServer = ConcurrentServer.builder().setPort(DEFAULT_PORT).setClientSocketConsumer(socket -> {
+            try {
+                Thread.sleep(5000);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).build();
 
-        assertDoesNotThrow(server::start);
-        server.stop();
+        m_concurrentServer.start();
+
+        ExecutorService clientExecutor = Executors.newSingleThreadExecutor();
+        clientExecutor.submit(() -> {
+            try (Socket clientSocket = new Socket("localhost", DEFAULT_PORT)) {
+                clientSocket.setSoTimeout(1000);
+                byte[] response = new byte[100];
+                System.out.println(clientSocket.getInputStream().read(response));
+            }
+            catch (IOException e) {
+                assertInstanceOf(SocketTimeoutException.class, e);
+            }
+        });
+
+        clientExecutor.shutdown();
+        assertTrue(clientExecutor.awaitTermination(6, TimeUnit.SECONDS));
+        assertDoesNotThrow(() -> m_concurrentServer.stop());
     }
+
+    @Test
+    @Order(6)
+    void testServerRejectionAfterShutdown() throws IOException, InterruptedException
+    {
+        m_concurrentServer.start();
+        assertDoesNotThrow(() -> m_concurrentServer.stop());
+
+
+        try (Socket clientSocket = new Socket("localhost", DEFAULT_PORT)) {
+            System.err.println("Connection should be rejected as server is stopped");
+        }
+        catch (IOException e) {
+            assertInstanceOf(ConnectException.class, e);
+        }
+    }
+
 }
