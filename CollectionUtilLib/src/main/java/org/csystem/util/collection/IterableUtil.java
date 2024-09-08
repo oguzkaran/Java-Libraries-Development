@@ -173,7 +173,11 @@ public final class IterableUtil {
      */
     public static <E, T extends E> int frequency(Iterable<E> iterable, T obj)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Objects.requireNonNull(iterable, "iterable cannot be null");
+        Objects.requireNonNull(obj, "obj cannot be null");
+
+        return (int)StreamSupport.stream(iterable.spliterator(), false)
+                .filter(obj::equals).count();
     }
 
     /**
@@ -185,7 +189,10 @@ public final class IterableUtil {
      */
     public static <T> Map<T, Integer> getCardinalityMap(Iterable<? extends T> coll)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Objects.requireNonNull(coll, "coll cannot be null");
+
+        return StreamSupport.stream(coll.spliterator(), false)
+                .collect(Collectors.toMap(Function.identity(), t -> 1, Integer::sum));
     }
 
 
@@ -200,7 +207,12 @@ public final class IterableUtil {
      */
     public static <T> Collection<T> intersection(Iterable<? extends T> a, Iterable<? extends T> b)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Objects.requireNonNull(a, "a cannot be null");
+        Objects.requireNonNull(b, "b cannot be null");
+
+        return StreamSupport.stream(a.spliterator(), false)
+                .filter(t -> StreamSupport.stream(b.spliterator(), false)
+                .anyMatch(t::equals)).collect(Collectors.toSet());
     }
 
 
