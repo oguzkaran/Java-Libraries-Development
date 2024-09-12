@@ -60,7 +60,7 @@ public final class CollectionUtil {
         if (iterable == null || object == null)
             throw new NullPointerException();
 
-        throw new UnsupportedOperationException("Not yet implemented"); // Binary search
+        throw new UnsupportedOperationException("Not yet implemented"); //TODO: Binary search ????
     }
 
 
