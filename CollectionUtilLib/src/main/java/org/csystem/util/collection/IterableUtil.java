@@ -378,7 +378,7 @@ public final class IterableUtil {
                 .distinct().collect(Collectors.toList());
     }
 
-    // TODO: THESE 2 METHODS WILL BE DISCUSED LATER
+
 
     /**
      * Returns a {@link Collection} containing all elements from the given collections.
