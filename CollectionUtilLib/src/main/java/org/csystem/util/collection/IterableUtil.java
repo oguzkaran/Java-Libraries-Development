@@ -358,16 +358,24 @@ public final class IterableUtil {
 
 
     /**
-     * Returns a {@link Collection} containing the union of the given collections.
+     * Returns a {@link Collection} containing the union of the given collections which were distincted.
      * @param  a  the first {@link Iterable} to include in the union
      * @param  b  the second {@link Iterable} to include in the union
-     * @param <O> the type of the elements in the collection
+     * @param <T> the type of the elements in the collection
      * @return  a {@link Collection} containing the union of the given collections
      * @throws NullPointerException if the both parameters are null
      */
-    public static <O> Collection<O> union(Iterable<? extends O> a, Iterable<? extends O> b)
+    public static <T> Collection<T> union(Iterable<? extends T> a, Iterable<? extends T> b)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (a == null && b == null)
+            throw new NullPointerException("Null pointer exception..!");
+        else if (a == null)
+            return StreamSupport.stream(b.spliterator(), false).collect(Collectors.toList());
+        else if (b == null)
+            return StreamSupport.stream(a.spliterator(), false).collect(Collectors.toList());
+
+        return Stream.concat(StreamSupport.stream(a.spliterator(), false), StreamSupport.stream(b.spliterator(), false))
+                .distinct().collect(Collectors.toList());
     }
 
     // TODO: THESE 2 METHODS WILL BE DISCUSED LATER
@@ -376,12 +384,20 @@ public final class IterableUtil {
      * Returns a {@link Collection} containing all elements from the given collections.
      * @param a  the first {@link Iterable} to include in the collection
      * @param b  the second {@link Iterable} to include in the collection
-     * @param <O> the type of the elements in the collection
+     * @param <T> the type of the elements in the collection
      * @return  a {@link Collection} containing all elements from the given collections
      * @throws NullPointerException if the both parameters are null
      */
-    public static <O> Collection<O> unionAll(Iterable<? extends O> a, Iterable<? extends O> b)
+    public static <T> Collection<T> unionAll(Iterable<? extends T> a, Iterable<? extends T> b)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (a == null && b == null)
+            throw new NullPointerException("Null pointer exception..!");
+        else if (a == null)
+            return StreamSupport.stream(b.spliterator(), false).collect(Collectors.toList());
+        else if (b == null)
+            return StreamSupport.stream(a.spliterator(), false).collect(Collectors.toList());
+
+        return Stream.concat(StreamSupport.stream(a.spliterator(), false), StreamSupport.stream(b.spliterator(), false))
+                .collect(Collectors.toList());
     }
 }
