@@ -22,7 +22,6 @@ import java.util.concurrent.Executors;
  * @see ExecutorService
  *
  * @author JavaApp2-Jan-2024 Group
- * @version 1.0.0
  */
 
 public class ConcurrentServer {
