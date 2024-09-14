@@ -370,9 +370,9 @@ public final class IterableUtil {
         if (a == null && b == null)
             throw new NullPointerException("Null pointer exception..!");
         else if (a == null)
-            return StreamSupport.stream(b.spliterator(), false).collect(Collectors.toList());
+            return StreamSupport.stream(b.spliterator(), false).distinct().collect(Collectors.toList());
         else if (b == null)
-            return StreamSupport.stream(a.spliterator(), false).collect(Collectors.toList());
+            return StreamSupport.stream(a.spliterator(), false).distinct().collect(Collectors.toList());
 
         return Stream.concat(StreamSupport.stream(a.spliterator(), false), StreamSupport.stream(b.spliterator(), false))
                 .distinct().collect(Collectors.toList());
