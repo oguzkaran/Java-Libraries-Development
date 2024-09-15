@@ -1,10 +1,12 @@
 package org.csystem.util.collection;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 
 public class CollectionUtilTest {
@@ -35,26 +37,42 @@ public class CollectionUtilTest {
     @Test
     public void testExtractSingleton()
     {
-        var collection = Arrays.asList("a", "b", "b");
+        var collection = Arrays.asList("a");
         assertEquals("a", CollectionUtil.extractSingleton(collection));
+
+        /* Konuşulup,  Exceptionlar dahil edilecek
+        Exception exception = assertThrows(
+                NullPointerException.class,
+                () -> CollectionUtil.extractSingleton(null));
+         */
     }
     @Test
     public void testFindValueOfType()
     {
-       // Class<?> clsString = String.class;
-        Class<?>[] types = {String.class};
+        Class<?>[] types = {String.class, Integer.class};
 
-        ArrayList<Object> objs = new ArrayList<>();
-        objs.add(1);
-        objs.add("su");
-        objs.add("ezgi");
+        Collection<Object> objs1 = Arrays.asList("Ezgisu", "Deniz", null, 1);
+        Collection<Object> objs2 = Arrays.asList(2, "Ezgisu", "Deniz", null, 1);
 
-        var value = CollectionUtil.findValueOfType(objs, types);
-        System.out.println("value:" + value);
+        var val1 = CollectionUtil.findValueOfType(objs1, types);
+        var val2 = CollectionUtil.findValueOfType(objs2, types);
+
+        assertEquals("Ezgisu", val1);
+        assertEquals(2, val2);
+
     }
     @Test
     public void testGet()
     {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("a", 0);
+        map.put("b", 1);
+        map.put("c", 2);
+
+        var expected = new HashMap<>();
+        expected.put("b", 1);
+
+        assertEquals(expected.entrySet().iterator().next(), CollectionUtil.get(map, 1));
     }
     @Test
     public void testRemoveCount()
