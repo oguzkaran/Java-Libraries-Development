@@ -136,11 +136,31 @@ class IterableUtilTest {
     void testForEach() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void union() {
+        var iterable1 = List.of(1, 2);
+        var iterable2 = List.of(3, 4);
+        var iterable3 = List.of(1, 2, 3, 3, 2);
+        var iterable4 = List.of(1, 4, 5, 3, 2);
+
+        var excepted1 = List.of(1, 2, 3, 4);
+        var excepted2 = List.of(1, 2, 3, 4, 5);
+
+        assertEquals(excepted1, IterableUtil.union(iterable1, iterable2));
+        assertEquals(excepted2, IterableUtil.union(iterable3, iterable4));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void unionAll() {
+        var iterable1 = List.of(1, 2);
+        var iterable2 = List.of(3, 4);
+        var iterable3 = List.of(1, 2, 3, 3, 2);
+        var iterable4 = List.of(1, 4, 5, 3, 2);
+
+        var excepted1 = List.of(1, 2, 3, 4);
+        var excepted2 = List.of(1, 2, 3, 3, 2, 1, 4, 5, 3, 2);
+
+        assertEquals(excepted1, IterableUtil.unionAll(iterable1, iterable2));
+        assertEquals(excepted2, IterableUtil.unionAll(iterable3, iterable4));
     }
 }
