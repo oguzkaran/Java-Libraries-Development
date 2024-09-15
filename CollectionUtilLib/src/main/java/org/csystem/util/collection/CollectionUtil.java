@@ -68,15 +68,17 @@ public final class CollectionUtil {
      * Returns the single element contained in the given collection,throws an {@link Exception} if the collection is empty
      * or contains more than one element.
      * @param collection the {@link Collection} to extract a single element from
-     * @return the single element contained in the given collection, or null if the collection is empty
-     * or contains more than one element
+     * @return the single element contained in the given collection
      * @throws NullPointerException if {@code collection} is null
      * @throws IllegalArgumentException if {@code collection} is empty or contains more than one element
      * @param <E> the type of the elements in the {@code collection}
      */
     public static <E> E extractSingleton(Collection<E> collection)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Objects.requireNonNull(collection, "collection cannot be null");
+        if (collection.size() != 1)
+            throw new IllegalArgumentException("collection cannot contain more than one element");
+        return collection.iterator().next();
     }
 
 
@@ -85,11 +87,31 @@ public final class CollectionUtil {
      * @param collection the {@link Collection} to search for the object of the specific type
      * @param types the types of the objects to search for in the collection
      * @return the object of the specific type if found, otherwise return null
-     * @throws NullPointerException if {@code collection} is null
+     * @throws NullPointerException if {@code collection} is null or {@code types}
      */
     public static Object findValueOfType(Collection<?> collection, Class<?>[] types)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (collection == null)
+            throw new NullPointerException("collection cannot be null");
+        if (types == null)
+            throw new NullPointerException("types cannot be null");
+
+        for (var item : collection)
+            if (item != null)
+                for (var type : types)
+                    if (type.isInstance(item))
+                        return item;
+
+        /*
+        Objects.requireNonNull(collection, "collection cannot be null");
+        return collection.stream()
+        .filter(Objects::nonNull)
+        .filter(obj -> Arrays.stream(types).anyMatch(type -> type.isInstance(obj)))
+        .findFirst()
+        .orElse(null);
+        */
+
+        return null;
     }
 
     /**
@@ -100,7 +122,7 @@ public final class CollectionUtil {
      * @throws NullPointerException if {@code map} is null
      * @throws IndexOutOfBoundsException if {@code index} is out of range
      * @param <K> the type of the keys in the {@code map}
-     * @param <V> the type of the values in the
+     * @param <V> the type of the values in the {@code map}
      */
     public static <K, V> Map.Entry<K, V> get(Map<K, V> map, int index)
     {
@@ -109,7 +131,22 @@ public final class CollectionUtil {
         if (index < 0 || map.size() < index)
             throw new IndexOutOfBoundsException("index cannot be out of range");
 
-        throw new UnsupportedOperationException("Not yet implemented");
+        return map.entrySet().stream().
+                skip(index).
+                findFirst().
+                orElse(null);
+        /*
+
+         int currentIndex = 0;
+         for (Map.Entry<K, V> entry : map.entrySet())
+         { if (currentIndex == index){
+         return entry;
+         }
+         currentIndex++;
+         }
+
+         */
+
     }
 
 

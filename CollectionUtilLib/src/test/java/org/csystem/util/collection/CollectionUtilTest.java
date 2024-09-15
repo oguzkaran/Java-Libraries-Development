@@ -35,10 +35,22 @@ public class CollectionUtilTest {
     @Test
     public void testExtractSingleton()
     {
+        var collection = Arrays.asList("a", "b", "b");
+        assertEquals("a", CollectionUtil.extractSingleton(collection));
     }
     @Test
     public void testFindValueOfType()
     {
+       // Class<?> clsString = String.class;
+        Class<?>[] types = {String.class};
+
+        ArrayList<Object> objs = new ArrayList<>();
+        objs.add(1);
+        objs.add("su");
+        objs.add("ezgi");
+
+        var value = CollectionUtil.findValueOfType(objs, types);
+        System.out.println("value:" + value);
     }
     @Test
     public void testGet()
