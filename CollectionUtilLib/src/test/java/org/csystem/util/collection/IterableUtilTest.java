@@ -2,6 +2,7 @@ package org.csystem.util.collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,8 +23,13 @@ class IterableUtilTest {
         var iterable = List.of(1, 2, 3, 4, 5);
         assertTrue(IterableUtil.checkAllNotNull(iterable));
 
-//        var iterables = List.of(1, 2, 3, 4, null);
-//        assertFalse(IterableUtil.checkAllNotNull(iterables));
+        List<String> list1 = Arrays.asList("a", null, "c");
+        List<String> list2 = Arrays.asList("d", "e", "f");
+        assertFalse(IterableUtil.checkAllNotNull(list1, list2));
+
+        List<String> list3 = Arrays.asList(null, null, null);
+        List<String> list4 = Arrays.asList(null, null, null);
+        assertFalse(IterableUtil.checkAllNotNull(list1, list2));
 
     }
 
