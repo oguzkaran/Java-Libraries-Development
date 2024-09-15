@@ -225,10 +225,17 @@ public final class IterableUtil {
      */
     public static boolean isSubCollection(Collection<?> a, Collection<?> b)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Objects.requireNonNull(a, "a cannot be null");
+        Objects.requireNonNull(b, "b cannot be null");
+
+        // TODO : Stream ile iyileştirilecek.
+
+        for (var t : a) {
+            if (!b.contains(t))
+                return false;
+        }
+        return true;
     }
-
-
 
 
     /**
