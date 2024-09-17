@@ -1,9 +1,6 @@
 package org.csystem.util.collection;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 /**
  * Utility class for collection operations including {@link java.util.Collection} and {@link java.util.Map}
@@ -15,7 +12,6 @@ public final class CollectionUtil {
     private CollectionUtil()
     {
     }
-
 
     /**
      * Adds the specified object to the given collection if the object is not null.
@@ -45,7 +41,6 @@ public final class CollectionUtil {
         return collection.size() == new HashSet<E>(collection).size();
     }
 
-
     /**
      * Checks if the object is contained in the given iterable.
      * Instead of dealing with a loop, this method with two parameters can be used for a quick check.
@@ -63,7 +58,6 @@ public final class CollectionUtil {
         throw new UnsupportedOperationException("Not yet implemented"); //TODO: Binary search ????
     }
 
-
     /**
      * Returns the single element contained in the given collection,throws an {@link Exception} if the collection is empty
      * or contains more than one element.
@@ -80,7 +74,6 @@ public final class CollectionUtil {
             throw new IllegalArgumentException("collection cannot contain more than one element");
         return collection.iterator().next();
     }
-
 
     /**
      * It is used to search for a component of a specific type within collections containing multiple types.
@@ -101,15 +94,6 @@ public final class CollectionUtil {
                 for (var type : types)
                     if (type.isInstance(item))
                         return item;
-
-        /*
-        Objects.requireNonNull(collection, "collection cannot be null");
-        return collection.stream()
-        .filter(Objects::nonNull)
-        .filter(obj -> Arrays.stream(types).anyMatch(type -> type.isInstance(obj)))
-        .findFirst()
-        .orElse(null);
-        */
 
         return null;
     }
@@ -135,20 +119,8 @@ public final class CollectionUtil {
                 skip(index).
                 findFirst().
                 orElse(null);
-        /*
-
-         int currentIndex = 0;
-         for (Map.Entry<K, V> entry : map.entrySet())
-         { if (currentIndex == index){
-         return entry;
-         }
-         currentIndex++;
-         }
-
-         */
 
     }
-
 
     /**
      * Removes the specified number of elements from the start index in the collection and returns them.

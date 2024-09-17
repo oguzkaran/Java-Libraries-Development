@@ -72,6 +72,30 @@ public final class IterableUtil {
         return collate(a, b, comparator, true);
     }
 
+    /**
+     * Merges two iterables into a single, sorted List by comparator
+     * @param a the {@link Iterable} to collate
+     * @param b the {@link Iterable} to collate
+     * @param includeDuplicates if true, duplicate elements are included
+     * @param comparator the {@link Comparator} to compare the elements to determine the order
+     * @param <T> the type of the elements
+     * @return List<T> the collated {@link List} of the two {@link Iterable}
+     * @throws NullPointerException if {@code a}, {@code b} or {@code comparator} is null
+     */
+    public static <T> List<T> collate(Iterable<? extends T> a, Iterable<? extends T> b,
+                                      Comparator<? super T> comparator, boolean includeDuplicates)
+    {
+        if (a == null)
+            throw new NullPointerException("a cannot be null");
+        if (b == null)
+            throw new NullPointerException("b cannot be null");
+        if (comparator == null)
+            throw new NullPointerException("comparator cannot be null");
+
+        return includeDuplicates ? unionAll(a, b).stream().sorted(comparator).collect(Collectors.toList()) :
+                union(a, b).stream().sorted(comparator).collect(Collectors.toList());
+    }
+
     /** Checks if the object is contained in the given iterable.
      * Instead of dealing with a loop, this method with two parameters can be used for a quick check.
      * @param iterable the {@link Iterable} iterable to check if the object is contained
@@ -87,23 +111,6 @@ public final class IterableUtil {
         //TODO: How to approach this?
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
-    /**
-     * Merges two iterables into a single, sorted List by comparator
-     * @param a the {@link Iterable} to collate
-     * @param b the {@link Iterable} to collate
-     * @param includeDuplicates if true, duplicate elements are included
-     * @param comparator the {@link Comparator} to compare the elements to determine the order
-     * @param <T> the type of the elements
-     * @return List<T> the collated {@link List} of the two {@link Iterable}
-     * @throws NullPointerException if {@code a}, {@code b} or {@code comparator} is null
-     */
-    public static <T> List<T> collate(Iterable<? extends T> a, Iterable<? extends T> b,
-                                      Comparator<? super T> comparator, boolean includeDuplicates)
-    {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
 
     /**
      * Combines multiple iterables into a single iterable
@@ -159,7 +166,12 @@ public final class IterableUtil {
     public static Object findValueOfType(Iterable<?> collection, Class<?>[] types)
     {
         Objects.requireNonNull(collection, "collection cannot be null");
-        throw new UnsupportedOperationException("Not yet implemented");
+        Objects.requireNonNull(types, "types cannot be null");
+
+        return StreamSupport.stream(collection.spliterator(), false).filter(Objects::nonNull)
+                .filter(obj -> Arrays.stream(types).anyMatch(type -> type.isInstance(obj)))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -195,7 +207,6 @@ public final class IterableUtil {
                 .collect(Collectors.toMap(Function.identity(), t -> 1, Integer::sum));
     }
 
-
     /**
      * Returns a collection containing the intersection of two iterables. The intersection is the set of elements that
      * are common to both iterables.
@@ -215,7 +226,6 @@ public final class IterableUtil {
                 .anyMatch(t::equals)).collect(Collectors.toSet());
     }
 
-
     /**
      * Checks if the first collection is a subset of the second collection.
      * @param a   the {@link Collection} to check as a subset
@@ -228,15 +238,11 @@ public final class IterableUtil {
         Objects.requireNonNull(a, "a cannot be null");
         Objects.requireNonNull(b, "b cannot be null");
 
-        // TODO : Stream ile iyileştirilecek.
+        if (b.size() > a.size())
+            return false;
 
-        for (var t : a) {
-            if (!b.contains(t))
-                return false;
-        }
-        return true;
+        return  a.stream().anyMatch(b::contains);
     }
-
 
     /**
      * Returns a limited iterable from the given iterable.
@@ -249,7 +255,16 @@ public final class IterableUtil {
      */
     public static <T> Iterable<T> limit(Iterable<T> iterable, int limitSize)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Objects.requireNonNull(iterable, "iterable cannot be null");
+
+        if (limitSize < 0)
+            throw new IllegalArgumentException("limitSize cannot be negative");
+        if (limitSize == 0)
+            return Collections.emptyList();
+
+        return StreamSupport.stream(iterable.spliterator(), false)
+                .limit(limitSize)
+                .collect(Collectors.toList());
     }
 
 
@@ -265,19 +280,33 @@ public final class IterableUtil {
         throw new UnsupportedOperationException("Will be written by Oğuz Karan");
     }
 
-
     /**
      * Retains only the elements in the given iterable that are also contained in the given collection.
      * @param  removeFrom    the {@link Iterable} from which elements will be removed
      * @param  elementsToRetain the {@link Collection} containing the elements to retain
      * @param <?>         the type of elements in the {@code removeFrom} and {@code elementsToRetain}
      * @return               true if any elements were removed from the iterable, false otherwise
-     * @throws UnsupportedOperationException if the {@code iterable} does not support the remove operation
      * @throws NullPointerException if {@code removeFrom} or {@code elementsToRetain} is null
      */
     public static boolean retainAll(Iterable<?> removeFrom, Collection<?> elementsToRetain)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Objects.requireNonNull(removeFrom, "removeFrom cannot be null");
+        Objects.requireNonNull(elementsToRetain, "elementsToRetain cannot be null");
+
+        if (elementsToRetain.isEmpty())
+            return true;
+
+        var iterator = removeFrom.iterator();
+        var result = false;
+
+         while (iterator.hasNext()) {
+            if (!elementsToRetain.contains(iterator.next())) {
+                iterator.remove();
+                result = true;
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -363,7 +392,6 @@ public final class IterableUtil {
         StreamSupport.stream(iterable.spliterator(), parallel).forEach(consumer);
     }
 
-
     /**
      * Returns a {@link Collection} containing the union of the given collections which were distincted.
      * @param  a  the first {@link Iterable} to include in the union
@@ -384,8 +412,6 @@ public final class IterableUtil {
         return Stream.concat(StreamSupport.stream(a.spliterator(), false), StreamSupport.stream(b.spliterator(), false))
                 .distinct().collect(Collectors.toList());
     }
-
-
 
     /**
      * Returns a {@link Collection} containing all elements from the given collections.
