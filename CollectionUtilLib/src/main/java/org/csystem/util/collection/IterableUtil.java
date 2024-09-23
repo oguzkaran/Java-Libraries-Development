@@ -1,6 +1,14 @@
 package org.csystem.util.collection;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -108,10 +116,11 @@ public final class IterableUtil {
     {
         Objects.requireNonNull(iterable, "iterable cannot be null");
         Objects.requireNonNull(object, "object cannot be null");
-        //TODO: How to approach this?
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
 
+        return StreamSupport.stream(iterable.spliterator(), false)
+            .anyMatch(object::equals);
+    }
+    
     /**
      * Combines multiple iterables into a single iterable
      * @param iterable the {@link Iterable} to combine

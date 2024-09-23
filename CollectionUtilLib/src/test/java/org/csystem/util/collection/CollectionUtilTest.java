@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
+
 
 
 public class CollectionUtilTest {
@@ -32,6 +32,11 @@ public class CollectionUtilTest {
     @Test
     public void testContains()
     {
+        var item = "a";
+        var collection = Arrays.asList("a", "b", "c");
+
+        assertTrue(CollectionUtil.contains(collection, item));
+        assertFalse(CollectionUtil.contains(collection, "d"));
     }
 
     @Test

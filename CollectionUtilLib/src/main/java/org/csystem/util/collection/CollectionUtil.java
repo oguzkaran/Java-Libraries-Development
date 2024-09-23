@@ -55,7 +55,7 @@ public final class CollectionUtil {
         if (iterable == null || object == null)
             throw new NullPointerException();
 
-        throw new UnsupportedOperationException("Not yet implemented"); //TODO: Binary search ????
+        return iterable.stream().anyMatch(object::equals);
     }
 
     /**
