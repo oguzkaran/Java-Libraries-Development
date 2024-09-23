@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class IterableUtilTest {
 
     @Test
-    void testCollateDuplicates()
+    public void testCollateDuplicates()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
         var b = Arrays.asList(3, 4, 5, 6, 7);
@@ -30,7 +31,7 @@ class IterableUtilTest {
     }
 
     @Test
-    void testCollateWithoutDuplicates()
+    public void testCollateWithoutDuplicates()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
         var b = Arrays.asList(3, 4, 5, 6, 7);
@@ -42,7 +43,7 @@ class IterableUtilTest {
     }
 
     @Test
-    void testCollateWithNullIterable()
+    public void testCollateWithNullIterable()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
 
@@ -50,7 +51,7 @@ class IterableUtilTest {
     }
 
     @Test
-    void testConcat()
+    public void testConcat()
     {
         List<List<String>> iterable = Arrays.asList(
                 Arrays.asList("a", "b"),
@@ -64,7 +65,7 @@ class IterableUtilTest {
     }
 
     @Test
-    void testFindValueOfType()
+    public void testFindValueOfType()
     {
         Class<?>[] types = {String.class, Integer.class};
 
@@ -79,7 +80,7 @@ class IterableUtilTest {
     }
 
     @Test
-    void testCollateWithNullComparator()
+    public void testCollateWithNullComparator()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
         var b = Arrays.asList(3, 4, 5, 6, 7);
@@ -88,7 +89,7 @@ class IterableUtilTest {
     }
 
     @Test
-    void testLimit()
+    public void testLimit()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
         var size = 3;
@@ -99,7 +100,7 @@ class IterableUtilTest {
     }
 
     @Test
-    void testRetainAll()
+    public void testRetainAll()
     {
         var a = new ArrayList<Integer>();
         a.add(1);
@@ -115,48 +116,74 @@ class IterableUtilTest {
     }
 
     @Test
-    void testToList()
+    public void testToList()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
-        Function f = i -> i + "*";
+        Function<Integer, String> f = i -> i + "*";
         var expected = Arrays.asList("1*", "2*", "3*", "4*", "5*");
 
         assertEquals(expected, IterableUtil.toList(a, f));
     }
 
     @Test
-    void testToIterableParallel()
+    public void testToIterableParallel()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
-        Function f = i -> i + "*";
+        Function<Integer, String> f = i -> i + "*";
         var expected = Arrays.asList("1*", "2*", "3*", "4*", "5*");
 
         assertEquals(expected, IterableUtil.toIterable(a, f, true));
     }
 
     @Test
-    void testToIterable()
+    public void testToIterable()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
-        Function f = i -> i + "*";
+        Function<Integer, String> f = i -> i + "*";
         var expected = Arrays.asList("1*", "2*", "3*", "4*", "5*");
 
         assertEquals(expected, IterableUtil.toIterable(a, f));
     }
 
+    @Test
+    public void testForEach()
+    {
+        var list = Arrays.asList("a", "b", "c", "d", "e", "f");
+        var result = new ArrayList<String>();
+
+        Consumer<String> consumer = result::add;
+
+        IterableUtil.forEach(list, consumer);
+
+        assertEquals(list, result);
+    }
 
     @Test
-    void testToListParallel()
+    public void testForEachParallel()
+    {
+        var list = Arrays.asList("a", "b", "c", "d", "e", "f");
+        var result = new ArrayList<String>();
+
+        Consumer<String> consumer = result::add;
+
+        IterableUtil.forEach(list, consumer,true);
+
+        assertTrue(result.containsAll(list));
+        assertEquals(result.size(), list.size());
+    }
+
+    @Test
+    public void testToListParallel()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
-        Function f = i -> i + "*";
+        Function<Integer, String> f = i -> i + "*";
         var expected = Arrays.asList("1*", "2*", "3*", "4*", "5*");
 
         assertEquals(expected, IterableUtil.toList(a, f,true));
     }
 
     @Test
-    void testIsSubCollection()
+    public void testIsSubCollection()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
         var b = Arrays.asList(3, 4, 5);
@@ -164,20 +191,20 @@ class IterableUtilTest {
     }
 
     @Test
-    void frequency() {
+    public void frequency() {
         var iterable = List.of(1, 1, 1, 4, 5);
         assertEquals(3, IterableUtil.frequency(iterable, 1));
     }
 
     @Test
-    void testGetCardinalityMap() {
+    public void testGetCardinalityMap() {
         var iterable = List.of(1, 1, 1, 4, 5);
         var excepted = Map.of(1, 3, 4, 1, 5, 1);
         assertEquals(excepted, IterableUtil.getCardinalityMap(iterable));
     }
 
     @Test
-    void testIntersection() {
+    public void testIntersection() {
         var iterable1 = List.of(1, 2, 3, 4, 5);
         var iterable2 = List.of(3, 4, 5, 6, 7);
         var excepted = Set.of(3, 4, 5);
@@ -187,7 +214,7 @@ class IterableUtilTest {
 
 
     @Test
-    void testAreAllDistinct()
+    public void testAreAllDistinct()
     {
         var a = Arrays.asList(1, 2, 3);
         var b = Arrays.asList(1, 2,2, 3, 4);
@@ -197,7 +224,7 @@ class IterableUtilTest {
     }
 
     @Test
-    void checkAllNotNull() {
+    public void checkAllNotNull() {
         var iterable = List.of(1, 2, 3, 4, 5);
         assertTrue(IterableUtil.checkAllNotNull(iterable));
 
@@ -212,7 +239,7 @@ class IterableUtilTest {
     }
 
     @Test
-    void testFindFirst() {
+    public void testFindFirst() {
         var iterable = List.of(1, 2, 3, 4, 5);
         Predicate<Integer> predicate = i -> i % 2 == 0;
         var excepted = Optional.of(2);
@@ -220,7 +247,7 @@ class IterableUtilTest {
     }
 
     @Test
-    void testUnion() {
+    public void testUnion() {
         var iterable1 = List.of(1, 2);
         var iterable2 = List.of(3, 4);
         var iterable3 = List.of(1, 2, 3, 3, 2);
@@ -235,7 +262,7 @@ class IterableUtilTest {
 
 
     @Test
-    void testUnionAll() {
+    public void testUnionAll() {
         var iterable1 = List.of(1, 2);
         var iterable2 = List.of(3, 4);
         var iterable3 = List.of(1, 2, 3, 3, 2);
