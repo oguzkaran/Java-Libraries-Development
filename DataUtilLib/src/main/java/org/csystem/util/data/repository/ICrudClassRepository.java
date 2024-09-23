@@ -1,14 +1,21 @@
-/*----------------------------------------------------------------------
-	FILE        : ICrudClassRepository.java
-	AUTHOR      : Oğuz Karan
-	LAST UPDATE : 07.08.2023
-
-	Abstraction of general CRUD operations without id
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
------------------------------------------------------------------------*/
 package org.csystem.util.data.repository;
+
+/**
+ * Abstraction of general CRUD operations without id
+ * This interface has three abstract methods
+ * {@code exists(T entity),
+ *      findBy(T entity),
+ *      findFirst(T entity)
+ * }
+ * that repository a result of types
+ * {@code boolean,
+ *      Iterable<T>,
+ *      Optional<T>
+ * }.
+ * @param <T> the type of result repository by this repository
+ * @author Oğuz Karan
+ * @version 3.3.0
+ */
 
 import java.util.Optional;
 import java.util.stream.StreamSupport;

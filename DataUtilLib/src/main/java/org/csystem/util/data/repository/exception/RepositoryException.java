@@ -1,14 +1,15 @@
-/*----------------------------------------------------------------------
-	FILE        : RepositoryException.java
-	AUTHOR      : Oğuz Karan
-	LAST UPDATE : 21.01.2023
-
-	RepositoryException class which can wrap the exception in repository
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
------------------------------------------------------------------------*/
 package org.csystem.util.data.repository.exception;
+
+/**
+ * RepositoryException class which can wrap the exception in repository
+ * This Service has two ctor and one method
+ * {@code getMessage}
+ * that service a result of types {@code String}.
+ * The method can throw an {@code RuntimeException} if an error occurs during the result generation.
+ * @see RuntimeException
+ * @author Oğuz Karan
+ * @version 3.3.0
+ */
 
 public class RepositoryException extends RuntimeException {
     public RepositoryException(String message)

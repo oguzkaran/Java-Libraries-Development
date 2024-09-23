@@ -1,20 +1,18 @@
-/*----------------------------------------------------------------------
-	FILE        : DataUtil.java
-	AUTHOR      : Oğuz Karan
-	LAST UPDATE : 21.01.2023
-
-	DataUtil class that has high order method for exception
-	handling
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
------------------------------------------------------------------------*/
 package org.csystem.util.data.error;
 
 import org.csystem.util.data.repository.exception.RepositoryException;
 import org.csystem.util.data.service.exception.DataServiceException;
 
 import java.util.function.Consumer;
+
+/**
+ * DataUtil class that has high order method for exception handling
+ * This Service has one ctor and two method
+ * {@code doForRepository, doForDataService}
+ * that service a result of types {@code void, <R> R}.
+ * @author Oğuz Karan
+ * @version 3.3.0
+ */
 
 public final class DataUtil {
     private DataUtil()

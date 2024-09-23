@@ -1,14 +1,14 @@
-/*----------------------------------------------------------------------
-	FILE        : IRunnable.java
-	AUTHOR      : Oğuz Karan
-	LAST UPDATE : 21.01.2023
-
-	IRunnable interface that can be used for checked exceptions
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
------------------------------------------------------------------------*/
 package org.csystem.util.data.error;
+
+/**
+ * A functional interface that represents a runnable of results.
+ * This interface has a single abstract method {@code run()} that runnable has not a result.
+ * The method can throw an {@code Exception} if an error occurs during the result generation.
+ * @see Exception
+ * @author Oğuz Karan
+ * @version 3.3.0
+ *
+ */
 
 @FunctionalInterface
 public interface IRunnable {

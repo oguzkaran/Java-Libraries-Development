@@ -1,14 +1,13 @@
-/*----------------------------------------------------------------------
-	FILE        : DataServiceException.java
-	AUTHOR      : Oğuz Karan
-	LAST UPDATE : 07.07.2024
-
-	DataServiceException class which can wrap the exception in service
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
------------------------------------------------------------------------*/
 package org.csystem.util.data.service.exception;
+
+/**
+ * DataServiceException class which can wrap the exception in service
+ * This Service has two ctor and one method
+ * {@code getMessage}
+ * that service a result of types {@code String}.
+ * @author Oğuz Karan
+ * @version 3.3.0
+ */
 
 public class DataServiceException extends RuntimeException {
     public DataServiceException(String message)
