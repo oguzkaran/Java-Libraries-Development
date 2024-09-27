@@ -19,6 +19,32 @@ import static org.junit.jupiter.api.Assertions.*;
 class IterableUtilTest {
 
     @Test
+    public void testAreAllDistinct()
+    {
+        var a = Arrays.asList(1, 2, 3);
+        var b = Arrays.asList(1, 2, 2, 3, 4);
+
+        assertTrue(IterableUtil.areAllDistinct(a));
+        assertFalse(IterableUtil.areAllDistinct(b));
+    }
+
+    @Test
+    public void testAllNotNull()
+    {
+        var iterable = List.of(1, 2, 3, 4, 5);
+        assertTrue(IterableUtil.checkAllNotNull(iterable));
+
+        List<String> list1 = Arrays.asList("a", null, "c");
+        List<String> list2 = Arrays.asList("d", "e", "f");
+        assertFalse(IterableUtil.checkAllNotNull(list1, list2));
+
+        List<String> list3 = Arrays.asList(null, null, null);
+        List<String> list4 = Arrays.asList(null, null, null);
+        assertFalse(IterableUtil.checkAllNotNull(list3, list4));
+
+    }
+
+    @Test
     public void testCollateDuplicates()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
@@ -43,6 +69,15 @@ class IterableUtilTest {
     }
 
     @Test
+    public void testCollateWithNullComparator()
+    {
+        var a = Arrays.asList(1, 2, 3, 4, 5);
+        var b = Arrays.asList(3, 4, 5, 6, 7);
+
+        assertThrows(NullPointerException.class, () -> IterableUtil.collate(a, b, null, true));
+    }
+
+    @Test
     public void testCollateWithNullIterable()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
@@ -54,14 +89,23 @@ class IterableUtilTest {
     public void testConcat()
     {
         List<List<String>> iterable = Arrays.asList(
-                Arrays.asList("a", "b"),
-                Arrays.asList("c", "d"),
-                Arrays.asList("e", "f")
+            Arrays.asList("a", "b"),
+            Arrays.asList("c", "d"),
+            Arrays.asList("e", "f")
         );
 
         var excepted = List.of("a", "b", "c", "d", "e", "f");
         assertEquals(excepted, IterableUtil.concat(iterable));
 
+    }
+
+    @Test
+    public void testFindFirst()
+    {
+        var iterable = List.of(1, 2, 3, 4, 5);
+        Predicate<Integer> predicate = i -> i % 2 == 0;
+        var excepted = Optional.of(2);
+        assertEquals(excepted, IterableUtil.findFirst(iterable, predicate));
     }
 
     @Test
@@ -80,12 +124,53 @@ class IterableUtilTest {
     }
 
     @Test
-    public void testCollateWithNullComparator()
+    public void testForEach()
+    {
+        var list = Arrays.asList("a", "b", "c", "d", "e", "f");
+        var result = new ArrayList<String>();
+
+        Consumer<String> consumer = result::add;
+
+        IterableUtil.forEach(list, consumer);
+
+        assertEquals(list, result);
+    }
+
+    @Test
+    public void testForEachParallel()
+    {
+        var list = Arrays.asList("a", "b", "c", "d", "e", "f");
+        var result = new ArrayList<String>();
+
+        Consumer<String> consumer = result::add;
+
+        IterableUtil.forEach(list, consumer, true);
+
+        assertTrue(result.containsAll(list));
+        assertEquals(result.size(), list.size());
+    }
+
+    @Test
+    public void testFrequency()
+    {
+        var iterable = List.of(1, 1, 1, 4, 5);
+        assertEquals(3, IterableUtil.frequency(iterable, 1));
+    }
+
+    @Test
+    public void testGetCardinalityMap()
+    {
+        var iterable = List.of(1, 1, 1, 4, 5);
+        var excepted = Map.of(1, 3, 4, 1, 5, 1);
+        assertEquals(excepted, IterableUtil.getCardinalityMap(iterable));
+    }
+
+    @Test
+    public void testIsSubCollection()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
-        var b = Arrays.asList(3, 4, 5, 6, 7);
-
-        assertThrows(NullPointerException.class, () -> IterableUtil.collate(a, b, null, true));
+        var b = Arrays.asList(3, 4, 5);
+        assertTrue(IterableUtil.isSubCollection(a, b));
     }
 
     @Test
@@ -116,13 +201,13 @@ class IterableUtilTest {
     }
 
     @Test
-    public void testToList()
+    public void testToIterable()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
         Function<Integer, String> f = i -> i + "*";
         var expected = Arrays.asList("1*", "2*", "3*", "4*", "5*");
 
-        assertEquals(expected, IterableUtil.toList(a, f));
+        assertEquals(expected, IterableUtil.toIterable(a, f));
     }
 
     @Test
@@ -136,40 +221,13 @@ class IterableUtilTest {
     }
 
     @Test
-    public void testToIterable()
+    public void testToList()
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
         Function<Integer, String> f = i -> i + "*";
         var expected = Arrays.asList("1*", "2*", "3*", "4*", "5*");
 
-        assertEquals(expected, IterableUtil.toIterable(a, f));
-    }
-
-    @Test
-    public void testForEach()
-    {
-        var list = Arrays.asList("a", "b", "c", "d", "e", "f");
-        var result = new ArrayList<String>();
-
-        Consumer<String> consumer = result::add;
-
-        IterableUtil.forEach(list, consumer);
-
-        assertEquals(list, result);
-    }
-
-    @Test
-    public void testForEachParallel()
-    {
-        var list = Arrays.asList("a", "b", "c", "d", "e", "f");
-        var result = new ArrayList<String>();
-
-        Consumer<String> consumer = result::add;
-
-        IterableUtil.forEach(list, consumer,true);
-
-        assertTrue(result.containsAll(list));
-        assertEquals(result.size(), list.size());
+        assertEquals(expected, IterableUtil.toList(a, f));
     }
 
     @Test
@@ -179,75 +237,21 @@ class IterableUtilTest {
         Function<Integer, String> f = i -> i + "*";
         var expected = Arrays.asList("1*", "2*", "3*", "4*", "5*");
 
-        assertEquals(expected, IterableUtil.toList(a, f,true));
+        assertEquals(expected, IterableUtil.toList(a, f, true));
     }
 
     @Test
-    public void testIsSubCollection()
+    public void testIntersection()
     {
-        var a = Arrays.asList(1, 2, 3, 4, 5);
-        var b = Arrays.asList(3, 4, 5);
-        assertTrue(IterableUtil.isSubCollection(a, b));
-    }
-
-    @Test
-    public void frequency() {
-        var iterable = List.of(1, 1, 1, 4, 5);
-        assertEquals(3, IterableUtil.frequency(iterable, 1));
-    }
-
-    @Test
-    public void testGetCardinalityMap() {
-        var iterable = List.of(1, 1, 1, 4, 5);
-        var excepted = Map.of(1, 3, 4, 1, 5, 1);
-        assertEquals(excepted, IterableUtil.getCardinalityMap(iterable));
-    }
-
-    @Test
-    public void testIntersection() {
         var iterable1 = List.of(1, 2, 3, 4, 5);
         var iterable2 = List.of(3, 4, 5, 6, 7);
         var excepted = Set.of(3, 4, 5);
         assertEquals(excepted, IterableUtil.intersection(iterable1, iterable2));
     }
 
-
-
     @Test
-    public void testAreAllDistinct()
+    public void testUnion()
     {
-        var a = Arrays.asList(1, 2, 3);
-        var b = Arrays.asList(1, 2,2, 3, 4);
-
-        assertTrue(IterableUtil.areAllDistinct(a));
-        assertFalse(IterableUtil.areAllDistinct(b));
-    }
-
-    @Test
-    public void checkAllNotNull() {
-        var iterable = List.of(1, 2, 3, 4, 5);
-        assertTrue(IterableUtil.checkAllNotNull(iterable));
-
-        List<String> list1 = Arrays.asList("a", null, "c");
-        List<String> list2 = Arrays.asList("d", "e", "f");
-        assertFalse(IterableUtil.checkAllNotNull(list1, list2));
-
-        List<String> list3 = Arrays.asList(null, null, null);
-        List<String> list4 = Arrays.asList(null, null, null);
-        assertFalse(IterableUtil.checkAllNotNull(list1, list2));
-
-    }
-
-    @Test
-    public void testFindFirst() {
-        var iterable = List.of(1, 2, 3, 4, 5);
-        Predicate<Integer> predicate = i -> i % 2 == 0;
-        var excepted = Optional.of(2);
-        assertEquals(excepted, IterableUtil.findFirst(iterable, predicate));
-    }
-
-    @Test
-    public void testUnion() {
         var iterable1 = List.of(1, 2);
         var iterable2 = List.of(3, 4);
         var iterable3 = List.of(1, 2, 3, 3, 2);
@@ -262,7 +266,8 @@ class IterableUtilTest {
 
 
     @Test
-    public void testUnionAll() {
+    public void testUnionAll()
+    {
         var iterable1 = List.of(1, 2);
         var iterable2 = List.of(3, 4);
         var iterable3 = List.of(1, 2, 3, 3, 2);

@@ -8,7 +8,6 @@ import java.util.*;
 import org.junit.jupiter.api.Test;
 
 
-
 public class CollectionUtilTest {
 
     @Test
@@ -19,6 +18,7 @@ public class CollectionUtilTest {
         assertFalse(CollectionUtil.addIfNotNull(collection, object));
         assertTrue(collection.isEmpty());
     }
+
     @Test
     public void testAreAllDistinct()
     {
@@ -44,13 +44,8 @@ public class CollectionUtilTest {
     {
         var collection = Arrays.asList("a");
         assertEquals("a", CollectionUtil.extractSingleton(collection));
-
-        /* Konuşulup,  Exceptionlar dahil edilecek
-        Exception exception = assertThrows(
-                NullPointerException.class,
-                () -> CollectionUtil.extractSingleton(null));
-         */
     }
+
     @Test
     public void testFindValueOfType()
     {
@@ -66,6 +61,7 @@ public class CollectionUtilTest {
         assertEquals(2, val2);
 
     }
+
     @Test
     public void testGet()
     {
@@ -79,6 +75,7 @@ public class CollectionUtilTest {
 
         assertEquals(expected.entrySet().iterator().next(), CollectionUtil.get(map, 1));
     }
+
     @Test
     public void testRemoveCount()
     {
