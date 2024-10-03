@@ -1,18 +1,20 @@
-/*----------------------------------------------------------------------
-	FILE        : ProcessUtil.java
-	AUTHOR      : JavaApp2-Jan-2024 Team
-	LAST UPDATE : 3rd June 2024
-
-	Utility class for process operations
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
------------------------------------------------------------------------*/
 package org.csystem.util.process;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+
+
+/**
+ * Utility class for managing and executing system processes, providing various methods for synchronous and asynchronous process handling.
+ * This includes options for executing processes with customizable actions for handling process completion, timeouts, interruptions, and exceptions.
+ *
+ * <p>© 1993 by C and System Programmers Association (CSD). All Rights Reserved.</p>
+ *
+ * @author JavaApp2-Jan-2024 Group
+ * @version 1.0.0
+ */
+
 
 public final class ProcessUtil {
     private ProcessUtil()
@@ -62,8 +64,6 @@ public final class ProcessUtil {
      * @param interruptAction A {@link Consumer} that handles the case where the thread is interrupted while waiting for the process to exit.
      * @param exceptionAction A {@link Consumer} that handles any {@link Throwable} that occurs during process execution.
      * @param commands A varargs array of {@link String} representing the program and its arguments to execute.
-     *
-     * @return void
      *
      * @throws NullPointerException if any of the consumer actions or commands are null.
      * @throws IllegalArgumentException if the commands array is empty.
@@ -118,8 +118,6 @@ public final class ProcessUtil {
      *
      * @implNote This method blocks the current thread until the process completes.
      * If asynchronous execution is required, consider using an async version of this method.
-     *
-     * @return void
      */
 
     public static void startProcess(Consumer<ProcessBuilder> builderAction,
@@ -155,8 +153,6 @@ public final class ProcessUtil {
      *
      * @implNote This method blocks the current thread until the process completes.
      * If asynchronous execution is required, consider using an async version of this method.
-     *
-     * @return void
      *
      * @throws NullPointerException if any of the consumer actions or commands are null.
      * @throws IllegalArgumentException if the commands array is empty.
@@ -196,8 +192,6 @@ public final class ProcessUtil {
      * @param interruptAction A {@link Consumer} that handles the case where the thread is interrupted while waiting for the process to exit.
      * @param exceptionAction A {@link Consumer} that handles any {@link Throwable} that occurs during process execution.
      * @param commands A varargs array of {@link String} representing the program and its arguments to execute.
-     *
-     * @return void
      *
      * @throws NullPointerException if any of the consumer actions or commands are null.
      * @throws IllegalArgumentException if the commands array is empty.

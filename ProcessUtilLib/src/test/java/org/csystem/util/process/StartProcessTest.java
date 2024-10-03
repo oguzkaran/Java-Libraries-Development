@@ -1,13 +1,11 @@
 package org.csystem.util.process;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled("Written by Bartu Çankaya")
 class StartProcessTest {
     @Test
     void testStartProcessExitAction() {
