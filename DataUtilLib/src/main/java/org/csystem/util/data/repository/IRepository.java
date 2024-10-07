@@ -1,35 +1,65 @@
 package org.csystem.util.data.repository;
 
 /**
- * Abstraction of general CRUD operations without id
- * A functional interface that represents a repository of results.
- * This interface has seven abstract methods
- * {@code count(),
- *      delete(T entity),
- *      deleteAll(),
- *      deleteAll(Iterable<? extends T> entities),
- *      findAll(),
- *      save(S entity),
- *      saveAll(Iterable<S> entities)
- * }
- * that repository a result of types
- * {@code long,
- *      void,
- *      Iterable<T>,
- *      <S extends T> S,
- *      <S extends T> Iterable<S>
- * }.
- * @param <T> the type of result repository by this repository
- * @author Oğuz Karan
- * @version 3.3.0
+ * A generic repository interface providing basic CRUD operations for entities of type {@code T}.
+ * This interface defines methods for counting, saving, deleting, and finding entities.
+ *
+ * @param <T> the type of entity managed by this repository
  */
-
 public interface IRepository<T> {
+
+    /**
+     * Returns the total number of entities in the repository.
+     *
+     * @return the total number of entities
+     */
     long count();
+
+    /**
+     * Deletes the given entity from the repository.
+     *
+     * @param entity the entity to delete
+     */
     void delete(T entity);
+
+    /**
+     * Deletes all entities in the repository.
+     */
     void deleteAll();
+
+    /**
+     * Deletes the given entities from the repository.
+     *
+     * @param entities the entities to delete
+     */
     void deleteAll(Iterable<? extends T> entities);
+
+    /**
+     * Returns all entities from the repository.
+     *
+     * @return an {@code Iterable} of all entities in the repository
+     */
     Iterable<T> findAll();
+
+    /**
+     * Saves the given entity to the repository.
+     *
+     * <p>If the entity already exists, it may be updated depending on the repository implementation.</p>
+     *
+     * @param <S> the type of the entity to be saved, which must extend {@code T}
+     * @param entity the entity to save
+     * @return the saved entity
+     */
     <S extends T> S save(S entity);
+
+    /**
+     * Saves all given entities to the repository.
+     *
+     * <p>If any entities already exist, they may be updated depending on the repository implementation.</p>
+     *
+     * @param <S> the type of the entities to be saved, which must extend {@code T}
+     * @param entities the entities to save
+     * @return an {@code Iterable} of the saved entities
+     */
     <S extends T> Iterable<S> saveAll(Iterable<S> entities);
 }
