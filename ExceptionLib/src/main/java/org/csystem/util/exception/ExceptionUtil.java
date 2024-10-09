@@ -1,4 +1,3 @@
-
 package org.csystem.util.exception;
 
 import java.io.Closeable;
