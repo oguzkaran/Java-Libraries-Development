@@ -6,8 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="org-csystem-util" />
         <module name="org-csystem-util-collection" />
+        <module name="CollectionUtilLib" />
+        <module name="org-csystem-util" />
         <module name="UtilLib" />
       </profile>
     </annotationProcessing>
