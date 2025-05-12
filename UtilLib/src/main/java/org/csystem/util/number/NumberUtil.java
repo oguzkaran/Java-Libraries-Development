@@ -83,6 +83,12 @@ public final class NumberUtil {
 
     private NumberUtil() {}
 
+    /**
+     * Returns the factorial of the specified non-negative integer.
+     *
+     * @param n the number to calculate the factorial for
+     * @return the factorial of {@code n}
+     */
     public static int factorial(int n)
     {
         int result = 1;
@@ -93,6 +99,12 @@ public final class NumberUtil {
         return result;
     }
 
+    /**
+     * Returns the factorial of the specified non-negative {@code long} value as a {@code BigInteger}.
+     *
+     * @param n the number to calculate the factorial of
+     * @return the factorial of {@code n} as a {@code BigInteger}
+     */
     public static BigInteger factorial(long n)
     {
         BigInteger result = BigInteger.ONE;
@@ -103,36 +115,90 @@ public final class NumberUtil {
         return result;
     }
 
+    /**
+     * Returns the digits of the specified {@code int} value as an array of integers.
+     * The digits are ordered from most significant to least significant.
+     *
+     * @param val the integer value to extract digits from
+     * @return an array containing the digits of {@code val}
+     */
     public static int [] getDigits(int val)
     {
         return getDigits((long)val);
     }
 
-    public static int [] getDigits(long val)
-    {
-        return getDigits(1, val);
-    }
+   /**
+    * Returns the digits of the specified {@code long} value as an array of integers.
+    * The digits are ordered from most significant to least significant.
+    *
+    * @param val the long value to extract digits from
+    * @return an array containing the digits of {@code val}
+    */
+   public static int [] getDigits(long val)
+   {
+       return getDigits(1, val);
+   }
 
-    public static int [] getDigitsInTwo(long val)
-    {
-        return getDigits(2, val);
-    }
+   /**
+    * Returns the digits of the specified {@code long} value grouped in pairs as an array of integers.
+    * The digits are ordered from most significant to least significant.
+    * If the number of digits is odd, the most significant digit will be a single digit.
+    *
+    * @param val the long value to extract digits from, grouped in pairs
+    * @return an array containing the digits of {@code val} grouped in pairs
+    */
+   public static int [] getDigitsInTwo(long val)
+   {
+       return getDigits(2, val);
+   }
 
+    /**
+     * Returns the digits of the specified {@code long} value grouped in threes as an array of integers.
+     * The digits are ordered from most significant to least significant.
+     * If the number of digits is not a multiple of three, the most significant group will contain the remaining digits.
+     *
+     * @param val the long value to extract digits from, grouped in threes
+     * @return an array containing the digits of {@code val} grouped in threes
+     */
     public static int [] getDigitsInThree(long val)
     {
         return getDigits(3, val);
     }
+
+    /**
+     * Returns the number of digits in the specified {@code int} value.
+     * Delegates to {@link #getDigitsCount(long)}.
+     *
+     * @param val the int value whose digits are to be counted
+     * @return the number of digits in {@code val}
+     */
 
     public static int getDigitsCount(int val)
     {
         return getDigitsCount((long)val);
     }
 
+    /**
+     * Returns the number of digits in the specified {@code long} value.
+     * If the value is zero, the result is {@code 1}.
+     *
+     * @param val the long value whose digits are to be counted
+     * @return the number of digits in {@code val}
+     */
+
     public static int getDigitsCount(long val)
     {
         return val == 0 ? 1 : (int)Math.log10(Math.abs(val)) + 1;
     }
 
+    /**
+     * Returns the sum of the digits in the specified {@code int} value.
+     * The sum is calculated by iterating through each digit of the number.
+     * The result is always a non-negative value.
+     *
+     * @param val the integer value to sum digits of
+     * @return the sum of the digits in {@code val}
+     */
     public static int getDigitsSum(int val)
     {
         int sum = 0;
@@ -145,78 +211,117 @@ public final class NumberUtil {
         return abs(sum);
     }
 
+   /**
+    * Returns the n-th Fibonacci number.
+    * The Fibonacci sequence is defined as follows:
+    * F(1) = 0, F(2) = 1, and F(n) = F(n-1) + F(n-2) for n > 2.
+    * If the input is less than or equal to 0, the method returns -1.
+    *
+    * @param n the position of the Fibonacci number to retrieve (1-based index)
+    * @return the n-th Fibonacci number, or -1 if {@code n} is less than or equal to 0
+    */
+   public static int getFibonacciNumber(int n)
+   {
+       if (n <= 0)
+           return -1;
 
-    public static int getFibonacciNumber(int n)
+       if (n <= 2)
+           return  n - 1;
+
+       int prev1 = 0, prev2 = 1, val = 0;
+
+       for (int i = 2; i < n; ++i) {
+           val = prev1 + prev2;
+           prev1 = prev2;
+           prev2 = val;
+       }
+
+       return val;
+   }
+
+   /**
+    * Returns the first {@code n} Fibonacci numbers as an array.
+    * The Fibonacci sequence is defined as follows:
+    * F(1) = 0, F(2) = 1, and F(n) = F(n-1) + F(n-2) for n > 2.
+    * If {@code n} is less than or equal to 0, an empty array is returned.
+    *
+    * @param n the number of Fibonacci numbers to generate
+    * @return an array containing the first {@code n} Fibonacci numbers
+    */
+   public static int [] getFibonacciNumbers(int n)
+   {
+       int [] numbers = new int[n];
+
+       if (n > 1)
+           numbers[1] = 1;
+
+       int prev1 = 0, prev2 = 1;
+
+       for (int i = 2; i < n; ++i) {
+           numbers[i] = prev1 + prev2;
+           prev1 = prev2;
+           prev2 = numbers[i];
+       }
+
+       return numbers;
+   }
+
+   /**
+    * Returns the next Fibonacci number greater than the specified value.
+    * The Fibonacci sequence is defined as follows:
+    * F(1) = 0, F(2) = 1, and F(n) = F(n-1) + F(n-2) for n > 2.
+    *
+    * @param val the value to find the next Fibonacci number for
+    * @return the next Fibonacci number greater than {@code val}
+    */
+   public static int getNextFibonacciNumber(int val)
+   {
+       int prev1 = 0, prev2 = 1, result = 0;
+
+       for (;;) {
+           result = prev1 + prev2;
+           if (result > val)
+               return result;
+
+           prev1 = prev2;
+           prev2 = result;
+       }
+   }
+
+   /**
+    * Returns the n-th prime number.
+    * The method iterates through integers starting from 2 and checks for primality.
+    * If {@code n} is less than or equal to 0, the method returns -1.
+    *
+    * @param n the position of the prime number to retrieve (1-based index)
+    * @return the n-th prime number, or -1 if {@code n} is less than or equal to 0
+    */
+   public static int getPrime(int n)
+   {
+       if (n <= 0)
+           return -1;
+
+       int count = 0, val = 0;
+
+       for (int i = 2; count < n; ++i)
+           if (isPrime(i)) {
+               ++count;
+               val = i;
+           }
+
+       return val;
+   }
+
+    /**
+     * Returns the first {@code n} prime numbers as an array.
+     * The method iterates through integers starting from 2 and checks for primality.
+     *
+     * @param n the number of prime numbers to generate
+     * @return an array containing the first {@code n} prime numbers
+     */
+    public static int[] getPrimes(int n)
     {
-        if (n <= 0)
-            return -1;
-
-        if (n <= 2)
-            return  n - 1;
-
-        int prev1 = 0, prev2 = 1, val = 0;
-
-        for (int i = 2; i < n; ++i) {
-            val = prev1 + prev2;
-            prev1 = prev2;
-            prev2 = val;
-        }
-
-        return val;
-    }
-
-    public static int [] getFibonacciNumbers(int n)
-    {
-        int [] numbers = new int[n];
-
-        if (n > 1)
-            numbers[1] = 1;
-
-        int prev1 = 0, prev2 = 1;
-
-        for (int i = 2; i < n; ++i) {
-            numbers[i] = prev1 + prev2;
-            prev1 = prev2;
-            prev2 = numbers[i];
-        }
-
-        return numbers;
-    }
-
-    public static int getNextFibonacciNumber(int val)
-    {
-        int prev1 = 0, prev2 = 1, result = 0;
-
-        for (;;) {
-            result = prev1 + prev2;
-            if (result > val)
-                return result;
-
-            prev1 = prev2;
-            prev2 = result;
-        }
-    }
-
-    public static int getPrime(int n)
-    {
-        if (n <= 0)
-            return -1;
-
-        int count = 0, val = 0;
-
-        for (int i = 2; count < n; ++i)
-            if (isPrime(i)) {
-                ++count;
-                val = i;
-            }
-
-        return val;
-    }
-
-
-    public static int [] getPrimes(int n)
-    {
-        int [] primes = new int[n];
+        int[] primes = new int[n];
         int count = 0;
 
         for (int i = 2; count < n; ++i)
@@ -225,20 +330,35 @@ public final class NumberUtil {
 
         return primes;
     }
-    public static int getRandomNumberUniqueDigits(int n)
+    /**
+     * Generates a random number with unique digits of the specified length.
+     * Delegates to {@link #getRandomNumberUniqueDigits(Random, int)}.
+     *
+     * @param n the number of unique digits in the generated number
+     * @return a random number with unique digits of length {@code n}
+     */
+    public static long getRandomNumberUniqueDigits(int n)
     {
         return getRandomNumberUniqueDigits(new Random(), n);
     }
-
-    public static int getRandomNumberUniqueDigits(Random r, int n)
+    /**
+     * Generates a random number with unique digits of the specified length.
+     * The number is generated by randomly selecting digits without repetition. The first digit will be between 1 and 9,
+     * and the subsequent digits will be selected from 0 to 9 without repeating any of the previously selected digits.
+     *
+     * @param r the {@link Random} object used to generate random values
+     * @param n the number of digits in the generated number. The digits will be unique.
+     * @return a random number with unique digits of length {@code n}
+     */
+    public static long getRandomNumberUniqueDigits(Random r, int n)
     {
         //...
         boolean [] flags = new boolean[10];
-        int result = 0;
+        long result = 0;
         int val;
 
         val = r.nextInt(9) + 1;
-        result +=  val * (int)Math.pow(10, n - 1);
+        result +=  val * (long)Math.pow(10, n - 1);
         flags[val] = true;
 
         for (int i = 1; i < n; ++i) {
@@ -247,25 +367,38 @@ public final class NumberUtil {
                 if (!flags[val])
                     break;
             }
-            result += val * (int)Math.pow(10, n - 1 - i);
+            result += val * (long)Math.pow(10, n - 1 - i);
             flags[val] = true;
         }
 
         return result;
     }
 
-    public static int getReverse(int val)
-    {
-        int rev = 0;
+   /**
+    * Reverses the digits of the specified integer value.
+    * For example, if the input is 123, the output will be 321.
+    *
+    * @param val the integer value to reverse
+    * @return the reversed integer value
+    */
+   public static int getReverse(int val)
+   {
+       int rev = 0;
 
-        while (val != 0) {
-            rev = rev * 10 + val % 10;
-            val /= 10;
-        }
+       while (val != 0) {
+           rev = rev * 10 + val % 10;
+           val /= 10;
+       }
 
-        return rev;
-    }
-
+       return rev;
+   }
+    /**
+     * Checks if the specified integer value is an Armstrong number.
+     * An Armstrong number is a number that is equal to the sum of its own digits raised to the power of the number of digits.
+     *
+     * @param val the integer value to check
+     * @return {@code true} if {@code val} is an Armstrong number, {@code false} otherwise
+     */
     public static boolean isArmstrong(int val)
     {
         if (val < 0)
@@ -279,11 +412,22 @@ public final class NumberUtil {
         return getPowSum(val, n) == val;
     }
 
-    public static boolean isEven(int val)
-    {
-        return val % 2 == 0;
-    }
-
+   /**
+    * Checks if the specified integer value is even.
+    *
+    * @param val the integer value to check
+    * @return {@code true} if {@code val} is even, {@code false} otherwise
+    */
+   public static boolean isEven(int val)
+   {
+       return val % 2 == 0;
+   }
+    /**
+     * Checks if the specified integer value is odd.
+     *
+     * @param val the integer value to check
+     * @return {@code true} if {@code val} is odd, {@code false} otherwise
+     */
     public static boolean isOdd(int val)
     {
         return !isEven(val);
@@ -311,11 +455,27 @@ public final class NumberUtil {
 
     }
 
+
+    /**
+     * Checks if the specified integer value is a prime number.
+     * Delegates to {@link #isPrime(long)} for the actual implementation.
+     *
+     * @param val the integer value to check
+     * @return {@code true} if {@code val} is a prime number, {@code false} otherwise
+     */
     public static boolean isPrime(int val)
     {
         return isPrime((long)val);
     }
 
+    /**
+     * Checks if the specified {@code long} value is a prime number.
+     * A prime number is a number greater than 1 that has no divisors other than 1 and itself.
+     * The method uses trial division up to the square root of the number for efficiency.
+     *
+     * @param val the {@code long} value to check
+     * @return {@code true} if {@code val} is a prime number, {@code false} otherwise
+     */
     public static boolean isPrime(long val)
     {
         if (val <= 1L)
@@ -342,6 +502,14 @@ public final class NumberUtil {
         return true;
     }
 
+    /**
+     * Checks if the specified {@link BigInteger} value is a prime number.
+     * A prime number is a number greater than 1 that has no divisors other than 1 and itself.
+     * The method uses trial division up to the square root of the number for efficiency.
+     *
+     * @param val the {@link BigInteger} value to check
+     * @return {@code true} if {@code val} is a prime number, {@code false} otherwise
+     */
     public static boolean isPrime(BigInteger val)
     {
         if (val.compareTo(BigInteger.ONE) <= 0)
@@ -368,32 +536,75 @@ public final class NumberUtil {
         return true;
     }
 
+    /**
+     * Checks if the specified integer value is not a prime number.
+     * A number is not prime if it is less than or equal to 1, or if it has divisors other than 1 and itself.
+     *
+     * @param val the integer value to check
+     * @return {@code true} if {@code val} is not a prime number, {@code false} otherwise
+     */
     public static boolean isNotPrime(int val)
     {
         return !isPrime(val);
     }
 
-    public static boolean isNotPrime(long val)
-    {
-        return !isPrime(val);
-    }
+   /**
+    * Checks if the specified {@code long} value is not a prime number.
+    * A number is not prime if it is less than or equal to 1, or if it has divisors other than 1 and itself.
+    *
+    * @param val the {@code long} value to check
+    * @return {@code true} if {@code val} is not a prime number, {@code false} otherwise
+    */
+   public static boolean isNotPrime(long val)
+   {
+       return !isPrime(val);
+   }
 
+    /**
+     * Checks if the specified {@link BigInteger} value is not a prime number.
+     * A number is not prime if it is less than or equal to 1, or if it has divisors other than 1 and itself.
+     *
+     * @param val the {@link BigInteger} value to check
+     * @return {@code true} if {@code val} is not a prime number, {@code false} otherwise
+     */
     public static boolean isNotPrime(BigInteger val)
     {
         return !isPrime(val);
     }
-
+    /**
+     * Returns the minimum of three integer values.
+     *
+     * @param a the first integer value
+     * @param b the second integer value
+     * @param c the third integer value
+     * @return the minimum of {@code a}, {@code b}, and {@code c}
+     */
     public static int min(int a, int b, int c)
     {
         return Math.min(Math.min(a, b), c);
     }
 
+    /**
+     * Returns the maximum of three integer values.
+     *
+     * @param a the first integer value
+     * @param b the second integer value
+     * @param c the third integer value
+     * @return the maximum of {@code a}, {@code b}, and {@code c}
+     */
     public static int max(int a, int b, int c)
     {
         return Math.max(Math.max(a, b), c);
     }
 
-    public String numToStr(long val)
+    /**
+     * Converts a long value to a string representation in Turkish.
+     * The conversion is done by calling {@link #numToStr3DigitsTR(int)}.
+     *
+     * @param val the long value to convert
+     * @return the string representation of {@code val} in Turkish
+     */
+    public static String numToStr(long val)
     {
         //...
         return numToStr3DigitsTR((int)val);
