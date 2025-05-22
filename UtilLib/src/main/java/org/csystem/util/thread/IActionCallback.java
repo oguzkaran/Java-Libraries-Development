@@ -1,16 +1,19 @@
-/*----------------------------------------------------------------------
-FILE        : IActionCallback.java
-AUTHOR      : Oğuz Karan
-LAST UPDATE : 13.09.2021
-
-IActionCallback functional interface
-
-Copyleft (c) 1993 by C and System Programmers Association (CSD)
-All Rights Free
------------------------------------------------------------------------*/
+/**
+ * Represents a functional interface for a callback action.
+ * This interface is intended to be used with lambda expressions or method references
+ * to encapsulate an action that may throw an exception.
+ *
+ * @author Oğuz Karan
+ * @since 13.09.2021
+ */
 package org.csystem.util.thread;
 
 @FunctionalInterface
 public interface IActionCallback {
+    /**
+     * Executes the action defined by the callback.
+     *
+     * @throws Exception if any error occurs during execution
+     */
     void run() throws Exception;
 }
