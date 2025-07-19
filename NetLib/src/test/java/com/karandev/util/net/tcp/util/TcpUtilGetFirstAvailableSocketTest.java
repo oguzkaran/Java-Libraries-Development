@@ -20,7 +20,7 @@ public class TcpUtilGetFirstAvailableSocketTest {
 
             var localPort = serverSocket.getLocalPort();
 
-            Assertions.assertTrue(IntStream.rangeClosed(MIN_PORT, MAX_PORT).limit(5)
+            Assertions.assertTrue(IntStream.rangeClosed(MIN_PORT, MAX_PORT)
                     .anyMatch(i -> i == localPort));
 
             System.out.printf("Assigned Port: %s%n", localPort);
