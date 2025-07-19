@@ -4,11 +4,15 @@ import com.karandev.util.net.TcpUtil;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
 
 public class TcpUtilSendReceiveFileTest {
     private static final String HOST = "localhost";
@@ -16,6 +20,7 @@ public class TcpUtilSendReceiveFileTest {
     private static final int SOCKET_TIMEOUT = 1000;
     private static final File SEND_FILE = new File("./sent.txt");
     private static final File RECEIVE_FILE = new File("./received.txt");
+    private static final int FILE_LENGTH = 2050;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
 
@@ -28,25 +33,37 @@ public class TcpUtilSendReceiveFileTest {
             TcpUtil.receiveFile(clientSocket, RECEIVE_FILE);
 
             Assertions.assertTrue(RECEIVE_FILE.isFile());
+            Assertions.assertEquals(FILE_LENGTH, RECEIVE_FILE.length());
         }
         catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
+    private void writeRandomBytes() throws IOException
+    {
+        var random = new Random();
+        var bytes = new byte[FILE_LENGTH];
+
+        random.nextBytes(bytes);
+
+        try (var fos = new FileOutputStream(SEND_FILE)) {
+            fos.write(bytes);
+        }
+    }
+
     @BeforeEach
-    public void setUp()
+    public void setUp() throws IOException
     {
         m_threadPool = Executors.newSingleThreadExecutor();
         m_threadPool.execute(this::serverCallback);
+        writeRandomBytes();
     }
 
     @Test
     public void test() throws IOException, InterruptedException
     {
-        SEND_FILE.createNewFile();
         Thread.sleep(100);
-
         TcpUtil.sendFile(new Socket(HOST, PORT), SEND_FILE, 2048);
     }
 
@@ -55,7 +72,6 @@ public class TcpUtilSendReceiveFileTest {
     {
         m_serverSocket.close();
         m_threadPool.shutdown();
-
         SEND_FILE.deleteOnExit();
         RECEIVE_FILE.deleteOnExit();
     }
