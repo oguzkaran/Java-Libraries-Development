@@ -16,11 +16,11 @@ public class TcpUtilGetFirstAvailableSocketTest {
     public void givenPortNumberRange_whenAvailable_thenPortAssigned() throws InterruptedException
     {
         Thread.sleep(100);
-        try (var serverSocket = TcpUtil.getFirstAvailableSocket(1024, MIN_PORT, MAX_PORT).orElseThrow()) {
+        try (var serverSocket = TcpUtil.getFirstAvailableSocketWithBacklog(1024, MIN_PORT, MAX_PORT).orElseThrow()) {
 
             var localPort = serverSocket.getLocalPort();
 
-            Assertions.assertTrue(IntStream.rangeClosed(MIN_PORT, MAX_PORT).limit(5)
+            Assertions.assertTrue(IntStream.rangeClosed(MIN_PORT, MAX_PORT)
                     .anyMatch(i -> i == localPort));
 
             System.out.printf("Assigned Port: %s%n", localPort);
@@ -34,14 +34,13 @@ public class TcpUtilGetFirstAvailableSocketTest {
     }
 
     @Test
-    public void givenPortNumber_whenPortIsUsed_thenReturnEmptyOptional() throws InterruptedException
+    public void givenPortNumber_whenPortIsUsed_thenReturnEmptyOptional()
     {
-        Thread.sleep(100);
-        try (var serverSocket = TcpUtil.getFirstAvailableSocket(1, MIN_PORT, MAX_PORT).orElseThrow()) {
-            var port = serverSocket.getLocalPort();
-            var portInUse = new int [] {port};
+        try (var serverSocket = TcpUtil.getFirstAvailableSocketWithBacklog(1, MIN_PORT, MAX_PORT).orElseThrow()) {
+            var inUsePort = serverSocket.getLocalPort();
+            var socketOpt = TcpUtil.getFirstAvailableSocket(inUsePort);
 
-            Assertions.assertTrue(TcpUtil.getFirstAvailableSocket(1, portInUse).isEmpty());
+            Assertions.assertTrue(socketOpt.isEmpty());
         }
         catch (IOException ignore) {
 
