@@ -7,7 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * Utility class for TCP socket operations, including sending and receiving primitive type values, texts and files.
@@ -18,6 +20,17 @@ import java.util.Optional;
  */
 public final class TcpUtil {
 	private static final int DEFAULT_LINE_BLOCK_SIZE = 2048;
+
+	/**
+	 * <p>Checks if the provided port numbers are within the valid range of 0-65535.</p>
+	 *
+	 * @param ports an array of port numbers to check.
+	 * @throws IllegalArgumentException if any port number is outside the valid range of 0-65535.
+     */
+	private static void checkPortRange(int[] ports) throws IllegalArgumentException {
+		if (Arrays.stream(ports).anyMatch(port -> port <0 || port > 65533))
+			throw new IllegalArgumentException("Port numbers must be in range 0-65535");
+	}
 
 	/**
 	 * <p>Receives a specified number of bytes from the input stream and stores them into the given byte array.</p>
@@ -127,6 +140,24 @@ public final class TcpUtil {
 		return send(dos, data, 0, data.length);
 	}
 
+	/**
+	 * <p>Tries to create a ServerSocket with the specified {@code backlog} and {@code port} values.</p>
+	 *
+	 * <p>If the port is already in use, it returns an empty Optional.</p>
+	 *
+	 * @param backlog the maximum length of the queue of incoming connections. If backlog is -1, the default value(50) is used.
+	 * @param port the port number to bind the server socket to
+	 * @return an Optional containing the created ServerSocket, or empty if the port is already in use
+	 */
+	private static Optional<ServerSocket> tryCreateSocket (int backlog, int port)
+	{
+		try {
+			return Optional.of( backlog != -1 ? new ServerSocket(port, backlog) : new ServerSocket(port));
+		} catch (IOException ignored) {
+			return Optional.empty();
+		}
+	}
+
 	private TcpUtil() {}
 
 	/**
@@ -135,6 +166,8 @@ public final class TcpUtil {
 	 * range, having the specified {@code backlog} value for maximum number of pending connections on the server socket.
 	 * Other-wise returns an empty Optional.</p>
 	 *
+	 * <p>Note: Ports must be in the range 0-65535.</p>
+	 *
 	 * @param backlog requested maximum length of the queue of incoming connections
 	 * @param minPort minimum value for the port number
 	 * @param maxPort maximum value for the port number
@@ -142,42 +175,12 @@ public final class TcpUtil {
 	 * or empty optional if all the ports are busy and cannot be assigned
 	 * @throws IllegalArgumentException if the provided port numbers are outside the valid range
 	 */
-	public static Optional<ServerSocket> getFirstAvailableSocket(int backlog, int minPort, int maxPort)
+	public static Optional<ServerSocket> getFirstAvailableSocketWithBacklog(int backlog, int minPort, int maxPort)
 	{
-		Optional<ServerSocket> result = Optional.empty();
+		var ports = IntStream.rangeClosed(minPort, maxPort).toArray();
+		checkPortRange(ports);
 
-		for (int port = minPort; port <= maxPort; ++port)
-			try {
-				result = Optional.of(new ServerSocket(port, backlog));
-			}
-			catch (IOException ignore) {
-			}
-
-		return result;
-	}
-
-	/**
-	 * <p>Returns an Optional SocketServer with the first available port number in the given
-	 * {@code minPort}, {@code maxPort} (inclusive)
-	 * range. Other-wise returns an empty Optional.</p>
-	 *
-	 * @param minPort minimum value for the port number
-	 * @param maxPort maximum value for the port number
-	 * @return an Optional SocketServer, or empty optional if all the ports are busy and cannot be assigned
-	 * @throws IllegalArgumentException if the provided port numbers are outside the valid range
-	 */
-	public static Optional<ServerSocket> getFirstAvailablePort(int minPort, int maxPort)
-	{
-		Optional<ServerSocket> result = Optional.empty();
-
-		for (int port = minPort; port <= maxPort; ++port)
-			try {
-				result = Optional.of(new ServerSocket(port));
-			}
-			catch (IOException ignore) {
-			}
-
-		return result;
+		return getFirstAvailableSocketWithBacklog(backlog, ports);
 	}
 
 	/**
@@ -185,28 +188,48 @@ public final class TcpUtil {
 	 * and sets the maximum number of pending connections on the server socket using the {@code backlog}.
 	 * Other-wise returns an empty Optional.</p>
 	 *
+	 * <p>Note: Ports must be in the range 0-65535.</p>
+	 *
 	 * @param backlog requested maximum length of the queue of incoming connections
 	 * @param ports vararg parameter for the port number values
 	 * @return an Optional SocketServer, or empty optional if all the {@code ports} are busy and cannot be assigned
 	 * @throws IllegalArgumentException if the provided port numbers are outside the valid range
 	 */
-	public static Optional<ServerSocket> getFirstAvailableSocket(int backlog, int...ports)
+	public static Optional<ServerSocket> getFirstAvailableSocketWithBacklog(int backlog, int...ports)
 	{
-		Optional<ServerSocket> result = Optional.empty();
+		checkPortRange(ports);
 
-		for (var port : ports)
-			try {
-				result = Optional.of(new ServerSocket(port, backlog));
-			}
-			catch (IOException ignore) {
-			}
+		return Arrays.stream(ports)
+				.mapToObj(port-> tryCreateSocket(backlog, port))
+				.flatMap(Optional::stream)
+				.findFirst();
+	}
 
-		return result;
+	/**
+	 * <p>Returns an Optional SocketServer with the first available port number in the given
+	 * {@code minPort}, {@code maxPort} (inclusive)
+	 * range. Other-wise returns an empty Optional.</p>
+	 *
+	 * <p>Note: Ports must be in the range 0-65535.</p>
+	 *
+	 * @param minPort minimum value for the port number
+	 * @param maxPort maximum value for the port number
+	 * @return an Optional SocketServer, or empty optional if all the ports are busy and cannot be assigned
+	 * @throws IllegalArgumentException if the provided port numbers are outside the valid range
+	 */
+	public static Optional<ServerSocket> getFirstAvailableSocket(int minPort, int maxPort)
+	{
+		var ports = IntStream.rangeClosed(minPort, maxPort).toArray();
+		checkPortRange(ports);
+
+		return getFirstAvailableSocket(ports);
 	}
 
 	/**
 	 * <p>Returns an Optional SocketServer with the first available port number in the given vararg parameter {@code ports}.
 	 * Other-wise returns an empty Optional.</p>
+	 *
+	 * <p>Note: Ports must be in the range 0-65535.</p>
 	 *
 	 * @param ports vararg parameter for the port number values
 	 * @return an Optional SocketServer, or empty optional if all the ports are busy and cannot be assigned
@@ -214,16 +237,12 @@ public final class TcpUtil {
 	 */
 	public static Optional<ServerSocket> getFirstAvailableSocket(int...ports)
 	{
-		Optional<ServerSocket> result = Optional.empty();
+		checkPortRange(ports);
 
-		for (var port : ports)
-			try {
-				result = Optional.of(new ServerSocket(port));
-			}
-			catch (IOException ignore) {
-			}
-
-		return result;
+		return Arrays.stream(ports)
+				.mapToObj(port -> tryCreateSocket(-1, port))
+				.flatMap(Optional::stream)
+				.findFirst();
 	}
 
 	/**
