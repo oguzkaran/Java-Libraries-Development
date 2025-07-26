@@ -27,8 +27,8 @@ public final class TcpUtil {
 	 * @param ports an array of port numbers to check.
 	 * @throws IllegalArgumentException if any port number is outside the valid range of 0-65535.
      */
-	private static void checkPortRange(int[] ports) throws IllegalArgumentException {
-		if (Arrays.stream(ports).anyMatch(port -> port <0 || port > 65533))
+	private static void checkPortRange(int [] ports) throws IllegalArgumentException {
+		if (Arrays.stream(ports).anyMatch(port -> port < 0 || port > 65533))
 			throw new IllegalArgumentException("Port numbers must be in range 0-65535");
 	}
 
@@ -149,10 +149,10 @@ public final class TcpUtil {
 	 * @param port the port number to bind the server socket to
 	 * @return an Optional containing the created ServerSocket, or empty if the port is already in use
 	 */
-	private static Optional<ServerSocket> tryCreateSocket (int backlog, int port)
+	private static Optional<ServerSocket> tryCreateSocket(int backlog, int port)
 	{
 		try {
-			return Optional.of( backlog != -1 ? new ServerSocket(port, backlog) : new ServerSocket(port));
+			return Optional.of(backlog != -1 ? new ServerSocket(port, backlog) : new ServerSocket(port));
 		} catch (IOException ignored) {
 			return Optional.empty();
 		}
