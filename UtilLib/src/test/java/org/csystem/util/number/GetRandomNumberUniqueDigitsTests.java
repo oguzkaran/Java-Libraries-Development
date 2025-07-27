@@ -44,7 +44,6 @@ public class GetRandomNumberUniqueDigitsTests {
             var val = NumberUtil.getRandomNumberUniqueDigits( n);
             var valStr = String.valueOf(val);
 
-            System.out.println(val);
             assertEquals(n, valStr.length());
 
             var firstDigit = Integer.parseInt(String.valueOf(valStr.charAt(0)));
