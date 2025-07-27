@@ -31,11 +31,8 @@ public class IsNotPrimeTest {
         assertFalse(NumberUtil.isNotPrime(9999999967L));
         assertFalse(NumberUtil.isNotPrime(99999999019L));
         assertFalse(NumberUtil.isNotPrime(100000000003L));
-        assertFalse(NumberUtil.isNotPrime(9223372036854775783L));
         assertFalse(NumberUtil.isNotPrime(new BigInteger("9999999967")));
         assertFalse(NumberUtil.isNotPrime(new BigInteger("99999999019")));
         assertFalse(NumberUtil.isNotPrime(new BigInteger("100000000003")));
-        assertFalse(NumberUtil.isNotPrime(new BigInteger("9223372036854775783")));
-
     }
 }

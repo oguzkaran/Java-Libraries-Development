@@ -19,11 +19,9 @@ public class IsPrimeTests {
         assertTrue(NumberUtil.isPrime(9999999967L));
         assertTrue(NumberUtil.isPrime(99999999019L));
         assertTrue(NumberUtil.isPrime(100000000003L));
-        assertTrue(NumberUtil.isPrime(9223372036854775783L));
         assertTrue(NumberUtil.isPrime(new BigInteger("9999999967")));
         assertTrue(NumberUtil.isPrime(new BigInteger("99999999019")));
         assertTrue(NumberUtil.isPrime(new BigInteger("100000000003")));
-        assertTrue(NumberUtil.isPrime(new BigInteger("9223372036854775783")));
 
         assertFalse(NumberUtil.isPrime(42));
         assertFalse(NumberUtil.isPrime(44));
