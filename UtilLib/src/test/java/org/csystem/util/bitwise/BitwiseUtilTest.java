@@ -1,5 +1,10 @@
 package org.csystem.util.bitwise;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 public class BitwiseUtilTest {
     @Test
     @DisplayName("clearBit(int) should clear the specific bit")
