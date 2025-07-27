@@ -15,7 +15,7 @@ import static com.karandev.util.net.TcpUtil.*;
 public class TcpUtilGetFirstAvailableSocketTest {
     private static final int MIN_PORT = 1024;
     private static final int MAX_PORT = 8192;
-    private static final int[] ALLOWED_PORT_RANGE = IntStream.rangeClosed(1024, 65533).toArray();
+    private static final int[] ALLOWED_PORT_RANGE = IntStream.rangeClosed(2048, 4096).toArray();
 
     @Test
     public void givenPortNumberRange_whenAvailable_thenPortAssigned() throws InterruptedException
