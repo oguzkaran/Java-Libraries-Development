@@ -1,5 +1,6 @@
 package org.csystem.util.number;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.math.BigInteger;
@@ -35,5 +36,13 @@ public class IsPrimeTests {
         assertFalse(NumberUtil.isPrime(new BigInteger("42")));
         assertFalse(NumberUtil.isPrime(new BigInteger("44")));
         assertFalse(NumberUtil.isPrime(new BigInteger("48")));
+    }
+
+    @Test
+    @Ignore
+    public void testIsPrimeWithLargeNumbers()
+    {
+        assertTrue(NumberUtil.isPrime(9223372036854775783L));
+        assertTrue(NumberUtil.isPrime(new BigInteger("9223372036854775783")));
     }
 }
