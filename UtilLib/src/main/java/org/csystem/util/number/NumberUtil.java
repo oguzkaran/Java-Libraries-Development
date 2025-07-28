@@ -1,3 +1,10 @@
+package org.csystem.util.number;
+
+import org.csystem.util.string.StringUtil;
+import java.math.BigInteger;
+import java.util.Random;
+
+import static java.lang.Math.*;
 /**
  * {@code NumberUtil} is a utility class that provides a set of static methods for performing various numerical operations.
  * <p>
@@ -27,18 +34,10 @@
  * }</pre>
  *
  * @author CSD Java Group
- * @version 01.11.2021
+ * @since 15.12.2021
  * @see java.math.BigInteger
  * @see java.util.Random
- */package org.csystem.util.number;
-
-import org.csystem.util.string.StringUtil;
-
-import java.math.BigInteger;
-import java.util.Random;
-
-import static java.lang.Math.*;
-
+ */
 public final class NumberUtil {
     private static final String [] MS_ONES_TR;
     private static final String [] MS_TENS_TR;
