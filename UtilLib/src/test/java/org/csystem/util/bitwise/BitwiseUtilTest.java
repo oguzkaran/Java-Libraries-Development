@@ -69,21 +69,21 @@ public class BitwiseUtilTest {
     @Test
     @DisplayName("numberOfSetBits should return correct count")
     void testNumberOfSetBits() {
-        assertEquals(3, BitwiseUtil.numberOfSetBits((byte) 0b10101100));
-        assertEquals(3, BitwiseUtil.numberOfSetBits((short) 0b10101100));
-        assertEquals(3, BitwiseUtil.numberOfSetBits(0b10101100));
-        assertEquals(3, BitwiseUtil.numberOfSetBits((long) 0b10101100));
-        assertEquals(3, BitwiseUtil.numberOfSetBits((char) 0b10101100));
+        assertEquals(4, BitwiseUtil.numberOfSetBits((byte) 0b10101100));
+        assertEquals(4, BitwiseUtil.numberOfSetBits((short) 0b10101100));
+        assertEquals(4, BitwiseUtil.numberOfSetBits(0b10101100));
+        assertEquals(4, BitwiseUtil.numberOfSetBits((char) 0b10101100));
+        assertEquals(4, BitwiseUtil.numberOfSetBits((long) 0b10101100));
     }
 
     @Test
     @DisplayName("numberOfClearBits should return correct count")
     void testNumberOfClearBits() {
-        assertEquals(5, BitwiseUtil.numberOfClearBits((byte) 0b10101100));
-        assertEquals(13, BitwiseUtil.numberOfClearBits((short) 0b10101100));
-        assertEquals(29, BitwiseUtil.numberOfClearBits(0b10101100));
-        assertEquals(61, BitwiseUtil.numberOfClearBits((long) 0b10101100));
-        assertEquals(13, BitwiseUtil.numberOfClearBits((char) 0b10101100));
+        assertEquals(4, BitwiseUtil.numberOfClearBits((byte) 0b10101100));
+        assertEquals(12, BitwiseUtil.numberOfClearBits((short) 0b10101100));
+        assertEquals(28, BitwiseUtil.numberOfClearBits(0b10101100));
+        assertEquals(60, BitwiseUtil.numberOfClearBits((long) 0b10101100));
+        assertEquals(12, BitwiseUtil.numberOfClearBits((char) 0b10101100));
     }
 
     @Test

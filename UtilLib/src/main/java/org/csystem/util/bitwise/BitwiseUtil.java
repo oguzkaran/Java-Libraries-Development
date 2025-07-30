@@ -128,7 +128,7 @@ public final class BitwiseUtil {
      */
     public static boolean isSet(long val, int k)
     {
-        return (val & 1L << k) != 1;
+        return (val & 1L << k) != 0;
     }
 
     /**
