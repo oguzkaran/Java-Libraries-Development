@@ -28,7 +28,7 @@ public final class TcpUtil {
 	 * @throws IllegalArgumentException if any port number is outside the valid range of 0-65535.
      */
 	private static void checkPortRange(int[] ports) throws IllegalArgumentException {
-		if (Arrays.stream(ports).anyMatch(port -> port < 0 || port > 65533))
+		if (Arrays.stream(ports).anyMatch(port -> port < 0 || port > 65535))
 			throw new IllegalArgumentException("Port numbers must be in range 0-65535");
 	}
 
