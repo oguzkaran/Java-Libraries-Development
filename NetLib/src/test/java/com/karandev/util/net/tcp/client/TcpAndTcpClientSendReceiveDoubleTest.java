@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TcpAndTcpClientSendReceiveDoubleTest {
     private static final String HOST = "localhost";
@@ -16,6 +17,7 @@ public class TcpAndTcpClientSendReceiveDoubleTest {
     private static final double SEND_DOUBLE = 34.5;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
+    private final AtomicReference<Throwable> m_exception = new AtomicReference<>();
 
     private void serverCallback()
     {
@@ -31,7 +33,7 @@ public class TcpAndTcpClientSendReceiveDoubleTest {
             tcp.sendDouble(SEND_DOUBLE);
         }
         catch (IOException ex) {
-            ex.printStackTrace();
+            m_exception.set(ex);
         }
     }
 
@@ -56,7 +58,8 @@ public class TcpAndTcpClientSendReceiveDoubleTest {
     @AfterEach
     public void tearDown() throws IOException
     {
+        Assertions.assertNull(m_exception.get());
         m_serverSocket.close();
-        m_threadPool.shutdown();
+        m_threadPool.shutdownNow();
     }
 }

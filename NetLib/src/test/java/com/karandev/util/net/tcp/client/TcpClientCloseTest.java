@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TcpClientCloseTest {
     private static final String HOST = "localhost";
     private static final int PORT = 50500;
     private ExecutorService m_threadPool;
     private ServerSocket m_serverSocket;
+    private final AtomicReference<Throwable> m_exception = new AtomicReference<>();
 
     private void serverCallback()
     {
@@ -22,7 +24,7 @@ public class TcpClientCloseTest {
             m_serverSocket.accept();
         }
         catch (IOException ex) {
-            ex.printStackTrace();
+            m_exception.set(ex);
         }
     }
 
@@ -48,7 +50,8 @@ public class TcpClientCloseTest {
     @AfterEach
     public void tearDown() throws IOException
     {
+        Assertions.assertNull(m_exception.get());
         m_serverSocket.close();
-        m_threadPool.shutdown();
+        m_threadPool.shutdownNow();
     }
 }

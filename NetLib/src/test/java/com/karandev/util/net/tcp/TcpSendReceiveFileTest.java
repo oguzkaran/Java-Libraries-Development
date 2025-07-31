@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TcpSendReceiveFileTest {
     private static final String HOST = "localhost";
@@ -18,6 +19,7 @@ public class TcpSendReceiveFileTest {
     private static final File RECEIVE_FILE = new File("./received.txt");
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
+    private final AtomicReference<Throwable> m_exception = new AtomicReference<>();
 
     private void serverCallback()
     {
@@ -32,7 +34,7 @@ public class TcpSendReceiveFileTest {
             Assertions.assertTrue(RECEIVE_FILE.isFile());
         }
         catch (IOException ex) {
-            ex.printStackTrace();
+            m_exception.set(ex);
         }
     }
 
@@ -59,8 +61,9 @@ public class TcpSendReceiveFileTest {
     @AfterEach
     public void tearDown() throws IOException
     {
+        Assertions.assertNull(m_exception.get());
         m_serverSocket.close();
-        m_threadPool.shutdown();
+        m_threadPool.shutdownNow();
 
         SEND_FILE.deleteOnExit();
         RECEIVE_FILE.deleteOnExit();

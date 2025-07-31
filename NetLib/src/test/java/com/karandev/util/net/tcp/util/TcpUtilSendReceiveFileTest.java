@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TcpUtilSendReceiveFileTest {
     private static final String HOST = "localhost";
@@ -24,6 +25,7 @@ public class TcpUtilSendReceiveFileTest {
     private static final int FILE_LENGTH = 2050;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
+    private final AtomicReference<Throwable> m_exception = new AtomicReference<>();
 
     private void serverCallback()
     {
@@ -37,7 +39,7 @@ public class TcpUtilSendReceiveFileTest {
             Assertions.assertEquals(FILE_LENGTH, RECEIVE_FILE.length());
         }
         catch (IOException ex) {
-            ex.printStackTrace();
+            m_exception.set(ex);
         }
     }
 
@@ -71,8 +73,9 @@ public class TcpUtilSendReceiveFileTest {
     @AfterEach
     public void tearDown() throws IOException
     {
+        Assertions.assertNull(m_exception.get());
         m_serverSocket.close();
-        m_threadPool.shutdown();
+        m_threadPool.shutdownNow();
         SEND_FILE.deleteOnExit();
         RECEIVE_FILE.deleteOnExit();
     }

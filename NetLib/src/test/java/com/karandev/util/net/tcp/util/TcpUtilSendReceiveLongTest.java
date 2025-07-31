@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TcpUtilSendReceiveLongTest {
     private static final String HOST = "localhost";
@@ -16,6 +17,7 @@ public class TcpUtilSendReceiveLongTest {
     private static final long SEND_LONG = 34L;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
+    private final AtomicReference<Throwable> m_exception = new AtomicReference<>();
 
     private void serverCallback()
     {
@@ -28,7 +30,7 @@ public class TcpUtilSendReceiveLongTest {
             Assertions.assertEquals(SEND_LONG, receivedLong);
         }
         catch (Throwable ex) {
-            ex.printStackTrace();
+            m_exception.set(ex);
         }
     }
 
@@ -51,7 +53,8 @@ public class TcpUtilSendReceiveLongTest {
     @AfterEach
     public void tearDown() throws IOException
     {
+        Assertions.assertNull(m_exception.get());
         m_serverSocket.close();
-        m_threadPool.shutdown();
+        m_threadPool.shutdownNow();
     }
 }

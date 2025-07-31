@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TcpAndTcpClientSendReceiveIntTest {
     private static final String HOST = "localhost";
@@ -16,6 +17,7 @@ public class TcpAndTcpClientSendReceiveIntTest {
     private static final int SEND_INT = 34;
     private ServerSocket m_serverSocket;
     private ExecutorService m_threadPool;
+    private final AtomicReference<Throwable> m_exception = new AtomicReference<>();
 
     private void serverCallback()
     {
@@ -32,7 +34,7 @@ public class TcpAndTcpClientSendReceiveIntTest {
             tcp.sendInt(SEND_INT);
         }
         catch (IOException ex) {
-            ex.printStackTrace();
+            m_exception.set(ex);
         }
     }
 
@@ -57,7 +59,8 @@ public class TcpAndTcpClientSendReceiveIntTest {
     @AfterEach
     public void tearDown() throws IOException
     {
+        Assertions.assertNull(m_exception.get());
         m_serverSocket.close();
-        m_threadPool.shutdown();
+        m_threadPool.shutdownNow();
     }
 }
