@@ -183,7 +183,6 @@ public final class OpenCVUtil {
 
         int rows = mat.rows();
         int cols = mat.cols();
-        int type = mat.type();
 
         for (int r = 0; r < rows; ++r) {
             for (int c = 0; c < cols; ++c) {
