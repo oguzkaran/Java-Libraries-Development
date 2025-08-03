@@ -175,7 +175,24 @@ public final class OpenCVUtil {
      */
     public static boolean isBinary(Mat mat)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (mat.empty())
+            return false;
+
+        if (mat.channels() != 1)
+            return false;
+
+        int rows = mat.rows();
+        int cols = mat.cols();
+        int type = mat.type();
+
+        for (int r = 0; r < rows; ++r) {
+            for (int c = 0; c < cols; ++c) {
+                double pixel = mat.get(r, c)[0];
+                if (pixel != 0 && pixel != STANDARD_MAX_PIXEL_VALUE)
+                    return false;
+            }
+        }
+        return true;
     }
 
     /**
