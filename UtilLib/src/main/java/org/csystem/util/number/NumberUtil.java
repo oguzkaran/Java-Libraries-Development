@@ -1,22 +1,43 @@
-/*----------------------------------------------------------------------
-	FILE        : NumberUtil.java
-	AUTHOR      : CSD Java Group (CJG)
-	LAST UPDATE : 01.11.2021
-
-	Utility class for numeric operations
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
------------------------------------------------------------------------*/
 package org.csystem.util.number;
 
 import org.csystem.util.string.StringUtil;
-
 import java.math.BigInteger;
 import java.util.Random;
 
 import static java.lang.Math.*;
-
+/**
+ * {@code NumberUtil} is a utility class that provides a set of static methods for performing various numerical operations.
+ * <p>
+ * These operations include digit manipulation, prime number generation, factorials, Fibonacci numbers,
+ * palindrome checking, Armstrong number validation, random number generation with unique digits, and more.
+ * </p>
+ * <p>
+ * All methods are static, and the class is not intended to be instantiated.
+ * </p>
+ * <h2>Features</h2>
+ * <ul>
+ *     <li>Factorial calculations for {@code int} and {@code long} values</li>
+ *     <li>Digit extraction and manipulation for numbers</li>
+ *     <li>Fibonacci number generation (individual and sequences)</li>
+ *     <li>Prime number checks and generators</li>
+ *     <li>Palindrome detection in strings</li>
+ *     <li>Random number generation with unique digits</li>
+ *     <li>Armstrong number validation</li>
+ *     <li>Even/odd number detection</li>
+ * </ul>
+ *
+ * <h2>Usage</h2>
+ * <pre>{@code
+ * int[] digits = NumberUtil.getDigits(12345); // [1, 2, 3, 4, 5]
+ * boolean isPrime = NumberUtil.isPrime(13);  // true
+ * long factorial = NumberUtil.factorial(20); // 2432902008176640000
+ * }</pre>
+ *
+ * @author CSD Java Group
+ * @since 15.12.2021
+ * @see java.math.BigInteger
+ * @see java.util.Random
+ */
 public final class NumberUtil {
     private static final String [] MS_ONES_TR;
     private static final String [] MS_TENS_TR;
