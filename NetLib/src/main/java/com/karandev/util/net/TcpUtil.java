@@ -27,7 +27,7 @@ public final class TcpUtil {
 	 *
 	 * <p>It is possible to handle data transfer when incoming bytes are not available in a single read operation.</p>
 	 *
-	 * @param dis the DataInputStream to read from
+	 * @param inputStream the DataInputStream to read from
 	 * @param data the byte array to store the read data from the DataInputStream
 	 * @param offset the starting index offset of the byte array
 	 * @param length the number of the bytes to be read
@@ -35,14 +35,14 @@ public final class TcpUtil {
 	 * 0 when no bytes are read
 	 * @throws IOException if an I/O error occurs while reading from the input stream
 	 */
-	private static int receive(DataInputStream dis, byte [] data, int offset, int length) throws IOException
+	private static int receive(InputStream inputStream, byte [] data, int offset, int length) throws IOException
 	{
 		int result;
 		int left = length, index = offset;
 
 		while (left > 0) {
-			if ((result = dis.read(data, index, left)) == -1)
-				return -1;
+			if ((result = inputStream.read(data, index, left)) == -1)
+				return index;
 
 			if (result == 0)
 				break;
@@ -244,7 +244,7 @@ public final class TcpUtil {
 	public static int receive(Socket socket, byte [] data, int offset, int length)
 	{
 		try {
-			return receive(new DataInputStream(socket.getInputStream()), data, offset, length);
+			return receive(socket.getInputStream(), data, offset, length);
 		}
 		catch (Throwable ex) {
 			throw new NetworkException("TcpUtil.receive", ex);
