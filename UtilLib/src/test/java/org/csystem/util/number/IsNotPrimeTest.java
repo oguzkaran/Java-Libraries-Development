@@ -41,7 +41,10 @@ public class IsNotPrimeTest {
     @Ignore
     public void testIsNotPrimeWithLargeNumbers()
     {
-        assertTrue(NumberUtil.isPrime(9223372036854775783L));
-        assertTrue(NumberUtil.isPrime(new BigInteger("9223372036854775783")));
+        assertFalse(NumberUtil.isNotPrime(9223372036854775783L));
+        assertFalse(NumberUtil.isNotPrime(new BigInteger("9223372036854775783")));
+
+        assertTrue(NumberUtil.isNotPrime(9223372036854775700L));
+        assertTrue(NumberUtil.isNotPrime(new BigInteger("9223372036854775700")));
     }
 }
