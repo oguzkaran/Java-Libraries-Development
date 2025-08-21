@@ -624,12 +624,30 @@ public final class NumberUtil {
      *
      * @param val the long value to convert
      * @return the string representation of {@code val} in Turkish
+     *
+     * @deprecated
+     * It is recommended to use the static method {@link #numberToString(long)}
+     * instead of this non-static method.
      */
-    public static String numToStr(long val)
+    @Deprecated(since = "1.0.0", forRemoval = true)
+    public String numToStr(long val)
     {
         //...
         return numToStr3DigitsTR((int)val);
 
+    }
+
+    /**
+     * Converts a long value to a string representation in Turkish.
+     * The conversion is done by calling {@link #numToStr3DigitsTR(int)}.
+     *
+     * @param val the long value to convert
+     * @return the string representation of {@code val} in Turkish
+     */
+    public static String numberToString(long val)
+    {
+        //...
+        return numToStr3DigitsTR((int)val);
     }
 }
 

@@ -9,17 +9,17 @@ public class NumToStrTests {
     @Test
     public void test()
     {
-        assertEquals("eksiikiyüzyetmişaltı", NumberUtil.numToStr(-276));
-        assertEquals("eksiellisekiz", NumberUtil.numToStr(-58));
-        assertEquals("eksibeş", NumberUtil.numToStr(-5));
-        assertEquals("sıfır", NumberUtil.numToStr(0));
-        assertEquals("bir", NumberUtil.numToStr(1));
-        assertEquals("iki", NumberUtil.numToStr(2));
-        assertEquals("on", NumberUtil.numToStr(10));
-        assertEquals("onbir", NumberUtil.numToStr(11));
-        assertEquals("oniki", NumberUtil.numToStr(12));
-        assertEquals("yüzyetmiş", NumberUtil.numToStr(170));
-        assertEquals("ikiyüzyetmişaltı", NumberUtil.numToStr(276));
-        assertEquals("dokuzyüzdoksandokuz", NumberUtil.numToStr(999));
+        assertEquals("eksiikiyüzyetmişaltı", NumberUtil.numberToString(-276));
+        assertEquals("eksiellisekiz", NumberUtil.numberToString(-58));
+        assertEquals("eksibeş", NumberUtil.numberToString(-5));
+        assertEquals("sıfır", NumberUtil.numberToString(0));
+        assertEquals("bir", NumberUtil.numberToString(1));
+        assertEquals("iki", NumberUtil.numberToString(2));
+        assertEquals("on", NumberUtil.numberToString(10));
+        assertEquals("onbir", NumberUtil.numberToString(11));
+        assertEquals("oniki", NumberUtil.numberToString(12));
+        assertEquals("yüzyetmiş", NumberUtil.numberToString(170));
+        assertEquals("ikiyüzyetmişaltı", NumberUtil.numberToString(276));
+        assertEquals("dokuzyüzdoksandokuz", NumberUtil.numberToString(999));
     }
 }
