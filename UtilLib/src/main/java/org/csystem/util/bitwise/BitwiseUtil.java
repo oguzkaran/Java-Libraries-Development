@@ -1,3 +1,5 @@
+package org.csystem.util.bitwise;
+
 /**
  * Utility class providing common bitwise operations for primitive data types.
  * This class includes methods to manipulate, inspect, and format the bits of
@@ -10,7 +12,6 @@
  * @author CSD Java group
  * @since 15.12.2021
  */
-package org.csystem.util.bitwise;
 
 public final class BitwiseUtil {
     private BitwiseUtil()

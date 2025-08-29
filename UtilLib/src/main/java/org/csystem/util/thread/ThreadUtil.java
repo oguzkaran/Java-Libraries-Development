@@ -1,3 +1,5 @@
+package org.csystem.util.thread;
+
 /**
  * A utility class that provides helper methods for thread-related operations,
  * such as joining, sleeping, synchronization, and semaphore control.
@@ -11,7 +13,6 @@
  * @author Oğuz Karan
  * @since 13.09.2021
  */
-package org.csystem.util.thread;
 
 import java.util.concurrent.Semaphore;
 

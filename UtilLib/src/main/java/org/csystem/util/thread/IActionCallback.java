@@ -1,3 +1,5 @@
+package org.csystem.util.thread;
+
 /**
  * Represents a functional interface for a callback action.
  * This interface is intended to be used with lambda expressions or method references
@@ -6,7 +8,6 @@
  * @author Oğuz Karan
  * @since 13.09.2021
  */
-package org.csystem.util.thread;
 
 @FunctionalInterface
 public interface IActionCallback {

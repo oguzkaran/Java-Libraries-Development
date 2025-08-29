@@ -1,13 +1,3 @@
-/*----------------------------------------------------------------------
-	FILE        : StringUtil.java
-	AUTHOR      : CSD Java group
-	LAST UPDATE : 29.11.2021
-
-	Utility class for string operations
-
-	Copyleft (c) 1993 by C and System Programmers Association (CSD)
-	All Rights Free
------------------------------------------------------------------------*/
 package org.csystem.util.string;
 
 import java.util.HashMap;
