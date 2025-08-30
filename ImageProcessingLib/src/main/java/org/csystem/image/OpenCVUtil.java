@@ -16,6 +16,7 @@ import java.nio.file.Path;
  * Utility class for image processing operations using OpenCV.
  * Provides methods for grayscale conversion, binary thresholding,
  * and checks for grayscale/binary images.
+ *
  * @author Oğuz Karan
  */
 public final class OpenCVUtil {
