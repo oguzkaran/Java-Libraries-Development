@@ -1,3 +1,7 @@
+/*
+ * Copyleft (c) 1993 by C and System Programmers Association (CSD)
+ * All Rights Free
+ */
 package org.csystem.util.collection;
 
 import java.util.*;
@@ -5,8 +9,9 @@ import java.util.*;
 /**
  * Utility class for collection operations including {@link java.util.Collection} and {@link java.util.Map}
  * <p>1993 by C and System Programmers Association (CSD) All Rights Free</p>
- * @author JavaApp2-Jan-2024 Group
- * @version 1.0.0
+ *
+ * @author CSD Development group
+ * @since 23.07.2021
  */
 public final class CollectionUtil {
 

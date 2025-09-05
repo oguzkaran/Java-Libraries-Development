@@ -1,3 +1,7 @@
+/*
+ * Copyleft (c) 1993 by C and System Programmers Association (CSD)
+ * All Rights Free
+ */
 package org.csystem.util.collection;
 
 import java.util.Arrays;
@@ -20,8 +24,9 @@ import java.util.stream.StreamSupport;
 /**
  * Utility class for iterable operations including {@link java.util.Collection} and {@link java.util.Map}
  * <p>1993 by C and System Programmers Association (CSD) All Rights Free</p>
- * @author JavaApp2-Jan-2024 Group
- * @version 1.0.0
+ *
+ * @author CSD Development group
+ * @since 23.07.2021
  */
 public final class IterableUtil {
     
@@ -145,7 +150,7 @@ public final class IterableUtil {
         return StreamSupport.stream(iterable.spliterator(), false)
             .anyMatch(object::equals);
     }
-    
+
     //Returns an iterable whose iterators cycle indefinitely over the elements of iterable.
     public static <T> Iterable<T> cycle(Iterable<T> iterable)
     {
