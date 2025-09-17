@@ -18,7 +18,6 @@ import java.util.function.DoubleSupplier;
  * </p>
  *
  *  @author CSD Development group
- *  @since 23.07.2021
  */
 public final class RandomDoubleGenerator implements Iterable<Double> {
     private final int m_count;
@@ -44,7 +43,7 @@ public final class RandomDoubleGenerator implements Iterable<Double> {
      * @param max The upper bound (exclusive) of the generated values
      * @return A RandomDoubleGenerator instance
      */
-    public static RandomDoubleGenerator of (int count, double min, double max)
+    public static RandomDoubleGenerator of(int count, double min, double max)
     {
         return of(new Random(), count, min, max);
     }

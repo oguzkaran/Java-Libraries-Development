@@ -13,7 +13,6 @@ import java.util.function.DoubleUnaryOperator;
  * The range is defined by a minimum and maximum value, and a step function.
  *
  *  @author CSD Development group
- *  @since 23.07.2021
  */
 public class DoubleRange implements Iterable<Double> {
     private final double m_min;

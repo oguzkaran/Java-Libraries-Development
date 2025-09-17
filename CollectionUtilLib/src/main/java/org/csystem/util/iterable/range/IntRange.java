@@ -13,7 +13,6 @@ import java.util.function.IntUnaryOperator;
  * The range can be customized with a step or an IntUnaryOperator for value progression.
  *
  * @author CSD Development group
- * @since 23.07.2021
  */
 public class IntRange implements Iterable<Integer> {
     private final int m_min;

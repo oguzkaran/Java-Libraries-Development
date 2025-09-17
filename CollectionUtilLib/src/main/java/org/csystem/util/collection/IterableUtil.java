@@ -26,7 +26,6 @@ import java.util.stream.StreamSupport;
  * <p>1993 by C and System Programmers Association (CSD) All Rights Free</p>
  *
  * @author CSD Development group
- * @since 23.07.2021
  */
 public final class IterableUtil {
     
@@ -150,7 +149,6 @@ public final class IterableUtil {
         return StreamSupport.stream(iterable.spliterator(), false)
             .anyMatch(object::equals);
     }
-
     //Returns an iterable whose iterators cycle indefinitely over the elements of iterable.
     public static <T> Iterable<T> cycle(Iterable<T> iterable)
     {
@@ -287,7 +285,7 @@ public final class IterableUtil {
             return false;
         }
 
-        return a.stream().anyMatch(b::contains);
+        return a.containsAll(b);
     }
 
     /**

@@ -14,7 +14,6 @@ import java.util.function.IntSupplier;
  * Implements {@link Iterable} to allow iteration over generated values.
  *
  *  @author CSD Development group
- *  @since 23.07.2021
  */
 public final class RandomIntGenerator implements Iterable<Integer> {
     private final int m_count;
