@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="org-csystem-util-tuple" />
+        <module name="org-csystem-util-process" />
+        <module name="com-karandev-net" />
+        <module name="org-csystem-util-data" />
+        <module name="org-csystem-util-converter" />
+        <module name="org-csystem-net-tcp-server" />
+        <module name="org-csystem-imageprocessing" />
+        <module name="com-karandev-util-console" />
+        <module name="org-csystem-util-io" />
+        <module name="org-csystem-util-exception" />
+        <module name="org-csystem-util" />
+        <module name="org-csystem-util-grpc" />
+        <module name="org-csystem-spring-net-tcp-server" />
+        <module name="org-csystem-util-collection" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="com-karandev-net" options="-parameters" />
+      <module name="com-karandev-util-console" options="-parameters" />
+      <module name="org-csystem-imageprocessing" options="-parameters" />
+      <module name="org-csystem-net-tcp-server" options="-parameters" />
+      <module name="org-csystem-spring-net-tcp-server" options="-parameters" />
+      <module name="org-csystem-util" options="-parameters" />
+      <module name="org-csystem-util-collection" options="-parameters" />
+      <module name="org-csystem-util-converter" options="-parameters" />
+      <module name="org-csystem-util-data" options="-parameters" />
+      <module name="org-csystem-util-exception" options="-parameters" />
+      <module name="org-csystem-util-grpc" options="-parameters" />
+      <module name="org-csystem-util-io" options="-parameters" />
+      <module name="org-csystem-util-process" options="-parameters" />
+      <module name="org-csystem-util-tuple" options="-parameters" />
+    </option>
+  </component>
+</project>

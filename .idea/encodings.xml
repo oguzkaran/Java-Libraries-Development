@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/CollectionUtilLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ConsoleLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ConverterLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/DataUtilLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ExceptionLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/GenericServerLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/GenericServerSpringLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/GrpcUtilLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/IOLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ImageProcessingLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/NetLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ProcessUtilLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TupleLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UtilLib/src/main/java" charset="UTF-8" />
+  </component>
+</project>
