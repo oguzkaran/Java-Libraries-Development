@@ -1,7 +1,3 @@
-/*
- * Copyleft (c) 1993 by C and System Programmers Association (CSD)
- * All Rights Free
- */
 package org.csystem.util.collection;
 
 import java.util.Arrays;
@@ -23,7 +19,7 @@ import java.util.stream.StreamSupport;
 
 /**
  * Utility class for iterable operations including {@link java.util.Collection} and {@link java.util.Map}
- * <p>1993 by C and System Programmers Association (CSD) All Rights Free</p>
+ * <p>Copyleft (c) 1993 by C and System Programmers Association (CSD) All Rights Free</p>
  *
  * @author CSD Development group
  */

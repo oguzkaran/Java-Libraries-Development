@@ -1,7 +1,3 @@
-/*
- * Copyleft (c) 1993 by C and System Programmers Association (CSD)
- * All Rights Free
- */
 package org.csystem.util.iterable.range;
 
 import java.util.Iterator;
@@ -11,6 +7,7 @@ import java.util.function.IntUnaryOperator;
 /**
  * Represents a range of integers, providing an iterable sequence from min to max.
  * The range can be customized with a step or an IntUnaryOperator for value progression.
+ * <p>Copyleft (c) 1993 by C and System Programmers Association (CSD) All Rights Free</p>
  *
  * @author CSD Development group
  */

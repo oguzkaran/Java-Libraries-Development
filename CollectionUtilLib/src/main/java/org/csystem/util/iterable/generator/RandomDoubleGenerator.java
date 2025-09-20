@@ -1,7 +1,3 @@
-/*
- * Copyleft (c) 1993 by C and System Programmers Association (CSD)
- * All Rights Free
- */
 package org.csystem.util.iterable.generator;
 
 import java.util.Iterator;
@@ -16,6 +12,7 @@ import java.util.function.DoubleSupplier;
  * The number of values to generate is specified at construction.
  * Factory methods are provided for generating values within a range, with a custom {@link Random}, or with a custom supplier.
  * </p>
+ * <p>Copyleft (c) 1993 by C and System Programmers Association (CSD) All Rights Free</p>
  *
  *  @author CSD Development group
  */

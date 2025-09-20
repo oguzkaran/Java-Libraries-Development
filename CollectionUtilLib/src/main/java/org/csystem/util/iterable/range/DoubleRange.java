@@ -1,7 +1,3 @@
-/*
- * Copyleft (c) 1993 by C and System Programmers Association (CSD)
- * All Rights Free
- */
 package org.csystem.util.iterable.range;
 
 import java.util.Iterator;
@@ -11,6 +7,7 @@ import java.util.function.DoubleUnaryOperator;
 /**
  * Represents a range of double values, providing an iterable sequence.
  * The range is defined by a minimum and maximum value, and a step function.
+ * <p>Copyleft (c) 1993 by C and System Programmers Association (CSD) All Rights Free</p>
  *
  *  @author CSD Development group
  */

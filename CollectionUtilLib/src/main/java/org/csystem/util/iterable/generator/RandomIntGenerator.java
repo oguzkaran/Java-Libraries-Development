@@ -1,7 +1,3 @@
-/*
- * Copyleft (c) 1993 by C and System Programmers Association (CSD)
- * All Rights Free
- */
 package org.csystem.util.iterable.generator;
 
 import java.util.Iterator;
@@ -12,6 +8,7 @@ import java.util.function.IntSupplier;
 /**
  * Generates a sequence of random integers.
  * Implements {@link Iterable} to allow iteration over generated values.
+ * <p>Copyleft (c) 1993 by C and System Programmers Association (CSD) All Rights Free</p>
  *
  *  @author CSD Development group
  */
