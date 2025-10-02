@@ -11,7 +11,9 @@ public final class IOUtil {
 	 * Private constructor to prevent instantiation.
 	 */
 	private IOUtil()
-	{}
+	{
+        throw new UnsupportedOperationException("IOUtil can not be instantiated");
+    }
 
 	/**
 	 * Copies data from an {@link InputStream} to an {@link OutputStream} using the specified block size.
