@@ -10,7 +10,7 @@ class DirectoryUtilTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        tempDir = Files.createTempDirectory("dirutiltest");
+        tempDir = Files.createDirectory(Path.of("dirutiltest"));
     }
 
     @AfterEach
@@ -18,6 +18,8 @@ class DirectoryUtilTest {
         Files.walk(tempDir)
             .map(Path::toFile)
             .forEach(File::delete);
+
+        Assertions.assertTrue(Files.deleteIfExists(tempDir));
     }
 
     @Test
