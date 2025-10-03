@@ -42,6 +42,7 @@ class FileUtilTests {
         FileUtil.zipFile(SRC_FILE, ZIP_FILE);
         try (var zis = new ZipInputStream(new FileInputStream(ZIP_FILE))) {
             var entry = zis.getNextEntry();
+
             assertNotNull(entry);
             assertEquals("source.txt", entry.getName());
             assertNull(zis.getNextEntry());
@@ -52,7 +53,8 @@ class FileUtilTests {
     void gzipFile_createsGzipFile() throws IOException {
         FileUtil.gzipFile(SRC_FILE, GZIP_FILE);
         try (var gzis = new GZIPInputStream(new FileInputStream(GZIP_FILE))) {
-            String content = new String(gzis.readAllBytes());
+            var content = new String(gzis.readAllBytes());
+
             assertEquals("Hello, world!", content);
         }
     }
@@ -101,6 +103,7 @@ class FileUtilTests {
         FileUtil.zipFile(emptyFile, ZIP_FILE);
         try (var zis = new ZipInputStream(new FileInputStream(ZIP_FILE))) {
             var entry = zis.getNextEntry();
+
             assertNotNull(entry);
             assertEquals("empty.txt", entry.getName());
             assertEquals(-1, zis.read());
