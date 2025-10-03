@@ -16,7 +16,7 @@ import java.util.zip.*;
  */
 public final class FileUtil {
     /**
-     * Default buffer size used for file operations.ƒ
+     * Default buffer size used for file operations.
      */
     private static final int DEFAULT_BUFFER_SIZE = 1024;
 
