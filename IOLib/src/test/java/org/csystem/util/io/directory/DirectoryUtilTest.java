@@ -44,7 +44,7 @@ class DirectoryUtilTest {
     }
 
     @Test
-    void createAlleDirectoryShouldReturnTrueWhenAllDirectoriesAreCreated() {
+    void createAllDirectoriesShouldReturnTrueWhenAllDirectoriesAreCreated() {
         var dirPath = tempDir.resolve("parent/child/grandchild").toString();
 
         Assertions.assertTrue(org.csystem.util.io.directory.DirectoryUtil.createAllDirectories(dirPath));
@@ -52,7 +52,7 @@ class DirectoryUtilTest {
     }
 
     @Test
-    void createAlleDirectoryShouldReturnFalseWhenDirectoryAlreadyExists() {
+    void createAllDirectoriesShouldReturnFalseWhenDirectoryAlreadyExists() {
         var dirPath = tempDir.resolve("alreadyExists").toString();
 
         new File(dirPath).mkdirs();
