@@ -42,7 +42,7 @@ package org.csystem.util.io.directory;
         }
 
         /**
-         * Creates the directory named by the specified path, including any necessary but nonexistent parent directories.
+         * Creates the directories named by the specified path, including any necessary but nonexistent parent directories.
          *
          * @param path the path of the directory to create
          * @return {@code true} if the directory and all nonexistent parent directories were created, {@code false} otherwise
@@ -53,7 +53,7 @@ package org.csystem.util.io.directory;
         }
 
         /**
-         * Creates the directory named by the given {@link File} object, including any necessary but nonexistent parent directories.
+         * Creates the directories named by the given {@link File} object, including any necessary but nonexistent parent directories.
          *
          * @param dir the {@link File} object representing the directory to create
          * @return {@code true} if the directory and all nonexistent parent directories were created, {@code false} otherwise
