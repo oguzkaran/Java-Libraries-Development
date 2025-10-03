@@ -33,7 +33,7 @@ class FileUtilTests {
     void tearDown() throws IOException {
         Files.walk(Paths.get(TEST_DIR))
                 .map(Path::toFile)
-                .sorted((a, b) -> b.getName().length() - a.getName().length())
+                .sorted((a, b) -> b.toPath().getNameCount() - a.toPath().getNameCount())
                 .forEach(File::delete);
     }
 
