@@ -1,4 +1,4 @@
-package org.csystem.util.io.diroctory;
+package org.csystem.util.io.directory;
 
     import java.io.File;
 

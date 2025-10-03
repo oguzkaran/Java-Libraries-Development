@@ -1,6 +1,6 @@
 package org.csystem.util.io.file;
 
-import org.csystem.util.io.diroctory.DirectoryUtil;
+import org.csystem.util.io.directory.DirectoryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
