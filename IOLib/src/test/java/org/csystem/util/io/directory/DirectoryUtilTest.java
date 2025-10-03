@@ -46,7 +46,7 @@ class DirectoryUtilTest {
     void creatAlleDirectoryShouldReturnTrueWhenAllDirectoriesAreCreated() {
         var dirPath = tempDir.resolve("parent/child/grandchild").toString();
 
-        Assertions.assertTrue(org.csystem.util.io.directory.DirectoryUtil.creatAllDirectories(dirPath));
+        Assertions.assertTrue(org.csystem.util.io.directory.DirectoryUtil.createAllDirectories(dirPath));
         Assertions.assertTrue(Files.isDirectory(Path.of(dirPath)));
     }
 
@@ -55,7 +55,7 @@ class DirectoryUtilTest {
         var dirPath = tempDir.resolve("alreadyExists").toString();
 
         new File(dirPath).mkdirs();
-        Assertions.assertFalse(org.csystem.util.io.directory.DirectoryUtil.creatAllDirectories(dirPath));
+        Assertions.assertFalse(org.csystem.util.io.directory.DirectoryUtil.createAllDirectories(dirPath));
     }
 
     @Test
