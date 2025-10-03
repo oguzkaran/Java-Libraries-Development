@@ -47,9 +47,9 @@ package org.csystem.util.io.directory;
          * @param path the path of the directory to create
          * @return {@code true} if the directory and all nonexistent parent directories were created, {@code false} otherwise
          */
-        public static boolean creatAlleDirectory(String path)
+        public static boolean creatAllDirectories(String path)
         {
-            return creatAlleDirectory(new File(path));
+            return creatAllDirectories(new File(path));
         }
 
         /**
@@ -58,7 +58,7 @@ package org.csystem.util.io.directory;
          * @param dir the {@link File} object representing the directory to create
          * @return {@code true} if the directory and all nonexistent parent directories were created, {@code false} otherwise
          */
-        public static boolean creatAlleDirectory(File dir)
+        public static boolean creatAllDirectories(File dir)
         {
             return dir.mkdirs();
         }
