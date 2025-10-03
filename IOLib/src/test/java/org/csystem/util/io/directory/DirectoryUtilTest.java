@@ -39,11 +39,12 @@ class DirectoryUtilTest {
     @Test
     void createDirectoryShouldReturnFalseWhenParentDoesNotExist() {
         var dirPath = tempDir.resolve("nonexistentParent/newDir").toString();
+
         Assertions.assertFalse(org.csystem.util.io.directory.DirectoryUtil.createDirectory(dirPath));
     }
 
     @Test
-    void creatAlleDirectoryShouldReturnTrueWhenAllDirectoriesAreCreated() {
+    void createAlleDirectoryShouldReturnTrueWhenAllDirectoriesAreCreated() {
         var dirPath = tempDir.resolve("parent/child/grandchild").toString();
 
         Assertions.assertTrue(org.csystem.util.io.directory.DirectoryUtil.createAllDirectories(dirPath));
@@ -51,7 +52,7 @@ class DirectoryUtilTest {
     }
 
     @Test
-    void creatAlleDirectoryShouldReturnFalseWhenDirectoryAlreadyExists() {
+    void createAlleDirectoryShouldReturnFalseWhenDirectoryAlreadyExists() {
         var dirPath = tempDir.resolve("alreadyExists").toString();
 
         new File(dirPath).mkdirs();

@@ -16,7 +16,7 @@ import java.util.zip.*;
  */
 public final class FileUtil {
     /**
-     * Default buffer size used for file operations.
+     * Default buffer size used for file operations.ƒ
      */
     private static final int DEFAULT_BUFFER_SIZE = 1024;
 
@@ -246,14 +246,14 @@ public final class FileUtil {
      * Decompresses a GZIP file.
      *
      * @param zipFile the GZIP file to decompress
-     * @param destDir the destination file
+     * @param destFile the destination file
      * @param bufSize the buffer size to use during decompression
      * @throws IOException if an I/O error occurs
      */
-    public static void gunzipFile(File zipFile, File destDir, int bufSize) throws IOException
+    public static void gunzipFile(File zipFile, File destFile, int bufSize) throws IOException
     {
         try (var fis = new FileInputStream(zipFile); var gzis = new GZIPInputStream(fis);
-             var fos = new FileOutputStream(destDir)) {
+             var fos = new FileOutputStream(destFile)) {
 
             var buffer = new byte[bufSize];
             int result;
@@ -279,11 +279,11 @@ public final class FileUtil {
      * Decompresses a GZIP file using the default buffer size.
      *
      * @param zipFile the GZIP file to decompress
-     * @param destDir the destination file
+     * @param destFile the destination file
      * @throws IOException if an I/O error occurs
      */
-    public static void gunzipFile(File zipFile, File destDir) throws IOException
+    public static void gunzipFile(File zipFile, File destFile) throws IOException
     {
-        gunzipFile(zipFile, destDir, DEFAULT_BUFFER_SIZE);
+        gunzipFile(zipFile, destFile, DEFAULT_BUFFER_SIZE);
     }
 }
