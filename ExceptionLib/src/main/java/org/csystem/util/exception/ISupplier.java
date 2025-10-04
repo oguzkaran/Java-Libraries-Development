@@ -10,5 +10,11 @@ package org.csystem.util.exception;
 
 @FunctionalInterface
 public interface ISupplier<R> {
+    /**
+     * Returns a value or throws an exception.
+     *
+     * @return the provided value
+     * @throws Exception if any error occurs
+     */
     R get() throws Exception;
 }

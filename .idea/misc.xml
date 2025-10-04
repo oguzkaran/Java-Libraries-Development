@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/IOLib/pom.xml" />
+        <option value="$PROJECT_DIR$/NetLib/pom.xml" />
+        <option value="$PROJECT_DIR$/UtilLib/pom.xml" />
+        <option value="$PROJECT_DIR$/TupleLib/pom.xml" />
+        <option value="$PROJECT_DIR$/ConsoleLib/pom.xml" />
+        <option value="$PROJECT_DIR$/DataUtilLib/pom.xml" />
+        <option value="$PROJECT_DIR$/GrpcUtilLib/pom.xml" />
+        <option value="$PROJECT_DIR$/ConverterLib/pom.xml" />
+        <option value="$PROJECT_DIR$/ExceptionLib/pom.xml" />
+        <option value="$PROJECT_DIR$/ProcessUtilLib/pom.xml" />
+        <option value="$PROJECT_DIR$/GenericServerLib/pom.xml" />
+        <option value="$PROJECT_DIR$/CollectionUtilLib/pom.xml" />
+        <option value="$PROJECT_DIR$/ImageProcessingLib/pom.xml" />
+        <option value="$PROJECT_DIR$/GenericServerSpringLib/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="21" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

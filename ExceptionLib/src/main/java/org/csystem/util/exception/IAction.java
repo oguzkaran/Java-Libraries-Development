@@ -8,5 +8,10 @@ package org.csystem.util.exception;
 
 @FunctionalInterface
 public interface IAction {
+    /**
+     * Performs the associated operation.
+     *
+     * @throws Exception if an error occurs during execution
+     */
     void run() throws Exception;
 }

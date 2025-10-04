@@ -41,6 +41,7 @@ public final class ExceptionUtil {
     /**
      * Executes the given action and handles any thrown exceptions by wrapping and rethrowing them as specified exceptions.
      * If an exception is thrown, a new RuntimeException is thrown with the provided message and the original exception as the cause.
+     * @param <T> the type of the exception that extends {@link RuntimeException}
      * @param actionCallback the {@link IAction} action to be executed
      * @param msg the detail message for the exception if one is thrown
      * @param cls the class of the exception to be thrown if an exception occurs during the action execution
