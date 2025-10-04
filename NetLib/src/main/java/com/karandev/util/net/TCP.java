@@ -138,7 +138,7 @@ public class TCP {
      *
      * @return the short value received
      * @throws NetworkException if an error occurs while receiving data
-     * @see TcpUtil#
+     * @see TcpUtil#receiveShort(Socket)
      */
     public short receiveShort()
     {
@@ -150,7 +150,7 @@ public class TCP {
      *
      * @return the integer received
      * @throws NetworkException if an error occurs while receiving data
-     * @see TcpUtil#
+     * @see TcpUtil#receiveInt(Socket)
      */
     public int receiveInt()
     {
@@ -474,7 +474,7 @@ public class TCP {
     }
 
     /**
-     * <p>Sends a `\n\r` terminated {@code str} to the socket.</p>
+     * <p>Sends a `\r\n` terminated {@code str} to the socket.</p>
      *
      * @param str the line of text to send
      * @throws NetworkException if an error occurs while sending data
@@ -486,7 +486,7 @@ public class TCP {
     }
 
     /**
-     * <p>Sends a `\n\r` terminated {@code str} to the socket using specified {@code charset}.</p>
+     * <p>Sends a `\r\n` terminated {@code str} to the socket using specified {@code charset}.</p>
      *
      * @param str the line of text to send
      * @param charset the {@link Charset} to use for encoding the text
