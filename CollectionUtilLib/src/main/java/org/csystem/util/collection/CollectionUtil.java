@@ -4,9 +4,9 @@ import java.util.*;
 
 /**
  * Utility class for collection operations including {@link java.util.Collection} and {@link java.util.Map}
- * <p>1993 by C and System Programmers Association (CSD) All Rights Free</p>
- * @author JavaApp2-Jan-2024 Group
- * @version 1.0.0
+ * <p>Copyleft (c) 1993 by C and System Programmers Association (CSD) All Rights Free</p>
+ *
+ * @author CSD Development group
  */
 public final class CollectionUtil {
 
@@ -123,14 +123,14 @@ public final class CollectionUtil {
         if (map == null) {
             throw new NullPointerException("map cannot be null");
         }
-        if (index < 0 || map.size() < index) {
+        if (index < 0 || map.size() <= index) {
             throw new IndexOutOfBoundsException("index cannot be out of range");
         }
 
         return map.entrySet().stream().
-            skip(index).
-            findFirst().
-            orElse(null);
+                skip(index).
+                findFirst().
+                get();
 
     }
 

@@ -69,11 +69,13 @@ public class CollectionUtilTest {
         map.put("a", 0);
         map.put("b", 1);
         map.put("c", 2);
+        map.put("d", 3);
 
         var expected = new HashMap<>();
         expected.put("b", 1);
 
         assertEquals(expected.entrySet().iterator().next(), CollectionUtil.get(map, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtil.get(map, 4));
     }
 
     @Test

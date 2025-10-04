@@ -170,7 +170,9 @@ class IterableUtilTest {
     {
         var a = Arrays.asList(1, 2, 3, 4, 5);
         var b = Arrays.asList(3, 4, 5);
+        var c = Arrays.asList(3, 4, 6);
         assertTrue(IterableUtil.isSubCollection(a, b));
+        assertFalse(IterableUtil.isSubCollection(a, c));
     }
 
     @Test
